@@ -1,0 +1,125 @@
+@media screen and (max-width: 2560px) {
+  #top {
+    background: linear-gradient(#111827ad,
+        #111827ad),
+      url('../../public/bg_2560.jpg');
+  }
+}
+
+@media screen and (max-width: 1920px) {
+  #top {
+    background: linear-gradient(#111827ad,
+        #111827ad),
+      url('../../public/bg_1920.jpg');
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .col-4,
+  .col-4-triple {
+    width: 50% !important;
+    max-width: 50% !important;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .nav-links {
+    display: none;
+  }
+
+  .mobile-nav {
+    display: block !important;
+    position: relative;
+  }
+
+  .scroll-to-top {
+    background-color: var(--darker-bg);
+    padding: 10px;
+    border-radius: 5px;
+    right: 20px;
+    bottom: 20px;
+  }
+
+  nav {
+    position: fixed;
+    background-color: var(--bg-color);
+    width: 100vw;
+  }
+
+  .nav-inner {
+    padding: 0 35px;
+  }
+
+  .col-1,
+  .col-2 {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .col-3,
+  .col-3-double {
+    width: 50% !important;
+    max-width: 50% !important;
+  }
+
+  .nowrap {
+    flex-wrap: wrap !important;
+  }
+
+  .column-min {
+    width: 100% !important;
+    align-items: center;
+    text-align: center;
+  }
+
+  #about-me-img {
+    width: 10em !important;
+    height: 10em !important;
+  }
+
+  .image-wrapper::after {
+    transform: none !important;
+  }
+
+  .row-on-smaller-screens {
+    flex-direction: row !important;
+    justify-content: space-evenly !important;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .featured {
+    flex-direction: column !important;
+    max-height: unset !important;
+
+    .image-wrapper {
+      width: 100% !important;
+      border-radius: 10px 10px 0 0 !important;
+
+      ::after {
+        display: none !important;
+      }
+    }
+  }
+
+  .featured-inner {
+    width: 100% !important;
+  }
+
+  .featured-thumbnail {
+    position: static !important;
+    border-radius: 10px 10px 0 0 !important;
+    max-height: 300px;
+  }
+
+  .col-3,
+  .col-3-double {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .half-input {
+    margin: 10px 0 !important;
+    width: 100%;
+  }
+}
