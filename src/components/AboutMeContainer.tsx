@@ -12,7 +12,7 @@ export default function AboutMeContainer(props: Props) {
         <div className="row row-reversed padding-row y-axis-centered nowrap">
           <div className="column-min col-margin">
             <Image
-              src="/leon-heuer-2-min.jpg"
+              src="/portrait.jpeg"
               id="about-me-img"
               alt="Leon Heuer"
               width={500}
