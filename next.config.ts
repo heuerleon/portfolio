@@ -1,15 +1,11 @@
 import type { NextConfig } from "next";
 import createMDX from '@next/mdx'
 
-
-// Create MDX wrapper
-const withMDX = createMDX({
-  extension: /\.mdx?$/
-});
-
-/** @type {NextConfig} */
 const nextConfig: NextConfig = {
-  pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
+  // Configure `pageExtensions` to include markdown and MDX files
+  pageExtensions: ['md', 'mdx', 'ts', 'tsx'],
 };
-
+const withMDX = createMDX({})
+ 
+// Merge MDX config with Next.js config
 export default withMDX(nextConfig);
