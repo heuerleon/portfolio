@@ -35,8 +35,8 @@ const featured = [
     image: "/projects/portfolio.jpg",
     title: "My portfolio",
     langs: [
-      { image: "/language_icons/javascript.svg", title: "JavaScript" },
-      { image: "/language_icons/gatsby.svg", title: "Gatsby" },
+      { image: "/language_icons/typescript.svg", title: "TypeScript" },
+      { image: "/language_icons/nextjs.svg", title: "NextJS" },
       { image: "/language_icons/vscode.svg", title: "VS Code" },
       { image: "/language_icons/sass.svg", title: "SASS/SCSS" },
     ],
@@ -188,7 +188,7 @@ export default function Index() {
                   old. I am actively writing desktop applications with C# and server-side
                   mods for Minecraft with Java and Kotlin, utilizing MongoDB as
                   database management system. I also have experience with the scripting
-                  languages JavaScript and Python, as well as the frontend library
+                  languages TypeScript and Python, as well as the frontend library
                   React and the framework Svelte.
                 </p>
                 <p>

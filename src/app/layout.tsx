@@ -5,6 +5,7 @@ import Nav from "@/components/Nav";
 import Footer from "@/components/Footer"
 import ScrollToTopButton from "@/components/ScrollToTopButton";
 import "@/styles/global.scss";
+import "@/styles/fontawesome/css/all.min.css"
 
 export const metadata: Metadata = {
   title: "Leon Heuer's portfolio",
@@ -20,10 +21,6 @@ export default function RootLayout({
     <html lang="en">
       <Head>
         <title>Leon Heuers Portfolio</title>
-        <script
-          src="https://kit.fontawesome.com/a01c807fba.js"
-          crossOrigin="anonymous"
-        ></script>
         <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
       </Head>
       <body>
