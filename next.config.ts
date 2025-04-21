@@ -1,12 +1,16 @@
-import type { NextConfig } from "next";
 import createMDX from '@next/mdx';
+import type { NextConfig } from 'next';
 
 const withMDX = createMDX({
-  extension: /\.mdx?$/, // ✅ crucial for proper MDX loader behavior
+  extension: /\.mdx?$/,
 });
 
+/** @type {NextConfig} */
 const nextConfig: NextConfig = {
-  pageExtensions: ['md', 'mdx', 'ts', 'tsx'],
+  pageExtensions: ['ts', 'tsx', 'mdx'],
+  experimental: {
+    mdxRs: true,
+  },
 };
 
 export default withMDX(nextConfig);
