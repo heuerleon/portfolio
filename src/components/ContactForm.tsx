@@ -13,7 +13,7 @@ export default function ContactForm() {
   const [token, setToken] = useState("");
 
   function handleSubjectChange(event: React.ChangeEvent<HTMLInputElement>) {
-    let content = event.target.value;
+    const content = event.target.value;
     if (content.length > 100) {
       event.preventDefault();
       event.target.value = content.substring(0, 100);
@@ -22,7 +22,7 @@ export default function ContactForm() {
   }
 
   function handleNameChange(event: React.ChangeEvent<HTMLInputElement>) {
-    let content = event.target.value;
+    const content = event.target.value;
     if (content.length > 50) {
       event.preventDefault();
       event.target.value = content.substring(0, 50);
@@ -31,7 +31,7 @@ export default function ContactForm() {
   }
 
   function handleEmailChange(event: React.ChangeEvent<HTMLInputElement>) {
-    let content = event.target.value;
+    const content = event.target.value;
     if (content.length > 50) {
       event.preventDefault();
       event.target.value = content.substring(0, 50);
@@ -40,7 +40,7 @@ export default function ContactForm() {
   }
 
   function handleMessageChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
-    let content = event.target.value;
+    const content = event.target.value;
     if (content.length > 500) {
       event.preventDefault();
       event.target.value = content.substring(0, 500);
@@ -53,7 +53,7 @@ export default function ContactForm() {
   function sendMessage() {
     setSendAttempted(true);
 
-    let all_fields_filled =
+    const all_fields_filled =
       contactSubject &&
       contactEmail &&
       isValidEmail(contactEmail) &&
@@ -62,7 +62,7 @@ export default function ContactForm() {
       token;
 
     if (all_fields_filled) {
-      let request = new XMLHttpRequest();
+      const request = new XMLHttpRequest();
       request.open(
         "POST",
         "https://discord.com/api/webhooks/1019718657967915038/7rYn4eZAg8Nl39s0S6qOGR9pJdE1lA6ozLjJiGHBRgjtzWlEzWeoEyA48FubQotv5vTR"
@@ -81,7 +81,7 @@ export default function ContactForm() {
       request.setRequestHeader("Accept", "application/json");
       request.setRequestHeader("Content-Type", "application/json");
       request.onload = () => console.log(request.responseText);
-      let body = JSON.stringify({
+      const body = JSON.stringify({
         content:
           "<@320518030243135490> someone has used the contact form on your website https://heuer.ovh",
         allowed_mentions: {
@@ -105,7 +105,7 @@ export default function ContactForm() {
     }
   }
 
-  function isValidEmail(email: String) {
+  function isValidEmail(email: string) {
     const regex = /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/;
     return regex.test(String(email).toLowerCase());
   }

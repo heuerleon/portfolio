@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Footer() {
   return (
     <section className="alt-section-dark" id="footer">
@@ -42,8 +44,7 @@ export default function Footer() {
               </a>
             </span>
             <span className="light">
-              All rights reserved | <a href="/legal">Legal Notice</a> |{" "}
-              <a href="/privacy">Privacy Policy</a>
+              All rights reserved | <Link href="/legal">Legal Notice</Link> | <Link href="/privacy">Privacy Policy</Link>
             </span>
             <span className="light">
               Contains images from{" "}

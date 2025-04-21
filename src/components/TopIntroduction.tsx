@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
 import TypeIt from "typeit-react";
 
@@ -97,19 +98,19 @@ export default function TopIntroduction() {
               </a>
             </div>
             <div>
-              <a href="#about" className="btn-primary">
+              <Link href="/#about" className="btn-primary">
                 <span>Learn More</span>
-              </a>
-              <a href="#projects" className="btn-alt">
+              </Link>
+              <Link href="/#projects" className="btn-alt">
                 <span>View my work</span>
-              </a>
+              </Link>
             </div>
           </div>
         </div>
       </div>
-      <a href="#about" className="scroll-down" aria-label="scroll-down">
+      <Link href="/#about" className="scroll-down" aria-label="scroll-down">
         <span></span>
-      </a>
+      </Link>
     </section>
   )
 }

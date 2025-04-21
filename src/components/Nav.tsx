@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import React, { useState, useRef } from "react";
 
 export default function Nav() {
@@ -56,25 +57,25 @@ export default function Nav() {
         } ${fixed || showMobileNav ? "nav-fixed" : ""}`}
     >
       <div className="nav-inner">
-        <h4 className="style-headline"><a href="/">heuer.ovh</a></h4>
+        <h4 className="style-headline"><Link href="/">heuer.ovh</Link></h4>
         <ul className="nav-links">
           <li>
-            <a href="/#top">Home</a>
+            <Link href="/#top">Home</Link>
           </li>
           <li>
-            <a href="/#about">About Me</a>
+            <Link href="/#about">About Me</Link>
           </li>
           <li>
-            <a href="/#what-i-do">What I Do</a>
+            <Link href="/#what-i-do">What I Do</Link>
           </li>
           <li>
-            <a href="/#featured">Featured</a>
+            <Link href="/#featured">Featured</Link>
           </li>
           <li>
-            <a href="/#projects">Projects</a>
+            <Link href="/#projects">Projects</Link>
           </li>
           <li>
-            <a href="/#contact">Contact</a>
+            <Link href="/#contact">Contact</Link>
           </li>
         </ul>
         <div className="mobile-nav">
@@ -87,22 +88,22 @@ export default function Nav() {
             onClick={() => setShowMobileNav(it => !it)}
           >
             <li>
-              <a href="/#top">Home</a>
+              <Link href="/#top">Home</Link>
             </li>
             <li>
-              <a href="/#about">About Me</a>
+              <Link href="/#about">About Me</Link>
             </li>
             <li>
-              <a href="/#what-i-do">What I Do</a>
+              <Link href="/#what-i-do">What I Do</Link>
             </li>
             <li>
-              <a href="/#featured">Featured</a>
+              <Link href="/#featured">Featured</Link>
             </li>
             <li>
-              <a href="/#projects">Projects</a>
+              <Link href="/#projects">Projects</Link>
             </li>
             <li>
-              <a href="/#contact">Contact</a>
+              <Link href="/#contact">Contact</Link>
             </li>
           </ul>
         </div>

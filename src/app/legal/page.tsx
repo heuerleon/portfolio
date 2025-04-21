@@ -1,4 +1,5 @@
 import Legal from "@/markdown/Legal.mdx"
+import Link from "next/link";
 
 export default function LegalNotice() {
   return (
@@ -12,7 +13,7 @@ export default function LegalNotice() {
               only available in German as of now.
             </p>
             <p>
-              <a href="/">Home</a> / <a href="/legal-notice">Legal-Notice</a>
+              <Link href="/">Home</Link> / <Link href="/legal-notice">Legal-Notice</Link>
             </p>
           </div>
         </div>

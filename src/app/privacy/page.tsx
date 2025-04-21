@@ -1,4 +1,5 @@
 import Privacy from "@/markdown/Privacy.mdx"
+import Link from "next/link";
 
 export default function PrivacyPolicy() {
   return (
@@ -12,8 +13,7 @@ export default function PrivacyPolicy() {
               only available in German as of now.
             </p>
             <p>
-              <a href="/">Home</a> /{" "}
-              <a href="/privacy-policy">Privacy-Policy</a>
+              <Link href="/">Home</Link> / <Link href="/privacy-policy">Privacy-Policy</Link>
             </p>
           </div>
         </div>

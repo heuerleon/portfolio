@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function ContactSuccess() {
   return (
     <section className="full-height alt-section-dark y-axis-centered simple-bg">
@@ -8,7 +10,7 @@ export default function ContactSuccess() {
             Your request has been sent to my mobile. I will view it as soon as possible. Expect an answer within 24 hours via E-Mail.
           </p>
           <p>
-            <a href="/">Return to home</a>
+            <Link href="/">Return to home</Link>
           </p>
         </div>
       </div>
