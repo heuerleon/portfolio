@@ -2,7 +2,7 @@
   #top {
     background: linear-gradient(#111827ad,
         #111827ad),
-      url('../../public/bg_2560.jpg');
+      url('../../public/bg_2560.jpg') no-repeat center center;
   }
 }
 
@@ -10,7 +10,7 @@
   #top {
     background: linear-gradient(#111827ad,
         #111827ad),
-      url('../../public/bg_1920.jpg');
+      url('../../public/bg_1920.jpg') no-repeat center center;
   }
 }
 

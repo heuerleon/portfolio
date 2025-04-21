@@ -1,3 +1,33 @@
+@mixin shrink-margins($margin: 0) {
+  &:first-of-type {
+    margin-left: $margin !important;
+  }
+
+  &:last-of-type {
+    margin-right: $margin !important;
+  }
+}
+
+@mixin shrink-paddings-lr($padding: 0) {
+  &:first-of-type {
+    padding-left: $padding !important;
+  }
+
+  &:last-of-type {
+    padding-right: $padding !important;
+  }
+}
+
+@mixin shrink-paddings-tb($padding: 0) {
+  &:first-of-type {
+    padding-top: $padding !important;
+  }
+
+  &:last-of-type {
+    padding-bottom: $padding !important;
+  }
+}
+
 // --------------------------------------------------- //
 //                       DROPDOWN                      //
 // --------------------------------------------------- //
