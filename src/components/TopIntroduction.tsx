@@ -66,8 +66,9 @@ export default function TopIntroduction() {
             </h3>
             <h1>Leon Heuer</h1>
             <p className="p-no-margin">
-              My name is Leon Heuer and I welcome you to my personal website.
-              I am a 19 years old software developer from Germany.
+              My name is Leon Heuer and I welcome you to my personal portfolio.
+              I am a student and young software developer from Germany
+              with an international focus.
             </p>
             <div className="social-media-container">
               <a
