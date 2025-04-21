@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import Image from "next/image";
 
@@ -114,94 +116,93 @@ export default function Projects() {
 
   return (
     <section className="padding-section alt-section" id="projects">
-          <div className="container">
-            <div className="row">
-              <div className="column-left">
-                <h1>More Projects</h1>
-                <div className="dropdown">
+      <div className="container">
+        <div className="row">
+          <div className="column-left">
+            <h1>More Projects</h1>
+            <div className="dropdown">
+              <button
+                className="dropdown-title"
+                onClick={() => setShowSortDropdown((it) => !it)}
+              >
+                {sortTitle}
+              </button>
+              <ul
+                className={`dropdown-list ${showSortDropdown ? "dropdown-visible" : ""
+                  }`}
+              >
+                <li>
                   <button
-                    className="dropdown-title"
-                    onClick={() => setShowSortDropdown((it) => !it)}
+                    className={sortFilter === 0 ? "selected" : ""}
+                    onClick={(event) => sortProjects(event, 0)}
                   >
-                    {sortTitle}
+                    Default
                   </button>
-                  <ul
-                    className={`dropdown-list ${
-                      showSortDropdown ? "dropdown-visible" : ""
-                    }`}
+                </li>
+                <li>
+                  <button
+                    className={sortFilter === 1 ? "selected" : ""}
+                    onClick={(event) => sortProjects(event, 1)}
                   >
-                    <li>
-                      <button
-                        className={sortFilter === 0 ? "selected" : ""}
-                        onClick={(event) => sortProjects(event, 0)}
-                      >
-                        Default
-                      </button>
-                    </li>
-                    <li>
-                      <button
-                        className={sortFilter === 1 ? "selected" : ""}
-                        onClick={(event) => sortProjects(event, 1)}
-                      >
-                        A to Z
-                      </button>
-                    </li>
-                    <li>
-                      <button
-                        className={sortFilter === 2 ? "selected" : ""}
-                        onClick={(event) => sortProjects(event, 2)}
-                      >
-                        Z to A
-                      </button>
-                    </li>
-                  </ul>
+                    A to Z
+                  </button>
+                </li>
+                <li>
+                  <button
+                    className={sortFilter === 2 ? "selected" : ""}
+                    onClick={(event) => sortProjects(event, 2)}
+                  >
+                    Z to A
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div className="row padding-row y-axis-stretched">
+          {projects.map((project, i) => (
+            <div key={i} className="column-centered col-3">
+              <div className="box box-image">
+                <h1>{project.title}</h1>
+                <Image
+                  src={project.image}
+                  alt={project.title}
+                  className="box-thumbnail"
+                  width={500}
+                  height={500}
+                />
+                <div className="box-inner">
+                  <h3>Description</h3>
+                  <p>{project.description}</p>
+                  <h3>Built with</h3>
+                  <div className="icon-container">
+                    {project.langs.map((language, i) => (
+                      <Image
+                        key={i}
+                        src={language.image}
+                        alt={language.title + "icon"}
+                        title={language.title}
+                        width={50}
+                        height={50}
+                      />
+                    ))}
+                  </div>
+                  <a
+                    href={project.source}
+                    className="box-source"
+                    target="_blank"
+                    rel="noreferrer"
+                    title="View on GitHub"
+                    aria-label="source"
+                  >
+                    <i className="fab fa-github"></i>
+                  </a>
                 </div>
               </div>
             </div>
-            <div className="row padding-row y-axis-stretched">
-              {projects.map((project, i) => (
-                <div key={i} className="column-centered col-3">
-                  <div className="box box-image">
-                    <h1>{project.title}</h1>
-                    <Image
-                      src={project.image}
-                      alt={project.title}
-                      className="box-thumbnail"
-                      width={500}
-                      height={500}
-                    />
-                    <div className="box-inner">
-                      <h3>Description</h3>
-                      <p>{project.description}</p>
-                      <h3>Built with</h3>
-                      <div className="icon-container">
-                        {project.langs.map((language, i) => (
-                          <Image 
-                            key={i}
-                            src={language.image}
-                            alt={language.title + "icon"}
-                            title={language.title}
-                            width={50}
-                            height={50}
-                          />
-                        ))}
-                      </div>
-                      <a
-                        href={project.source}
-                        className="box-source"
-                        target="_blank"
-                        rel="noreferrer"
-                        title="View on GitHub"
-                        aria-label="source"
-                      >
-                        <i className="fab fa-github"></i>
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+          ))}
+        </div>
+      </div>
+    </section>
   )
 }
