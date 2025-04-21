@@ -45,16 +45,15 @@ export default function Nav() {
           setInvisible(true);
         }
       }
-      
+
       scrollBefore.current = window.scrollY;
     }
   }
 
   return (
     <nav
-      className={`alt-section-dark ${
-        invisible && !showMobileNav ? "nav-default" : ""
-      } ${fixed || showMobileNav ? "nav-fixed" : ""}`}
+      className={`alt-section-dark ${invisible && !showMobileNav ? "nav-default" : ""
+        } ${fixed || showMobileNav ? "nav-fixed" : ""}`}
     >
       <div className="nav-inner">
         <h4 className="style-headline"><a href="/">heuer.ovh</a></h4>
@@ -83,9 +82,8 @@ export default function Nav() {
             <i className={`fas ${showMobileNav ? "fa-times" : "fa-bars"}`}></i>
           </button>
           <ul
-            className={`mobile-nav-links ${
-              showMobileNav ? "mobile-nav-links-visible" : ""
-            }`}
+            className={`mobile-nav-links ${showMobileNav ? "mobile-nav-links-visible" : ""
+              }`}
             onClick={() => setShowMobileNav(it => !it)}
           >
             <li>

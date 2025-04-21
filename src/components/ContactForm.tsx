@@ -155,9 +155,9 @@ export default function ContactForm() {
                   placeholder="Your email address"
                   onChange={(event) => handleEmailChange(event)}
                   className={`${(!contactEmail && sendAttempted) ||
-                      (!isValidEmail(contactEmail) && sendAttempted)
-                      ? "empty-input"
-                      : ""
+                    (!isValidEmail(contactEmail) && sendAttempted)
+                    ? "empty-input"
+                    : ""
                     }`}
                 />
                 <span>{contactEmail.length}/50</span>
@@ -198,20 +198,20 @@ export default function ContactForm() {
                 </span>
                 <span
                   className={`error-message ${(contactEmail &&
-                      contactName &&
-                      contactSubject &&
-                      contactMessage) ||
-                      !sendAttempted
-                      ? "hidden"
-                      : ""
+                    contactName &&
+                    contactSubject &&
+                    contactMessage) ||
+                    !sendAttempted
+                    ? "hidden"
+                    : ""
                     }`}
                 >
                   Please fill in all fields.
                 </span>
                 <span
                   className={`error-message ${isValidEmail(contactEmail) || !sendAttempted
-                      ? "hidden"
-                      : ""
+                    ? "hidden"
+                    : ""
                     }`}
                 >
                   Please enter a valid E-Mail address.

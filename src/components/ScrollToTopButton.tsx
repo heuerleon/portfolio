@@ -21,9 +21,9 @@ export default function ScrollToTopButton() {
       scrollBefore.current = window.scrollY;
     }
   }
-    return(
-        <span className={`scroll-to-top ${showToTop ? "visible" : ""}`}>
-          <a href="#top" aria-label="to-top"><i className="fas fa-chevron-up"></i></a>
-        </span>
-    )
+  return (
+    <span className={`scroll-to-top ${showToTop ? "visible" : ""}`}>
+      <a href="#top" aria-label="to-top"><i className="fas fa-chevron-up"></i></a>
+    </span>
+  )
 }
