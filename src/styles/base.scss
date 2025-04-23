@@ -1,5 +1,3 @@
-@use "./fonts/inter.css";
-
 :root {
   --trans-default: 200ms ease-in-out;
   --trans-anim: 400ms ease-in-out;
@@ -170,7 +168,6 @@ body {
   margin: 0;
   box-sizing: border-box;
   font-size: 14pt;
-  font-family: 'Inter', sans-serif;
 }
 
 a {
@@ -250,7 +247,6 @@ h3 {
 }
 
 .style-headline {
-  font-family: 'Inter', serif;
   text-transform: lowercase;
   font-size: 1.2em;
   font-weight: 600;

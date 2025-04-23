@@ -8,11 +8,15 @@ import Footer from "@/components/Footer"
 import ScrollToTopButton from "@/components/ScrollToTopButton";
 import "@/styles/global.scss";
 import "@/styles/fontawesome/css/all.min.css"
+import Script from "next/script";
+import { Inter } from "next/font/google";
 
 export const metadata: Metadata = {
   title: "Leon Heuer's portfolio",
   description: "Personal projects and resume",
 };
+
+const inter = Inter({ subsets: ['latin'] })
 
 export default function RootLayout({
   children,
@@ -21,11 +25,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <Script src="https://js.hcaptcha.com/1/api.js" async defer></Script>
       <Head>
         <title>Leon Heuers Portfolio</title>
-        <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
       </Head>
-      <body>
+      <body className={inter.className}>
         <Nav/>
         {children}
         <Footer/>
