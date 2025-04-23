@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import React from "react"
 import Head from 'next/head';
 import Nav from "@/components/Nav";
@@ -30,6 +31,7 @@ export default function RootLayout({
         <Footer/>
         <ScrollToTopButton/>
         <Analytics/>
+        <SpeedInsights/>
       </body>
     </html>
   );
