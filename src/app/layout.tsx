@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/react";
 import React from "react"
 import Head from 'next/head';
 import Nav from "@/components/Nav";
@@ -28,6 +29,7 @@ export default function RootLayout({
         {children}
         <Footer/>
         <ScrollToTopButton/>
+        <Analytics/>
       </body>
     </html>
   );
