@@ -6,10 +6,10 @@ import { useState } from "react";
 
 export default function ContactForm() {
   const [sendAttempted, setSendAttempted] = useState(false);
-  const [contactSubject, setContactSubject] = useState("");
-  const [contactEmail, setContactEmail] = useState("");
-  const [contactName, setContactName] = useState("");
-  const [contactMessage, setContactMessage] = useState("");
+  const [subject, setSubject] = useState("");
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [message, setMessage] = useState("");
   const [token, setToken] = useState("");
 
   function handleSubjectChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -18,7 +18,7 @@ export default function ContactForm() {
       event.preventDefault();
       event.target.value = content.substring(0, 100);
     }
-    setContactSubject(event.target.value);
+    setSubject(event.target.value);
   }
 
   function handleNameChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -27,7 +27,7 @@ export default function ContactForm() {
       event.preventDefault();
       event.target.value = content.substring(0, 50);
     }
-    setContactName(event.target.value);
+    setName(event.target.value);
   }
 
   function handleEmailChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -36,7 +36,7 @@ export default function ContactForm() {
       event.preventDefault();
       event.target.value = content.substring(0, 50);
     }
-    setContactEmail(event.target.value);
+    setEmail(event.target.value);
   }
 
   function handleMessageChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
@@ -45,7 +45,7 @@ export default function ContactForm() {
       event.preventDefault();
       event.target.value = content.substring(0, 500);
     }
-    setContactMessage(event.target.value);
+    setMessage(event.target.value);
   }
 
   const router = useRouter();
@@ -53,13 +53,7 @@ export default function ContactForm() {
   async function sendMessage() {
     setSendAttempted(true);
 
-    const all_fields_filled =
-      contactSubject &&
-      contactEmail &&
-      isValidEmail(contactEmail) &&
-      contactName &&
-      contactMessage &&
-      token;
+    const all_fields_filled = subject &&isValidEmail(email) && name && message && token;
 
     if (all_fields_filled) {
       const headers = {
@@ -67,10 +61,11 @@ export default function ContactForm() {
         "Content-Type": "application/json"
       };
       const body = JSON.stringify({
-        name: contactName,
-        subject: contactSubject,
-        email: contactEmail,
-        message: contactMessage
+        name: name,
+        subject: subject,
+        email: email,
+        message: message,
+        token: token
       });
       const response = await fetch("/api/contact", {
         method: "POST",
@@ -129,10 +124,10 @@ export default function ContactForm() {
                   placeholder="Subject"
                   onChange={(event) => handleSubjectChange(event)}
                   className={
-                    !contactSubject && sendAttempted ? "empty-input" : ""
+                    !subject && sendAttempted ? "empty-input" : ""
                   }
                 />
-                <span>{contactSubject.length}/100</span>
+                <span>{subject.length}/100</span>
               </div>
 
               <div className="input-wrapper half-input">
@@ -140,13 +135,13 @@ export default function ContactForm() {
                   type="text"
                   placeholder="Your email address"
                   onChange={(event) => handleEmailChange(event)}
-                  className={`${(!contactEmail && sendAttempted) ||
-                    (!isValidEmail(contactEmail) && sendAttempted)
+                  className={`${(!email && sendAttempted) ||
+                    (!isValidEmail(email) && sendAttempted)
                     ? "empty-input"
                     : ""
                     }`}
                 />
-                <span>{contactEmail.length}/50</span>
+                <span>{email.length}/50</span>
               </div>
 
               <div className="input-wrapper half-input">
@@ -154,10 +149,10 @@ export default function ContactForm() {
                   type="text"
                   placeholder="Your name"
                   onChange={(event) => handleNameChange(event)}
-                  className={`${!contactName && sendAttempted ? "empty-input" : ""
+                  className={`${!name && sendAttempted ? "empty-input" : ""
                     }`}
                 />
-                <span>{contactName.length}/50</span>
+                <span>{name.length}/50</span>
               </div>
 
               <div className="input-wrapper">
@@ -165,10 +160,10 @@ export default function ContactForm() {
                   placeholder="Enter message"
                   onChange={(event) => handleMessageChange(event)}
                   className={
-                    !contactMessage && sendAttempted ? "empty-input" : ""
+                    !message && sendAttempted ? "empty-input" : ""
                   }
                 ></textarea>
-                <span>{contactMessage.length}/500</span>
+                <span>{message.length}/500</span>
               </div>
 
               <div className="captcha-wrapper">
@@ -183,10 +178,10 @@ export default function ContactForm() {
                   You have to complete the captcha.
                 </span>
                 <span
-                  className={`error-message ${(contactEmail &&
-                    contactName &&
-                    contactSubject &&
-                    contactMessage) ||
+                  className={`error-message ${(email &&
+                    name &&
+                    subject &&
+                    message) ||
                     !sendAttempted
                     ? "hidden"
                     : ""
@@ -195,7 +190,7 @@ export default function ContactForm() {
                   Please fill in all fields.
                 </span>
                 <span
-                  className={`error-message ${isValidEmail(contactEmail) || !sendAttempted
+                  className={`error-message ${isValidEmail(email) || !sendAttempted
                     ? "hidden"
                     : ""
                     }`}
