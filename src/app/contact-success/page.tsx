@@ -7,7 +7,7 @@ export default function ContactSuccess() {
         <div className="column-centered">
           <h1>Thank you for the request!</h1>
           <p>
-            Your request has been sent to my mobile. I will view it as soon as possible. Expect an answer within 24 hours via E-Mail.
+            Your message has been sent directly to my phone. I will read it as soon as possible. Expect an answer within 24 hours via E-Mail.
           </p>
           <p>
             <Link href="/">Return to home</Link>

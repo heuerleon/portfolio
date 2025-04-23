@@ -50,7 +50,7 @@ export default function ContactForm() {
 
   const router = useRouter();
 
-  function sendMessage() {
+  async function sendMessage() {
     setSendAttempted(true);
 
     const all_fields_filled =
@@ -62,46 +62,32 @@ export default function ContactForm() {
       token;
 
     if (all_fields_filled) {
-      const request = new XMLHttpRequest();
-      request.open(
-        "POST",
-        "https://discord.com/api/webhooks/1019718657967915038/7rYn4eZAg8Nl39s0S6qOGR9pJdE1lA6ozLjJiGHBRgjtzWlEzWeoEyA48FubQotv5vTR"
-      );
-      request.onreadystatechange = () => {
-        if (request.readyState === 4) {
-          if (request.status >= 200 && request.status < 300) {
-            router.push("/contact-success");
-          } else {
-            alert(
-              "Error processing your contact request. Please use another contact option."
-            );
-          }
-        }
+      const headers = {
+        "Accept": "application/json",
+        "Content-Type": "application/json"
       };
-      request.setRequestHeader("Accept", "application/json");
-      request.setRequestHeader("Content-Type", "application/json");
-      request.onload = () => console.log(request.responseText);
       const body = JSON.stringify({
-        content:
-          "<@320518030243135490> someone has used the contact form on your website https://heuer.ovh",
-        allowed_mentions: {
-          parse: ["users"],
-        },
-        embeds: [
-          {
-            title: contactSubject,
-            description: contactMessage,
-            color: 959977,
-            fields: [
-              {
-                name: "From:",
-                value: contactName + " (" + contactEmail + ")",
-              },
-            ],
-          },
-        ],
+        name: contactName,
+        subject: contactSubject,
+        email: contactEmail,
+        message: contactMessage
       });
-      request.send(body);
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: headers,
+        body: body
+      });
+
+      const status = response.status;
+      const responseBody = JSON.stringify(response.json());
+      if (status != 200) {
+        alert(
+          "Error processing your contact request. Please use another contact option."
+        );
+        console.error(`Got status code ${status} with body ${responseBody}`);
+        return;
+      }
+      router.push("/contact-success");
     }
   }
 
