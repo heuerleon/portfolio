@@ -19,6 +19,7 @@
     "rate-limiter-flexible": "^7.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "resend": "^4.4.0",
     "typeit-react": "^2.7.8"
   },
   "devDependencies": {

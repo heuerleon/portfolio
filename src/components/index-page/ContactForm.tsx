@@ -1,17 +1,13 @@
 "use client";
 
+import { ContactFormRequestData } from "@/app/api/contact/route";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function ContactForm() {
-  const [sendAttempted, setSendAttempted] = useState(false);
   const [subject, setSubject] = useState("");
-  const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
-  const [message, setMessage] = useState("");
-  const [token, setToken] = useState("");
-
+  
   function handleSubjectChange(event: React.ChangeEvent<HTMLInputElement>) {
     const content = event.target.value;
     if (content.length > 100) {
@@ -20,6 +16,8 @@ export default function ContactForm() {
     }
     setSubject(event.target.value);
   }
+
+  const [name, setName] = useState("");
 
   function handleNameChange(event: React.ChangeEvent<HTMLInputElement>) {
     const content = event.target.value;
@@ -30,6 +28,8 @@ export default function ContactForm() {
     setName(event.target.value);
   }
 
+  const [email, setEmail] = useState("");
+
   function handleEmailChange(event: React.ChangeEvent<HTMLInputElement>) {
     const content = event.target.value;
     if (content.length > 50) {
@@ -38,6 +38,8 @@ export default function ContactForm() {
     }
     setEmail(event.target.value);
   }
+
+  const [message, setMessage] = useState("");
 
   function handleMessageChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
     const content = event.target.value;
@@ -49,41 +51,45 @@ export default function ContactForm() {
   }
 
   const router = useRouter();
-
+  const [sendAttempted, setSendAttempted] = useState(false);
+  const [token, setToken] = useState("");
+  
   async function sendMessage() {
     setSendAttempted(true);
 
-    const all_fields_filled = subject &&isValidEmail(email) && name && message && token;
-
-    if (all_fields_filled) {
+    if (validateFields()) {
       const headers = {
         "Accept": "application/json",
         "Content-Type": "application/json"
       };
-      const body = JSON.stringify({
+      const body: ContactFormRequestData = {
         name: name,
         subject: subject,
         email: email,
         message: message,
         token: token
-      });
+      };
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: headers,
-        body: body
+        body: JSON.stringify(body)
       });
 
       const status = response.status;
-      const responseBody = JSON.stringify(response.json());
+      const responseBody: string = await response.json();
       if (status != 200) {
         alert(
           "Error processing your contact request. Please use another contact option."
         );
-        console.error(`Got status code ${status} with body ${responseBody}`);
+        console.error(`Got status code ${status} with body:`, responseBody);
         return;
       }
       router.push("/contact-success");
     }
+  }
+
+  function validateFields() {
+    return subject && isValidEmail(email) && name && message && token;
   }
 
   function isValidEmail(email: string) {
