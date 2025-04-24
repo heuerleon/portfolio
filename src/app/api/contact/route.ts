@@ -10,7 +10,7 @@ const rateLimiter = new RateLimiterMemory({
 });
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-const captchaSecret = process.env.HCAPTCHA_SECRET;
+const captchaSecret = process.env.CAPTCHA_SECRET;
 const sender = process.env.EMAIL_SENDER;
 const recipient = process.env.EMAIL_RECIPIENT;
 
