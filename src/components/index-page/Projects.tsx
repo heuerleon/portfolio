@@ -39,18 +39,6 @@ const projectsDefault: Project[] = [
     description: "MC GUI API is an API for creating graphical user interfaces using inventories in minecraft.",
   },
   {
-    image: "/projects/sc-website.jpg",
-    title: "SkyCave website",
-    langs: [
-      { image: "/language_icons/typescript.svg", title: "TypeScript" },
-      { image: "/language_icons/svelte.svg", title: "Svelte" },
-      { image: "/language_icons/vscode.svg", title: "VS Code" },
-      { image: "/language_icons/sass.svg", title: "SASS/SCSS" },
-    ],
-    source: "https://github.com/skycavemc/skycave-website",
-    description: "Official website of the SkyCave Minecraft server.",
-  },
-  {
     image: "/projects/project-2.jpg",
     title: "WhatsFlat",
     langs: [
@@ -67,7 +55,6 @@ const projectsDefault: Project[] = [
     langs: [
       { image: "/language_icons/csharp.svg", title: "C#" },
       { image: "/language_icons/vs.svg", title: "Visual Studio" },
-      { image: "/language_icons/postgresql.svg", title: "PostgreSQL" },
     ],
     source: "https://github.com/heuerleon/passman",
     description: "Simple password manager that stores your passwords. Also provides a simple password generator. Still in development.",
