@@ -3,12 +3,10 @@
 import { ContactFormRequestData } from "@/app/api/contact/route";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import Turnstile, { useTurnstile } from "react-turnstile";
+import Turnstile from "react-turnstile";
 
 export default function ContactForm() {
-  const siteKey = process.env.NEXT_PUBLIC_CAPTCHA_KEY!!;
-  const turnstile = useTurnstile();
-
+  const siteKey = process.env.NEXT_PUBLIC_CAPTCHA_KEY;
   const [subject, setSubject] = useState("");
   
   function handleSubjectChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -194,7 +192,7 @@ export default function ContactForm() {
               </div>
 
               <div className="captcha-wrapper">
-                <Turnstile sitekey={siteKey} onSuccess={setToken} theme="light"/>
+                {siteKey && <Turnstile sitekey={siteKey} onSuccess={setToken} theme="light"/>}
                 <span
                   className={`error-message ${token || !sendAttempted ? "hidden" : ""
                     }`}
