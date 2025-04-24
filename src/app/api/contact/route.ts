@@ -45,9 +45,9 @@ export async function POST(req: NextRequest) {
     return errorResponse({ message: 'Missing secret' }, 500);
   }
 
-  const hCaptchaData = await checkHCaptchaToken(token);
-  if (!hCaptchaData.success) {
-    return errorResponse({ message: 'Failed to verify hCaptcha token', response: hCaptchaData }, 500);
+  const captchaResponse = await checkCaptchaToken(token);
+  if (!captchaResponse.success) {
+    return errorResponse({ message: 'Failed to verify captcha token', response: captchaResponse }, 500);
   }
 
   return await sendMail(
@@ -80,13 +80,14 @@ function isValidEmail(email: string) {
   return regex.test(String(email).toLowerCase());
 }
 
-async function checkHCaptchaToken(token: string) {
-  const hCaptchaRes = await fetch('https://api.hcaptcha.com/siteverify', {
+async function checkCaptchaToken(token: string) {
+  const response = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: `response=${token}&secret=${captchaSecret}`,
+    body: `secret=${captchaSecret}&response=${token}`
   });
-  return await hCaptchaRes.json();
+
+  return await response.json();
 }
 
 async function sendMail(sender: string, recipient: string, subject: string, name: string, email: string, message: string) {
