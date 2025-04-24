@@ -1,11 +1,14 @@
 "use client";
 
 import { ContactFormRequestData } from "@/app/api/contact/route";
-import HCaptcha from "@hcaptcha/react-hcaptcha";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import Turnstile, { useTurnstile } from "react-turnstile";
 
 export default function ContactForm() {
+  const siteKey = process.env.NEXT_PUBLIC_CAPTCHA_KEY!!;
+  const turnstile = useTurnstile();
+
   const [subject, setSubject] = useState("");
   
   function handleSubjectChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -191,10 +194,7 @@ export default function ContactForm() {
               </div>
 
               <div className="captcha-wrapper">
-                <HCaptcha
-                  sitekey="dc87f7c2-9f10-4b84-9faf-45114d2e2285"
-                  onVerify={setToken}
-                />
+                <Turnstile sitekey={siteKey} onSuccess={setToken} theme="light"/>
                 <span
                   className={`error-message ${token || !sendAttempted ? "hidden" : ""
                     }`}

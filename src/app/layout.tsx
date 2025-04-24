@@ -8,7 +8,6 @@ import Footer from "@/components/Footer"
 import ScrollToTopButton from "@/components/ScrollToTopButton";
 import "@/styles/global.scss";
 import "@/styles/fontawesome/css/all.min.css"
-import Script from "next/script";
 import { Inter } from "next/font/google";
 
 export const metadata: Metadata = {
@@ -25,7 +24,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <Script src="https://js.hcaptcha.com/1/api.js" async defer></Script>
       <Head>
         <title>Leon Heuers Portfolio</title>
       </Head>
