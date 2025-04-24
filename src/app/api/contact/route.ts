@@ -32,10 +32,14 @@ export async function POST(req: NextRequest) {
   }
 
   const body = await req.json();
-  const { name, subject, email, message, token }: ContactFormRequestData = body;
+  const formData: ContactFormRequestData = body;
+  const { name, subject, email, message, token } = formData;
 
   if (!name || !subject || !email || !message || !token) {
     return errorResponse({ message: 'Missing fields' }, 400);
+  }
+  if (!validateFields(formData)) {
+    return errorResponse({ message: 'Invalid fields received' }, 400);
   }
   if (!captchaSecret || !sender || !recipient) {
     return errorResponse({ message: 'Missing secret' }, 500);
@@ -65,6 +69,15 @@ function errorResponse(error: object, status: number) {
 
 function ipAddress(headers: Headers) {
   return (headers.get('x-forwarded-for') ?? '127.0.0.1').split(',')[0]
+}
+
+function validateFields({ name, subject, email, message }: ContactFormRequestData) {
+  return name.length <= 50 && subject.length <= 100 && isValidEmail(email) && message.length <= 500;
+}
+
+function isValidEmail(email: string) {
+  const regex = /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/;
+  return regex.test(String(email).toLowerCase());
 }
 
 async function checkHCaptchaToken(token: string) {

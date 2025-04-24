@@ -52,12 +52,14 @@ export default function ContactForm() {
 
   const router = useRouter();
   const [sendAttempted, setSendAttempted] = useState(false);
+  const [sending, setSending] = useState(false);
   const [token, setToken] = useState("");
   
   async function sendMessage() {
     setSendAttempted(true);
 
     if (validateFields()) {
+      setSending(true);
       const headers = {
         "Accept": "application/json",
         "Content-Type": "application/json"
@@ -78,13 +80,29 @@ export default function ContactForm() {
       const status = response.status;
       const responseBody: string = await response.json();
       if (status != 200) {
-        alert(
-          "Error processing your contact request. Please use another contact option."
-        );
+        if (status == 400) {
+          alert(
+            "Error processing your contact request. Please check your input."
+          );
+        } else if (status == 500) {
+          alert(
+            "Error processing your contact request. There was an internal server error while sending your message. Please use another contact option."
+          );
+        } else if (status == 429) {
+          alert(
+            "You are sending too many messages. Please try again one hour later."
+          );
+        } else {
+          alert(
+            "Error processing your contact request. Please use another contact option."
+          );
+        }
         console.error(`Got status code ${status} with body:`, responseBody);
-        return;
+      } else {
+        router.push("/contact-success");
       }
-      router.push("/contact-success");
+      setSending(false);
+      return;
     }
   }
 
@@ -211,7 +229,7 @@ export default function ContactForm() {
                   className="btn-primary"
                   onClick={() => sendMessage()}
                 >
-                  Send message
+                  <i className={`fas ${sending ? "fa-spinner fa-spin" : "fa-paper-plane"}`}></i> Send message
                 </button>
               </div>
             </div>
