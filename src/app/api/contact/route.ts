@@ -41,7 +41,7 @@ export async function POST(req: NextRequest) {
     return errorResponse({ message: 'Missing secret' }, 500);
   }
 
-  let hCaptchaData = await checkHCaptchaToken(token);
+  const hCaptchaData = await checkHCaptchaToken(token);
   if (!hCaptchaData.success) {
     return errorResponse({ message: 'Failed to verify hCaptcha token', response: hCaptchaData }, 500);
   }
