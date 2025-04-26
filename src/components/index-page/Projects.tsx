@@ -38,27 +38,6 @@ const projectsDefault: Project[] = [
     source: "https://github.com/heuerleon/mcguiapi",
     description: "MC GUI API is an API for creating graphical user interfaces using inventories in minecraft.",
   },
-  {
-    image: "/projects/project-2.jpg",
-    title: "WhatsFlat",
-    langs: [
-      { image: "/language_icons/csharp.svg", title: "C#" },
-      { image: "/language_icons/vs.svg", title: "Visual Studio" },
-      { image: "/language_icons/mongodb.svg", title: "MongoDB" },
-    ],
-    source: "https://github.com/whatsflat/",
-    description: "WhatsFlat is a simple chat application. Still in development.",
-  },
-  {
-    image: "/projects/project-4.jpg",
-    title: "Passman",
-    langs: [
-      { image: "/language_icons/csharp.svg", title: "C#" },
-      { image: "/language_icons/vs.svg", title: "Visual Studio" },
-    ],
-    source: "https://github.com/heuerleon/passman",
-    description: "Simple password manager that stores your passwords. Also provides a simple password generator. Still in development.",
-  },
 ];
 
 export default function Projects() {
