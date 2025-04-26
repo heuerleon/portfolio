@@ -5,6 +5,9 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Turnstile from "react-turnstile";
 
+type AlertBoxStyle = "error" | "info" | "success";
+type AlertBoxIconClass = "fa-circle-xmark" | "fa-circle-info" | "fa-circle-check";
+
 export default function ContactForm() {
   const siteKey = process.env.NEXT_PUBLIC_CAPTCHA_KEY;
   const [subject, setSubject] = useState("");
@@ -82,19 +85,19 @@ export default function ContactForm() {
       const responseBody: string = await response.json();
       if (status != 200) {
         if (status == 400) {
-          alert(
+          errorBox(
             "Error processing your contact request. Please check your input."
           );
         } else if (status == 500) {
-          alert(
+          errorBox(
             "Error processing your contact request. There was an internal server error while sending your message. Please use another contact option."
           );
         } else if (status == 429) {
-          alert(
+          errorBox(
             "You are sending too many messages. Please try again one hour later."
           );
         } else {
-          alert(
+          errorBox(
             "Error processing your contact request. Please use another contact option."
           );
         }
@@ -115,6 +118,24 @@ export default function ContactForm() {
     const regex = /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/;
     return regex.test(String(email).toLowerCase());
   }
+
+  const [showAlertbox, setShowAlertbox] = useState(false);
+  const [alertBoxText, setAlertBoxText] = useState("");
+  const [alertBoxStyle, setAlertBoxStyle] = useState<AlertBoxStyle>("info");
+  const [alertBoxIconClass, setAlertBoxIconClass] = useState<AlertBoxIconClass>("fa-circle-info");
+  const alertBoxDuration = 5 * 1000;
+
+  function errorBox(text: string) {
+    setAlertBoxStyle("error");
+    setAlertBoxIconClass("fa-circle-xmark");
+    showAlertBox(text);
+  }
+
+  function showAlertBox(text: string) {
+    setAlertBoxText(text);
+    setShowAlertbox(true);
+    setTimeout(() => setShowAlertbox(false), alertBoxDuration);
+  } 
 
   return (
     <section className="padding-section" id="contact">
@@ -141,7 +162,7 @@ export default function ContactForm() {
               </div>
             </div>
           </div>
-          <div className="column-min">
+          <div className="column-min contact-form">
             <div className="row row-slim">
               <div className="input-wrapper">
                 <input
@@ -233,6 +254,10 @@ export default function ContactForm() {
             </div>
           </div>
         </div>
+      </div>
+      <div className={`alert-box ${showAlertbox && "shown"} ${alertBoxStyle}`}>
+        <i className={`fas ${alertBoxIconClass}`}></i>
+        <span>{alertBoxText}</span>
       </div>
     </section>
   )
