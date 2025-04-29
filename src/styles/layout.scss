@@ -552,28 +552,67 @@ section {
   padding: 0;
 }
 
-.col-1 {
-  width: auto !important;
+@media screen and (800px < width) {
+  .col-2 {
+    max-width: 50%;
+  }
 }
 
-.col-2 {
-  max-width: 50%;
+@media screen and (width <= 800px) {
+  .col-2 {
+    width: 100%;
+    max-width: 100%;
+  }
 }
 
-.col-3 {
-  max-width: 33.3%;
+@media screen and (800px < width) {
+  .col-3 {
+    max-width: 33.3%;
+  }
+  
+  .col-3-double {
+    max-width: 66.6%;
+  }
 }
 
-.col-3-double {
-  max-width: 66.6%;
+@media screen and (600px < width <= 800px) {
+  .col-3,
+  .col-3-double {
+    width: 50%;
+    max-width: 50%;
+  }
 }
 
-.col-4 {
-  max-width: 25%;
+@media screen and (width <= 600px) {
+  .col-3,.col-3-double {
+    max-width: 100%;
+    width: 100%;
+  }
 }
 
-.col-4-triple {
-  max-width: 75%;
+@media screen and (900px < width) {
+  .col-4 {
+    max-width: 25%;
+  }
+
+  .col-4-triple {
+    max-width: 75%;
+  }
+}
+
+@media screen and (600px < width <= 900px) {
+  .col-4,
+  .col-4-triple {
+    width: 50%;
+    max-width: 50%;
+  }
+}
+
+@media screen and (width <= 600px) {
+  .col-4 {
+    width: 100%;
+    max-width: 100%;
+  }
 }
 
 .col-border {
@@ -589,6 +628,20 @@ section {
 
 .nowrap {
   flex-wrap: nowrap;
+}
+
+@media screen and (500px < width <= 800px) {
+  .row-on-smaller-screens {
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+}
+
+@media screen and (width <= 500px) {
+  .row-on-smaller-screens {
+    flex-direction: column;
+    justify-content: center;
+  }
 }
 
 

@@ -658,10 +658,29 @@ textarea {
   background-size: cover;
 }
 
-#top {
-  background-size: cover;
-  background: linear-gradient(#111827ad,
-      #111827ad), url('../../public/bg_6000.jpg') no-repeat center center;
+
+@media screen and (width > 2560px) {
+  #top {
+    background-size: cover;
+    background: linear-gradient(#111827ad,
+        #111827ad), url('../../public/bg_6000.jpg') no-repeat center center;
+  }
+}
+
+@media screen and (1920px <= width <= 2560px) {
+  #top {
+    background: linear-gradient(#111827ad,
+        #111827ad),
+      url('../../public/bg_2560.jpg') no-repeat center center;
+  }
+}
+
+@media screen and (width <= 1920px) {
+  #top {
+    background: linear-gradient(#111827ad,
+        #111827ad),
+      url('../../public/bg_1920.jpg') no-repeat center center;
+  }
 }
 
 #footer {
