@@ -11,8 +11,8 @@ const featured = [
       { image: "/language_icons/vscode.svg", title: "VS Code" },
       { image: "/language_icons/sass.svg", title: "SASS/SCSS" },
     ],
-    source: "https://github.com/heuerleon/leonheuer-portfolio",
-    desc: "My personal portfolio website you're currently looking at.",
+    source: "https://github.com/heuerleon/portfolio",
+    desc: "My self-made portfolio website you're currently looking at.",
   },
   {
     id: 1,

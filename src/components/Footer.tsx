@@ -35,7 +35,7 @@ export default function Footer() {
             <span>Designed & built by Leon Heuer</span>
             <span>
               <a
-                href="https://github.com/heuerleon/leonheuer-portfolio"
+                href="https://github.com/heuerleon/portfolio"
                 className="link"
                 target="_blank"
                 rel="noreferrer"
