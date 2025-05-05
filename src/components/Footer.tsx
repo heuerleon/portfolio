@@ -44,7 +44,7 @@ export default function Footer() {
               </a>
             </span>
             <span className="light">
-              All rights reserved | <Link href="/legal">Legal Notice</Link> | <Link href="/privacy">Privacy Policy</Link>
+              © {new Date().getFullYear()} Leon Heuer, All rights reserved | <Link href="/legal">Legal Notice</Link> | <Link href="/privacy">Privacy Policy</Link>
             </span>
             <span className="light">
               Contains images from{" "}
