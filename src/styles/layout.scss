@@ -646,7 +646,6 @@ section {
 
 
 
-
 // --------------------------------------------------- //
 //                  NAVIGATION LAYOUT                  //
 // --------------------------------------------------- //
@@ -817,4 +816,50 @@ nav {
 .mobile-nav-links-visible {
   display: block;
   animation: grow-height var(--trans-anim) forwards;
+}
+
+
+
+// --------------------------------------------------- //
+//                   ALERTBOX LAYOUT                   //
+// --------------------------------------------------- //
+
+.alert-box {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  visibility: hidden;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  z-index: 1;
+  font-size: .8em;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  max-width: 25rem;
+
+  i, span {
+    display: block;
+  }
+
+  i {
+    font-size: 1.2em;
+    margin-right: 10px;
+  }
+
+  &.shown {
+    visibility: visible;
+  }
+  
+  &.success {
+    background-color: var(--green);
+    color: var(--green-dark);
+  }
+  &.error {
+    background-color: var(--red);
+    color: var(--red-dark);
+  }
 }
