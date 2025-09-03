@@ -15,7 +15,7 @@
     "@vercel/analytics": "^1.5.0",
     "@vercel/speed-insights": "^1.2.0",
     "next": "15.5.2",
-    "rate-limiter-flexible": "^7.1.1",
+    "rate-limiter-flexible": "^7.2.0",
     "react": "^19.0.0",
     "react-dom": "^19.1.1",
     "react-turnstile": "^1.1.4",
