@@ -19,7 +19,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.1.1",
     "react-turnstile": "^1.1.4",
-    "resend": "^6.0.1",
+    "resend": "^6.1.0",
     "typeit-react": "^2.7.8"
   },
   "devDependencies": {
