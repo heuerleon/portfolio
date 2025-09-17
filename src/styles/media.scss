@@ -1,29 +1,10 @@
 @media screen and (max-width: 800px) {
-  .nav-links {
-    display: none;
-  }
-
-  .mobile-nav {
-    display: block !important;
-    position: relative;
-  }
-
   .scroll-to-top {
     background-color: var(--darker-bg);
     padding: 10px;
     border-radius: 5px;
     right: 20px;
     bottom: 20px;
-  }
-
-  nav {
-    position: fixed;
-    background-color: var(--bg-color);
-    width: 100vw;
-  }
-
-  .nav-inner {
-    padding: 0 35px;
   }
 
   .nowrap {

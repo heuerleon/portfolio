@@ -106,7 +106,12 @@ async function sendMail(sender: string, recipient: string, subject: string, name
       { data },
       { status: 200 }
     );
-  } catch (error) {
-    return errorResponse({ message: 'Email failed to send', response: error }, 500);
+  } catch (error: unknown) {
+    return errorResponse({ message: 'Error while trying to send Email', response: getErrorMessage(error) }, 500);
   }
+}
+
+function getErrorMessage(error: unknown) {
+	if (error instanceof Error) return error.message
+	return String(error)
 }
