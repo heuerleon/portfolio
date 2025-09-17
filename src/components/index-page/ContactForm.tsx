@@ -255,7 +255,7 @@ export default function ContactForm() {
           </div>
         </div>
       </div>
-      <div className={`alert-box ${showAlertbox && "shown"} ${alertBoxStyle}`}>
+      <div className={`alert-box ${showAlertbox ? "shown" : ""} ${alertBoxStyle}`}>
         <i className={`fas ${alertBoxIconClass}`}></i>
         <span>{alertBoxText}</span>
       </div>

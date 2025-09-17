@@ -925,3 +925,9 @@ section {
     color: var(--red-dark);
   }
 }
+
+@media screen and (width <= 800px) {
+  .alert-box {
+    width: calc(100vw - 60px);
+  }
+}
