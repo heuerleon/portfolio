@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
 export default function Nav() {
   const [showMobileNav, setShowMobileNav] = useState(false);
@@ -13,11 +13,12 @@ export default function Nav() {
   const wasFixedBefore = useRef(false);
 
   const isBrowser = typeof window !== "undefined";
-  const baselineVH = (window.visualViewport?.height ?? window.innerHeight);
 
-  if (isBrowser) {
-    setInterval(() => handleScroll(), 10);
-  }
+  useEffect(() => {
+    if (isBrowser) {
+      setInterval(() => handleScroll(), 10);
+    }
+  }, []);
 
   const Direction = {
     UP: 0,
@@ -53,7 +54,7 @@ export default function Nav() {
       }
 
       scrollBefore.current = window.scrollY;
-      setChangeMobileNavColor(window.scrollY + 20 > baselineVH);
+      setChangeMobileNavColor(window.scrollY + 20 > window.innerHeight);
     }
 
   }
