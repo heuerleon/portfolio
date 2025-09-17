@@ -15,6 +15,7 @@
     "@react-email/render": "^1.2.3",
     "@vercel/analytics": "^1.5.0",
     "@vercel/speed-insights": "^1.2.0",
+     "geist": "^1.4.2",
     "next": "15.5.2",
     "rate-limiter-flexible": "^7.2.0",
     "react": "^19.0.0",
