@@ -1,4 +1,5 @@
 import Link from "next/link";
+import SocialMediaContainer from "@/components/SocialMediaContainer";
 
 export default function Footer() {
   return (
@@ -6,32 +7,7 @@ export default function Footer() {
       <div className="container">
         <div className="row padding-row">
           <div className="column-centered">
-            <div className="social-media-container">
-              <a
-                href="https://github.com/heuerleon"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="github"
-              >
-                <i className="fab fa-github"></i>
-              </a>
-              <a
-                href="https://www.instagram.com/heuerleon/"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="instagram"
-              >
-                <i className="fab fa-instagram"></i>
-              </a>
-              <a
-                href="https://www.linkedin.com/in/leonheuer/"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="linkedin"
-              >
-                <i className="fab fa-linkedin"></i>
-              </a>
-            </div>
+            <SocialMediaContainer noTopMargin/>
             <span>Designed & built by Leon Heuer</span>
             <span>
               <a

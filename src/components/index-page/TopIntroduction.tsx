@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
 import TypeIt from "typeit-react";
+import Button from "@/components/Button";
+import SocialMediaContainer from "@/components/SocialMediaContainer";
 
 export default function TopIntroduction() {
   const [topParralax, setTopParallax] = useState("center");
@@ -71,39 +73,10 @@ export default function TopIntroduction() {
               I am a student and young software developer from Germany
               with an international focus.
             </p>
-            <div className="social-media-container">
-              <a
-                href="https://github.com/heuerleon"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="github"
-              >
-                <i className="fab fa-github"></i>
-              </a>
-              <a
-                href="https://www.instagram.com/heuerleon/"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="instagram"
-              >
-                <i className="fab fa-instagram"></i>
-              </a>
-              <a
-                href="https://www.linkedin.com/in/leonheuer/"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="linkedin"
-              >
-                <i className="fab fa-linkedin"></i>
-              </a>
-            </div>
+            <SocialMediaContainer />
             <div>
-              <Link href="/#about" className="btn-primary">
-                <span>Learn More</span>
-              </Link>
-              <Link href="/#projects" className="btn-alt">
-                <span>View my work</span>
-              </Link>
+              <Button href="/#contact" primary large>Work With Me</Button>
+              <Button href="/#featured" large>Browse Projects</Button>
             </div>
           </div>
         </div>

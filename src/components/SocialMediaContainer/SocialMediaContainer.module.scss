@@ -1,0 +1,30 @@
+.socialMediaContainer {
+  margin: 30px 0;
+
+  a {
+    display: inline-block;
+    margin: 0 10px;
+    padding: 5px;
+    font-size: 1.4em;
+    opacity: .5;
+    transition: var(--trans-default);
+
+    &:hover {
+      opacity: 1;
+      color: var(--accent);
+      transform: scale(1.2);
+    }
+
+    &:first-of-type {
+        margin-left: 0;
+    }
+
+    &:last-of-type {
+        margin-right: 0;
+    }
+  }
+}
+
+.noTopMargin {
+    margin-top: 0;
+}

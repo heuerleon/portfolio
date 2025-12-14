@@ -4,6 +4,7 @@ import { ContactFormRequestData } from "@/app/api/contact/route";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Turnstile from "react-turnstile";
+import Button from "../Button";
 
 type AlertBoxStyle = "error" | "info" | "success";
 type AlertBoxIconClass = "fa-circle-xmark" | "fa-circle-info" | "fa-circle-check";
@@ -244,12 +245,9 @@ export default function ContactForm() {
             </div>
             <div className="row row-slim">
               <div className="button-container">
-                <button
-                  className="btn-primary"
-                  onClick={() => sendMessage()}
-                >
+                <Button onClick={() => sendMessage()} primary>
                   <i className={`fas ${sending ? "fa-spinner fa-spin" : "fa-paper-plane"}`}></i> Send message
-                </button>
+                </Button>    
               </div>
             </div>
           </div>
