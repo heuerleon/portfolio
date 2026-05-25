@@ -2,7 +2,7 @@
   --trans-default: 200ms ease-in-out;
   --trans-anim: 400ms ease-in-out;
 
-  --global-max-width: 1100px;
+  --global-max-width: 1800px;
   --nav-height: 60px;
 
   --shadow-lighter: 0 5px 20px rgba(100, 100, 100, .1);
@@ -181,7 +181,7 @@ a {
   transition: var(--trans-default);
 
   &:hover {
-    color: var(--accent);
+    color: inherit;
   }
 }
 
@@ -252,8 +252,6 @@ h3 {
 }
 
 .style-headline {
-  text-transform: lowercase;
-  font-size: 1.2em;
   font-weight: 600;
   margin: 0;
 }

@@ -2,6 +2,12 @@
 
 import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
+import ThemeSwitcher from "./ThemeSwitcher";
+
+type MenuItem = {
+  link: string;
+  label: string;
+};
 
 export default function Nav() {
   const [showMobileNav, setShowMobileNav] = useState(false);
@@ -23,8 +29,8 @@ export default function Nav() {
   const Direction = {
     UP: 0,
     DOWN: 1,
-    NONE: 2
-  }
+    NONE: 2,
+  };
 
   function handleScroll() {
     if (scrollBefore.current !== window.scrollY) {
@@ -47,7 +53,11 @@ export default function Nav() {
           wasFixedBefore.current = true;
         }
 
-        if (direction === Direction.DOWN && !collapsed && wasFixedBefore.current) {
+        if (
+          direction === Direction.DOWN &&
+          !collapsed &&
+          wasFixedBefore.current
+        ) {
           setSlideIn(false);
           setCollapsed(true);
         }
@@ -56,46 +66,32 @@ export default function Nav() {
       scrollBefore.current = window.scrollY;
       setChangeMobileNavColor(window.scrollY + 20 > window.innerHeight);
     }
-
   }
 
   return (
     <div>
       {/*Desktop Nav */}
-      {}
       <nav
         className={`desktop-nav ${collapsed ? "nav-collapsed" : ""} ${slideIn ? "nav-slidein" : ""}`}
       >
         <div className="nav-inner">
-          <h4 className="style-headline"><Link href="/">heuer.ovh</Link></h4>
+          <h4 className="style-headline">
+            <Link href="/">LH</Link>
+          </h4>
           <ul className="nav-links">
-            <li>
-              <Link href="/#top">Home</Link>
-            </li>
-            <li>
-              <Link href="/#about">About Me</Link>
-            </li>
-            <li>
-              <Link href="/#what-i-do">What I Do</Link>
-            </li>
-            <li>
-              <Link href="/#featured">Featured</Link>
-            </li>
-            <li>
-              <Link href="/#projects">Projects</Link>
-            </li>
-            <li>
-              <Link href="/#contact">Contact</Link>
-            </li>
+            <MenuItems />
           </ul>
+          <ThemeSwitcher />
         </div>
       </nav>
 
       {/* Mobile Nav */}
       <nav className={`mobile-nav ${showMobileNav ? "nav-visible" : ""}`}>
         <div className="nav-top-bar">
-          <div className={`nav-switcher ${changeMobileNavColor ? "dark-switcher" : ""}`}>
-            <button onClick={() => setShowMobileNav(shown => !shown)}>
+          <div
+            className={`nav-switcher ${changeMobileNavColor ? "dark-switcher" : ""}`}
+          >
+            <button onClick={() => setShowMobileNav((shown) => !shown)}>
               <span className="top-line"></span>
               <span className="middle-line"></span>
               <span className="bottom-line"></span>
@@ -103,26 +99,41 @@ export default function Nav() {
           </div>
         </div>
         <ul onClick={() => setShowMobileNav(false)}>
-          <li>
-            <Link href="/#top">Intro</Link>
-          </li>
-          <li>
-            <Link href="/#about">About Me</Link>
-          </li>
-          <li>
-            <Link href="/#what-i-do">What I Do</Link>
-          </li>
-          <li>
-            <Link href="/#featured">Featured</Link>
-          </li>
-          <li>
-            <Link href="/#projects">Projects</Link>
-          </li>
-          <li>
-            <Link href="/#contact">Contact</Link>
-          </li>
+          <MenuItems />
         </ul>
+          <ThemeSwitcher />
       </nav>
     </div>
   );
-};
+}
+
+function MenuItems() {
+  const menuItems: MenuItem[] = [
+    {
+      link: "/#top",
+      label: "Home",
+    },
+    {
+      link: "/#projects",
+      label: "Projects",
+    },
+    {
+      link: "/blog",
+      label: "Blog",
+    },
+    {
+      link: "/#contact",
+      label: "Contact",
+    },
+  ];
+
+  return (
+    <>
+      {menuItems.map((item, index) => (
+        <li key={index}>
+          <Link href={item.link}>{item.label}</Link>
+        </li>
+      ))}
+    </>
+  );
+}

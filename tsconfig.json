@@ -26,6 +26,9 @@
       "@/*": [
         "./src/*"
       ],
+      "@markdown/*": [
+        "./src/markdown/*"
+      ],
       "@payload-config": [
         "./src/payload.config.ts"
       ]
