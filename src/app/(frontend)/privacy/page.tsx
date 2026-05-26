@@ -1,4 +1,5 @@
 import Privacy from "@/markdown/Privacy.mdx"
+import { InfoIcon } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
 
 export default function PrivacyPolicy() {
@@ -9,7 +10,7 @@ export default function PrivacyPolicy() {
           <div className="column-centered">
             <h1>Privacy Policy</h1>
             <p className="warning-message">
-              <i className="fas fa-info-circle"></i> The content of this site is
+              <InfoIcon /> The content of this site is
               only available in German as of now.
             </p>
             <p>

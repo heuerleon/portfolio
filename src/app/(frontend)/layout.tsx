@@ -7,16 +7,16 @@ import Nav from "@/components/Nav/Nav";
 import Footer from "@/components/Footer";
 import ScrollToTopButton from "@/components/ScrollToTopButton";
 import ThemeProvider from "@/components/context/ThemeProvider";
+import "@/app/globals.css";
 import "@/styles/global.scss";
-import "@/styles/fontawesome/css/all.min.css";
-import { Inter } from "next/font/google";
+import { Noto_Sans } from "next/font/google";
 
 export const metadata: Metadata = {
   title: "Leon Heuer's portfolio",
   description: "Personal projects and resume",
 };
 
-const inter = Inter({ subsets: ["latin"] });
+const notoSans = Noto_Sans({ subsets: ["latin"], weight: "500" });
 
 export default function RootLayout({
   children,
@@ -26,7 +26,7 @@ export default function RootLayout({
       <Head>
         <title>Leon Heuers Portfolio</title>
       </Head>
-      <body className={inter.className}>
+      <body className={notoSans.className}>
         <ThemeProvider>
           <Nav />
           {children}

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Turnstile from "react-turnstile";
 import Button from "../Button";
+import { CircleNotchIcon, DiscordLogoIcon, EnvelopeIcon, PaperPlaneRightIcon } from "@phosphor-icons/react/dist/ssr";
 
 type AlertBoxStyle = "error" | "info" | "success";
 type AlertBoxIconClass = "fa-circle-xmark" | "fa-circle-info" | "fa-circle-check";
@@ -149,14 +150,14 @@ export default function ContactForm() {
         <div className="row row-reversed nowrap">
           <div className="column-min row-on-smaller-screens">
             <div className="contact-option">
-              <i className="fas fa-envelope-open-text double-line-icon"></i>
+              <EnvelopeIcon className="double-line-icon"/>
               <div>
                 <span className="bold">leon(at)heuer.ovh</span>
                 <span className="light">Send me an email</span>
               </div>
             </div>
             <div className="contact-option">
-              <i className="fab fa-discord double-line-icon"></i>
+              <DiscordLogoIcon className="double-line-icon"/>
               <div>
                 <span className="bold">@haku2</span>
                 <span className="light">Add me on discord</span>
@@ -246,7 +247,7 @@ export default function ContactForm() {
             <div className="row row-slim">
               <div className="button-container">
                 <Button onClick={() => sendMessage()} primary>
-                  <i className={`fas ${sending ? "fa-spinner fa-spin" : "fa-paper-plane"}`}></i> Send message
+                  {sending ? <CircleNotchIcon className="animate-spin"/> : <PaperPlaneRightIcon />} Send message
                 </Button>    
               </div>
             </div>

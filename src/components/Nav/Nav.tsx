@@ -10,7 +10,6 @@ type MenuItem = {
 };
 
 export default function Nav() {
-  const [showMobileNav, setShowMobileNav] = useState(false);
   const [changeMobileNavColor, setChangeMobileNavColor] = useState(false);
 
   const [slideIn, setSlideIn] = useState(false);
@@ -70,40 +69,53 @@ export default function Nav() {
 
   return (
     <div>
-      {/*Desktop Nav */}
-      <nav
-        className={`desktop-nav ${collapsed ? "nav-collapsed" : ""} ${slideIn ? "nav-slidein" : ""}`}
-      >
-        <div className="nav-inner">
-          <h4 className="style-headline">
-            <Link href="/">LH</Link>
-          </h4>
-          <ul className="nav-links">
-            <MenuItems />
-          </ul>
-          <ThemeSwitcher />
-        </div>
-      </nav>
+      <DesktopNav />
+      <MobileNav changeMobileNavColor={changeMobileNavColor} />
+    </div>
+  );
+}
 
-      {/* Mobile Nav */}
-      <nav className={`mobile-nav ${showMobileNav ? "nav-visible" : ""}`}>
-        <div className="nav-top-bar">
-          <div
-            className={`nav-switcher ${changeMobileNavColor ? "dark-switcher" : ""}`}
-          >
-            <button onClick={() => setShowMobileNav((shown) => !shown)}>
-              <span className="top-line"></span>
-              <span className="middle-line"></span>
-              <span className="bottom-line"></span>
-            </button>
-          </div>
-        </div>
-        <ul onClick={() => setShowMobileNav(false)}>
+function DesktopNav() {
+  return (
+    <nav className="desktop-nav">
+      <div className="nav-inner">
+        <h4 className="style-headline">
+          <Link href="/">LH</Link>
+        </h4>
+        <ul className="nav-links">
           <MenuItems />
         </ul>
-          <ThemeSwitcher />
-      </nav>
-    </div>
+        <ThemeSwitcher />
+      </div>
+    </nav>
+  );
+}
+
+function MobileNav({
+  changeMobileNavColor,
+}: {
+  changeMobileNavColor: boolean;
+}) {
+  const [showMobileNav, setShowMobileNav] = useState(false);
+
+  return (
+    <nav className={`mobile-nav ${showMobileNav ? "nav-visible" : ""}`}>
+      <div className="nav-top-bar">
+        <div
+          className={`nav-switcher ${changeMobileNavColor ? "dark-switcher" : ""}`}
+        >
+          <button onClick={() => setShowMobileNav((shown) => !shown)}>
+            <span className="top-line"></span>
+            <span className="middle-line"></span>
+            <span className="bottom-line"></span>
+          </button>
+        </div>
+      </div>
+      <ul onClick={() => setShowMobileNav(false)}>
+        <MenuItems />
+      </ul>
+      <ThemeSwitcher />
+    </nav>
   );
 }
 

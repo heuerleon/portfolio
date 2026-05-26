@@ -1,3 +1,4 @@
+import { GithubLogoIcon } from "@phosphor-icons/react/dist/ssr";
 import Image from "next/image";
 
 const featured = [
@@ -90,7 +91,7 @@ export default function FeaturedProjects() {
                     title="View on GitHub"
                     aria-label="source"
                   >
-                    <i className="fab fa-github"></i>
+                    <GithubLogoIcon weight="bold" className="pointer-icon" />
                   </a>
                 </div>
               </div>

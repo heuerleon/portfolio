@@ -1,4 +1,5 @@
 import Legal from "@/markdown/Legal.mdx"
+import { InfoIcon } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
 
 export default function LegalNotice() {
@@ -9,7 +10,7 @@ export default function LegalNotice() {
           <div className="column-centered">
             <h1>Legal Notice</h1>
             <p className="warning-message">
-              <i className="fas fa-info-circle"></i> The content of this site is
+              <InfoIcon /> The content of this site is
               only available in German as of now.
             </p>
             <p>

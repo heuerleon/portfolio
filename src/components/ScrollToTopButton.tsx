@@ -1,5 +1,6 @@
 "use client";
 
+import { CaretUpIcon } from "@phosphor-icons/react/dist/ssr";
 import { useRef, useState } from "react";
 
 export default function ScrollToTopButton() {
@@ -23,7 +24,7 @@ export default function ScrollToTopButton() {
   }
   return (
     <span className={`scroll-to-top ${showToTop ? "visible" : ""}`}>
-      <a href="#top" aria-label="to-top"><i className="fas fa-chevron-up"></i></a>
+      <a href="#top" aria-label="to-top"><CaretUpIcon /></a>
     </span>
   )
 }

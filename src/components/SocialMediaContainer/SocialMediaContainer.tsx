@@ -1,3 +1,4 @@
+import { GithubLogoIcon, InstagramLogoIcon, LinkedinLogoIcon } from "@phosphor-icons/react/dist/ssr"
 import styles from "./SocialMediaContainer.module.scss"
 
 type SocialMediaContainerProps = {
@@ -13,7 +14,7 @@ export default function SocialMediaContainer({ noTopMargin }: SocialMediaContain
                 rel="noreferrer"
                 aria-label="github"
             >
-                <i className="fab fa-github"></i>
+                <GithubLogoIcon className="pointer-icon" />
             </a>
             <a
                 href="https://www.instagram.com/heuerleon/"
@@ -21,7 +22,7 @@ export default function SocialMediaContainer({ noTopMargin }: SocialMediaContain
                 rel="noreferrer"
                 aria-label="instagram"
             >
-                <i className="fab fa-instagram"></i>
+                <InstagramLogoIcon className="pointer-icon" />
             </a>
             <a
                 href="https://www.linkedin.com/in/leonheuer/"
@@ -29,7 +30,7 @@ export default function SocialMediaContainer({ noTopMargin }: SocialMediaContain
                 rel="noreferrer"
                 aria-label="linkedin"
             >
-                <i className="fab fa-linkedin"></i>
+                <LinkedinLogoIcon className="pointer-icon" />
             </a>
         </div>
     )

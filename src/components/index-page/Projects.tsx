@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { GithubLogoIcon } from "@phosphor-icons/react/dist/ssr";
 
 type Language = {
   image: string;
@@ -161,7 +162,7 @@ export default function Projects() {
                     title="View on GitHub"
                     aria-label="source"
                   >
-                    <i className="fab fa-github"></i>
+                    <GithubLogoIcon weight="bold" className="pointer-icon" />
                   </a>
                 </div>
               </div>
