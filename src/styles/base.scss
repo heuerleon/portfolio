@@ -215,11 +215,10 @@ a {
   }
 }
 
-.link[target]::after {
-  content: "\f061";
-  font-family: "Font Awesome 5 Free", sans-serif;
-  margin-left: 0.5em;
-  font-weight: 900;
+.button-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 
 a,
@@ -579,7 +578,8 @@ textarea {
     font-size: 1.2em;
 
     &:hover {
-      opacity: 0.8;
+      background-color: var(--accent-5);
+      color: var(--bg-brighter);
       box-shadow: var(--shadow-light);
     }
   }

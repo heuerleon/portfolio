@@ -1,5 +1,6 @@
 import Link from "next/link";
 import SocialMediaContainer from "@/components/SocialMediaContainer";
+import { ArrowRightIcon } from "@phosphor-icons/react/dist/ssr";
 
 export default function Footer() {
   return (
@@ -12,11 +13,11 @@ export default function Footer() {
             <span>
               <a
                 href="https://github.com/heuerleon/portfolio"
-                className="link"
+                className="link button-link"
                 target="_blank"
                 rel="noreferrer"
               >
-                View on GitHub
+                View on GitHub <ArrowRightIcon weight="bold" />
               </a>
             </span>
             <span className="light">

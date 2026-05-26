@@ -24,7 +24,7 @@ export default function ScrollToTopButton() {
   }
   return (
     <span className={`scroll-to-top ${showToTop ? "visible" : ""}`}>
-      <a href="#top" aria-label="to-top"><CaretUpIcon /></a>
+      <a href="#top" aria-label="to-top"><CaretUpIcon weight="bold" /></a>
     </span>
   )
 }

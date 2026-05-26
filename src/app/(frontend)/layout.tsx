@@ -5,18 +5,17 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import Head from "next/head";
 import Nav from "@/components/Nav/Nav";
 import Footer from "@/components/Footer";
-import ScrollToTopButton from "@/components/ScrollToTopButton";
 import ThemeProvider from "@/components/context/ThemeProvider";
 import "@/app/globals.css";
 import "@/styles/global.scss";
-import { Noto_Sans } from "next/font/google";
+import { Inter } from "next/font/google";
 
 export const metadata: Metadata = {
   title: "Leon Heuer's portfolio",
   description: "Personal projects and resume",
 };
 
-const notoSans = Noto_Sans({ subsets: ["latin"], weight: "500" });
+const inter = Inter({ subsets: ["latin"], weight: "500" });
 
 export default function RootLayout({
   children,
@@ -26,12 +25,11 @@ export default function RootLayout({
       <Head>
         <title>Leon Heuers Portfolio</title>
       </Head>
-      <body className={notoSans.className}>
+      <body className={inter.className}>
         <ThemeProvider>
           <Nav />
           {children}
           <Footer />
-          <ScrollToTopButton />
           <Analytics />
           <SpeedInsights />
         </ThemeProvider>

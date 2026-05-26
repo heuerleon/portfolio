@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
 import ThemeSwitcher from "./ThemeSwitcher";
+import styles from "./Nav.module.scss"
 
 type MenuItem = {
   link: string;
@@ -77,12 +78,12 @@ export default function Nav() {
 
 function DesktopNav() {
   return (
-    <nav className="desktop-nav">
-      <div className="nav-inner">
-        <h4 className="style-headline">
+    <nav className={styles.desktopNav}>
+      <div className={styles.navInner}>
+        <h4 className={styles.styleHeadline}>
           <Link href="/">LH</Link>
         </h4>
-        <ul className="nav-links">
+        <ul className={styles.navLinks}>
           <MenuItems />
         </ul>
         <ThemeSwitcher />
@@ -99,15 +100,15 @@ function MobileNav({
   const [showMobileNav, setShowMobileNav] = useState(false);
 
   return (
-    <nav className={`mobile-nav ${showMobileNav ? "nav-visible" : ""}`}>
-      <div className="nav-top-bar">
+    <nav className={styles.mobileNav + (showMobileNav ? " " + styles.navVisible : "")}>
+      <div className={styles.navTopBar}>
         <div
-          className={`nav-switcher ${changeMobileNavColor ? "dark-switcher" : ""}`}
+          className={styles.navSwitcher + (changeMobileNavColor ? " " + styles.darkSwitcher : "")}
         >
           <button onClick={() => setShowMobileNav((shown) => !shown)}>
-            <span className="top-line"></span>
-            <span className="middle-line"></span>
-            <span className="bottom-line"></span>
+            <span className={styles.topLine}></span>
+            <span className={styles.middleLine}></span>
+            <span className={styles.bottomLine}></span>
           </button>
         </div>
       </div>
