@@ -58,7 +58,6 @@ section {
 }
 
 @keyframes scroll {
-
   from,
   to {
     top: 5px;
@@ -168,11 +167,11 @@ section {
 }
 
 body {
-  background-color: var(--bg);
-  color: var(--main-color);
+  background-color: var(--main-color);
+  color: var(--bg);
   margin: 0;
   box-sizing: border-box;
-  font-size: 14pt;
+  font-size: 12pt;
 }
 
 a {
@@ -240,7 +239,8 @@ h2 {
 
 .headline-prefix {
   text-transform: uppercase;
-  letter-spacing: .15em;
+  letter-spacing: .1em;
+  font-size: 1.2em;
   font-weight: 600;
   color: var(--accent);
 }
@@ -584,7 +584,7 @@ textarea {
 }
 
 .typewriter::after {
-  content: '|';
+  content: '_';
   animation: blink 700ms infinite;
   margin-left: 5px;
   font-weight: 700;
@@ -598,34 +598,7 @@ textarea {
   background-size: cover;
 }
 
-
-@media screen and (width > 2560px) {
-  #top {
-    background-size: cover;
-    background: linear-gradient(#111827ad,
-        #111827ad), url('../../public/bg_6000.jpg') no-repeat center center;
-  }
-}
-
-@media screen and (1920px <= width <= 2560px) {
-  #top {
-    background: linear-gradient(#111827ad,
-        #111827ad),
-      url('../../public/bg_2560.jpg') no-repeat center center;
-  }
-}
-
-@media screen and (width <= 1920px) {
-  #top {
-    background: linear-gradient(#111827ad,
-        #111827ad),
-      url('../../public/bg_1920.jpg') no-repeat center center;
-  }
-}
-
 #footer {
-  background-color: var(--bg-dark);
-
   span {
     margin-bottom: 10px;
     font-weight: 600;

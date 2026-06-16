@@ -5,7 +5,6 @@ import React from "react"
 import Head from 'next/head';
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer"
-import ScrollToTopButton from "@/components/ScrollToTopButton";
 import "@/styles/global.scss";
 import "@/styles/fontawesome/css/all.min.css"
 import { Inter } from "next/font/google";
@@ -31,7 +30,6 @@ export default function RootLayout({
         <Nav/>
         {children}
         <Footer/>
-        <ScrollToTopButton/>
         <Analytics/>
         <SpeedInsights/>
       </body>

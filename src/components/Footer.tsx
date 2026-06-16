@@ -3,7 +3,7 @@ import SocialMediaContainer from "@/components/SocialMediaContainer";
 
 export default function Footer() {
   return (
-    <section className="alt-section-dark" id="footer">
+    <section id="footer">
       <div className="container">
         <div className="row padding-row">
           <div className="column-centered">

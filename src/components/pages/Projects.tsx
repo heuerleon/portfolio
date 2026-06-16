@@ -1,61 +1,19 @@
 import Image from "next/image";
-
-const featured = [
-  {
-    id: 0,
-    image: "/projects/portfolio.jpg",
-    title: "My portfolio",
-    langs: [
-      { image: "/language_icons/typescript.svg", title: "TypeScript" },
-      { image: "/language_icons/nextjs.svg", title: "NextJS" },
-      { image: "/language_icons/vscode.svg", title: "VS Code" },
-      { image: "/language_icons/sass.svg", title: "SASS/SCSS" },
-    ],
-    source: "https://github.com/heuerleon/portfolio",
-    desc: "My self-made portfolio website you're currently looking at.",
-  },
-  {
-    id: 1,
-    image: "/projects/osu-backup.jpg",
-    title: "osu!backup",
-    langs: [
-      { image: "/language_icons/csharp.svg", title: "C#" },
-      { image: "/language_icons/vs.svg", title: "Visual Studio" },
-    ],
-    source: "https://github.com/heuerleon/osu-backup",
-    desc: 'GUI based backupper for the game "osu!". Allows exporting you local player data and importing it conveniently on another machine. ',
-  },
-  {
-    id: 2,
-    image: "/projects/sc-islands.jpg",
-    title: "SkyCave Island System",
-    langs: [
-      { image: "/language_icons/java.svg", title: "Java" },
-      { image: "/language_icons/intellij.svg", title: "IntelliJ IDEA" },
-      { image: "/language_icons/mongodb.svg", title: "MongoDB" },
-    ],
-    source: "https://github.com/skycavemc/island-system",
-    desc: "An island system for the Minecraft server SkyCave. Allows creation and management of protected Islands with their own regions, members etc.",
-  },
-];
+import { MY_PROJECTS } from "./projects";
 
 export default function FeaturedProjects() {
   return (
-    <section className="padding-section" id="featured">
+    <section className="padding-section alt-section" id="projects">
       <div className="container">
         <div className="row">
           <div className="column-centered">
-            <h1>Featured Projects</h1>
+            <h1>Projects</h1>
           </div>
         </div>
         <div className="row padding-row x-axis-space-between y-axis-stretched">
           <div className="column">
-            {featured.map((project, i) => (
-              <div
-                className={`featured ${project.id % 2 === 1 ? "featured-right" : ""
-                  }`}
-                key={i}
-              >
+            {MY_PROJECTS.map((project, i) => (
+              <div className="featured" key={i}>
                 <div className="image-wrapper">
                   <Image
                     src={project.image}
@@ -99,5 +57,5 @@ export default function FeaturedProjects() {
         </div>
       </div>
     </section>
-  )
+  );
 }
