@@ -9,42 +9,15 @@
   --shadow-light: 0 5px 20px rgba(100, 100, 100, .2);
   --default-shadow: 0 10px 20px rgba(0, 0, 0, .5);
 
-  --accent-light: #38BDF8;
-  --accent: #0EA5E9;
-  --accent-dark: #0284C7;
-  --accent-darker: #0C4A6E;
+  --accent-light: #3aaefe;
+  --accent: #099cff;
+  --accent-dark: #0079cd;
+  --accent-darker: #0068b6;
 
-  --box-color: rgba(255, 255, 255, .5);
-
-  --green: #e6f4ea;
-  --green-dark: #1e8449;
-  --red: #fcebea;
-  --red-dark: #c0392b;
-}
-
-:root,
-.alt-section-dark {
-  --bg-brighter: #F8FAFC;
-  --bg-bright: #6B7280;
-  --bg-lighter: #374151;
-  --bg-light: #1F2937;
-  --bg: #111827;
-  --bg-dark: #0b101a;
-
-  --main-color: #F3F4F6;
-  --border-color: #E2E8F0;
-}
-
-section {
   --bg: #F1F5F9;
+  --bg-alt: #E2E8F0;
   --main-color: #111827;
-  --fg-lighter: #94A3B8;
-}
-
-.alt-section {
-  --bg: #E2E8F0;
-  --main-color: #111827;
-  --fg-lighter: #94A3B8;
+  --border-color: #E2E8F0;
 }
 
 @keyframes rotate {
@@ -197,6 +170,34 @@ a {
     width: 0;
     height: 2px;
     background-color: var(--accent);
+    transition: var(--trans-default);
+  }
+
+  &:hover::before {
+    width: 100%;
+  }
+}
+
+.back-link {
+  position: relative;
+  margin-bottom: 30px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+
+  &:hover {
+    color: inherit;
+  }
+
+  &::before {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--main-color);
     transition: var(--trans-default);
   }
 

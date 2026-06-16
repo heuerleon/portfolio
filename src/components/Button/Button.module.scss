@@ -1,10 +1,10 @@
 .btnPrimary {
     background-color: var(--accent);
-    color: var(--bg-brighter);
+    color: var(--bg);
 
     &:hover {
         background-color: var(--accent-light);
-        color: var(--bg-brighter);
+        color: var(--bg);
     }
 
     i {

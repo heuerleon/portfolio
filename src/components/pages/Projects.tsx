@@ -13,7 +13,12 @@ export default function FeaturedProjects() {
         <div className="row padding-row x-axis-space-between y-axis-stretched">
           <div className="column">
             {MY_PROJECTS.map((project, i) => (
-              <div className="featured" key={i}>
+              <div
+                className={`featured ${
+                  project.id % 2 === 1 ? "featured-right" : ""
+                }`}
+                key={i}
+              >
                 <div className="image-wrapper">
                   <Image
                     src={project.image}

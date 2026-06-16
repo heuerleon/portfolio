@@ -1,11 +1,13 @@
 "use client";
 
-import Link from "next/link";
-import { useState, useRef, useEffect, ReactNode } from "react";
+import { ReactNode } from "react";
 import TypeIt from "typeit-react";
 import Button from "@/components/Button";
 import SocialMediaContainer from "@/components/SocialMediaContainer";
 import Image from "next/image";
+import { JetBrains_Mono } from "next/font/google";
+
+const mono = JetBrains_Mono();
 
 export default function TopIntroduction({ children }: { children: ReactNode }) {
   return (
@@ -13,20 +15,20 @@ export default function TopIntroduction({ children }: { children: ReactNode }) {
       <div className="container">
         <div className="row x-axis-space-between y-axis-centered">
           <div className="column-left col-3-double">
-            <h3 className="headline-prefix typewriter">
+            <h3 className={"headline-prefix typewriter " + mono.className}>
               <TypeIt
                 options={{
                   strings: [
-                    "App developer",
                     "Linux enthusiast",
-                    "Java & Kotlin developer",
+                    "Full-stack engineer",
                     "Hobby gamer",
                     "Hardware tinkerer",
+                    "Berlin based",
                   ],
                   loop: true,
                   speed: 50,
                   deleteSpeed: 25,
-                  nextStringDelay: [1500, 100],
+                  nextStringDelay: [1500],
                   lifeLike: false,
                   cursor: false,
                   breakLines: false,

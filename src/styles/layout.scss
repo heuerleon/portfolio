@@ -381,6 +381,24 @@
   }
 }
 
+.featured-right {
+  flex-direction: row-reverse;
+
+  .image-wrapper {
+    border-radius: 0 10px 10px 0;
+
+    &::after {
+      left: -150px;
+      top: -1px;
+      transform-origin: bottom left;
+    }
+  }
+
+  .featured-thumbnail {
+    border-radius: 0 10px 10px 0;
+  }
+}
+
 
 
 // --------------------------------------------------- //
@@ -393,6 +411,10 @@ section {
   background-color: var(--bg);
   color: var(--main-color);
   padding: 20px 0;
+}
+
+.alt-section {
+  background-color: var(--bg-alt);
 }
 
 .padding-section {

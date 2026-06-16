@@ -27,9 +27,7 @@ export default function RootLayout({
         <title>Leon Heuers Portfolio</title>
       </Head>
       <body className={inter.className}>
-        <Nav/>
         {children}
-        <Footer/>
         <Analytics/>
         <SpeedInsights/>
       </body>
