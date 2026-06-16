@@ -9,7 +9,6 @@ const rateLimiter = new RateLimiterMemory({
   duration: 3600,
 });
 
-const resend = new Resend(process.env.RESEND_API_KEY);
 const captchaSecret = process.env.CAPTCHA_SECRET;
 const sender = process.env.EMAIL_SENDER;
 const recipient = process.env.EMAIL_RECIPIENT;
@@ -92,6 +91,7 @@ async function checkCaptchaToken(token: string) {
 
 async function sendMail(sender: string, recipient: string, subject: string, name: string, email: string, message: string) {
   try {
+    const resend = new Resend(process.env.RESEND_API_KEY);
     const { data, error } = await resend.emails.send({
       from: sender,
       to: [recipient],
