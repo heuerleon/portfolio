@@ -64,7 +64,7 @@ export default function TopIntroduction() {
             <SocialMediaContainer />
             <div>
               <Button href="/#contact" primary large>Work With Me</Button>
-              <Button href="/#featured" large>Browse Projects</Button>
+              <Button href="/#projects" large>Browse Projects</Button>
             </div>
           </div>
         </div>

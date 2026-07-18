@@ -13,7 +13,7 @@ export default function PrivacyPolicy() {
               only available in German as of now.
             </p>
             <p>
-              <Link href="/">Home</Link> / <Link href="/privacy-policy">Privacy-Policy</Link>
+              <Link href="/">Home</Link> / <Link href="/privacy">Privacy-Policy</Link>
             </p>
           </div>
         </div>

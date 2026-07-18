@@ -1,39 +1,58 @@
 import type { Metadata } from "next";
+import type { ReactNode } from "react";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import React from "react"
-import Head from 'next/head';
 import Nav from "@/components/Nav";
-import Footer from "@/components/Footer"
+import Footer from "@/components/Footer";
 import ScrollToTopButton from "@/components/ScrollToTopButton";
 import "@/styles/global.scss";
-import "@/styles/fontawesome/css/all.min.css"
+import "@/styles/fontawesome/css/all.min.css";
 import { Inter } from "next/font/google";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://heuer.ovh"),
   title: "Leon Heuer's portfolio",
   description: "Personal projects and resume",
+  openGraph: {
+    title: "Leon Heuer's portfolio",
+    description: "Personal projects and resume",
+    url: "/",
+    siteName: "heuer.ovh",
+    locale: "en_US",
+    type: "website",
+    images: [
+      {
+        url: "/portrait.jpeg",
+        width: 500,
+        height: 500,
+        alt: "Leon Heuer",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary",
+    title: "Leon Heuer's portfolio",
+    description: "Personal projects and resume",
+    images: ["/portrait.jpeg"],
+  },
 };
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
   return (
     <html lang="en">
-      <Head>
-        <title>Leon Heuers Portfolio</title>
-      </Head>
       <body className={inter.className}>
-        <Nav/>
+        <Nav />
         {children}
-        <Footer/>
-        <ScrollToTopButton/>
-        <Analytics/>
-        <SpeedInsights/>
+        <Footer />
+        <ScrollToTopButton />
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

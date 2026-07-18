@@ -13,7 +13,7 @@ export default function LegalNotice() {
               only available in German as of now.
             </p>
             <p>
-              <Link href="/">Home</Link> / <Link href="/legal-notice">Legal-Notice</Link>
+              <Link href="/">Home</Link> / <Link href="/legal">Legal-Notice</Link>
             </p>
           </div>
         </div>

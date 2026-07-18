@@ -1,8 +1,8 @@
 "use client";
 
-import { ContactFormRequestData } from "@/app/api/contact/route";
+import { limits, type ContactFormRequestData } from "@/lib/contact";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Turnstile from "react-turnstile";
 import Button from "../Button";
 
@@ -11,120 +11,79 @@ type AlertBoxIconClass = "fa-circle-xmark" | "fa-circle-info" | "fa-circle-check
 
 export default function ContactForm() {
   const siteKey = process.env.NEXT_PUBLIC_CAPTCHA_KEY;
-  const [subject, setSubject] = useState("");
-  
-  function handleSubjectChange(event: React.ChangeEvent<HTMLInputElement>) {
-    const content = event.target.value;
-    if (content.length > 100) {
-      event.preventDefault();
-      event.target.value = content.substring(0, 100);
-    }
-    setSubject(event.target.value);
-  }
-
-  const [name, setName] = useState("");
-
-  function handleNameChange(event: React.ChangeEvent<HTMLInputElement>) {
-    const content = event.target.value;
-    if (content.length > 50) {
-      event.preventDefault();
-      event.target.value = content.substring(0, 50);
-    }
-    setName(event.target.value);
-  }
-
-  const [email, setEmail] = useState("");
-
-  function handleEmailChange(event: React.ChangeEvent<HTMLInputElement>) {
-    const content = event.target.value;
-    if (content.length > 50) {
-      event.preventDefault();
-      event.target.value = content.substring(0, 50);
-    }
-    setEmail(event.target.value);
-  }
-
-  const [message, setMessage] = useState("");
-
-  function handleMessageChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
-    const content = event.target.value;
-    if (content.length > 500) {
-      event.preventDefault();
-      event.target.value = content.substring(0, 500);
-    }
-    setMessage(event.target.value);
-  }
-
   const router = useRouter();
+
+  const [subject, setSubject] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [token, setToken] = useState("");
+
   const [sendAttempted, setSendAttempted] = useState(false);
   const [sending, setSending] = useState(false);
-  const [token, setToken] = useState("");
-  
+
+  const [showAlertbox, setShowAlertbox] = useState(false);
+  const [alertBoxText, setAlertBoxText] = useState("");
+  const [alertBoxStyle, setAlertBoxStyle] = useState<AlertBoxStyle>("info");
+  const [alertBoxIconClass, setAlertBoxIconClass] = useState<AlertBoxIconClass>("fa-circle-info");
+  const alertTimer = useRef(0);
+  const alertBoxDuration = 5 * 1000;
+
+  useEffect(() => () => clearTimeout(alertTimer.current), []);
+
   async function sendMessage() {
     setSendAttempted(true);
 
-    if (validateFields()) {
-      setSending(true);
-      const headers = {
-        "Accept": "application/json",
-        "Content-Type": "application/json"
-      };
-      const body: ContactFormRequestData = {
-        name: name,
-        subject: subject,
-        email: email,
-        message: message,
-        token: token
-      };
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: headers,
-        body: JSON.stringify(body)
-      });
-
-      const status = response.status;
-      const responseBody: string = await response.json();
-      if (status != 200) {
-        if (status == 400) {
-          errorBox(
-            "Error processing your contact request. Please check your input."
-          );
-        } else if (status == 500) {
-          errorBox(
-            "Error processing your contact request. There was an internal server error while sending your message. Please use another contact option."
-          );
-        } else if (status == 429) {
-          errorBox(
-            "You are sending too many messages. Please try again one hour later."
-          );
-        } else {
-          errorBox(
-            "Error processing your contact request. Please use another contact option."
-          );
-        }
-        console.error(`Got status code ${status} with body:`, responseBody);
-      } else {
-        router.push("/contact-success");
-      }
-      setSending(false);
+    if (sending || !validateFields()) {
       return;
     }
+
+    setSending(true);
+    const body: ContactFormRequestData = { name, subject, email, message, token };
+    const response = await fetch("/api/contact", {
+      method: "POST",
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(body)
+    });
+
+    const status = response.status;
+    if (status === 200) {
+      router.push("/contact-success");
+    } else {
+      if (status === 400) {
+        errorBox(
+          "Error processing your contact request. Please check your input."
+        );
+      } else if (status === 500) {
+        errorBox(
+          "Error processing your contact request. There was an internal server error while sending your message. Please use another contact option."
+        );
+      } else if (status === 429) {
+        errorBox(
+          "You are sending too many messages. Please try again one hour later."
+        );
+      } else {
+        errorBox(
+          "Error processing your contact request. Please use another contact option."
+        );
+      }
+      const responseBody: unknown = await response.json().catch(() => null);
+      console.error(`Got status code ${status} with body:`, responseBody);
+    }
+    setSending(false);
   }
 
   function validateFields() {
-    return subject && isValidEmail(email) && name && message && token;
+    return Boolean(subject && isValidEmail(email) && name && message && token);
   }
 
   function isValidEmail(email: string) {
     const regex = /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/;
     return regex.test(String(email).toLowerCase());
   }
-
-  const [showAlertbox, setShowAlertbox] = useState(false);
-  const [alertBoxText, setAlertBoxText] = useState("");
-  const [alertBoxStyle, setAlertBoxStyle] = useState<AlertBoxStyle>("info");
-  const [alertBoxIconClass, setAlertBoxIconClass] = useState<AlertBoxIconClass>("fa-circle-info");
-  const alertBoxDuration = 5 * 1000;
 
   function errorBox(text: string) {
     setAlertBoxStyle("error");
@@ -135,8 +94,9 @@ export default function ContactForm() {
   function showAlertBox(text: string) {
     setAlertBoxText(text);
     setShowAlertbox(true);
-    setTimeout(() => setShowAlertbox(false), alertBoxDuration);
-  } 
+    clearTimeout(alertTimer.current);
+    alertTimer.current = window.setTimeout(() => setShowAlertbox(false), alertBoxDuration);
+  }
 
   return (
     <section className="padding-section alt-section" id="contact">
@@ -163,54 +123,72 @@ export default function ContactForm() {
               </div>
             </div>
           </div>
-          <div className="column-min contact-form">
+          <form
+            className="column-min contact-form"
+            onSubmit={(event) => {
+              event.preventDefault();
+              void sendMessage();
+            }}
+            noValidate
+          >
             <div className="row row-slim">
               <div className="input-wrapper">
                 <input
                   type="text"
+                  name="subject"
                   placeholder="Subject"
-                  onChange={(event) => handleSubjectChange(event)}
+                  maxLength={limits.subject}
+                  value={subject}
+                  onChange={(event) => setSubject(event.target.value)}
                   className={
                     !subject && sendAttempted ? "empty-input" : ""
                   }
                 />
-                <span>{subject.length}/100</span>
+                <span>{subject.length}/{limits.subject}</span>
               </div>
 
               <div className="input-wrapper half-input">
                 <input
-                  type="text"
+                  type="email"
+                  name="email"
+                  autoComplete="email"
                   placeholder="Your email address"
-                  onChange={(event) => handleEmailChange(event)}
-                  className={`${(!email && sendAttempted) ||
-                    (!isValidEmail(email) && sendAttempted)
-                    ? "empty-input"
-                    : ""
-                    }`}
+                  maxLength={limits.email}
+                  value={email}
+                  onChange={(event) => setEmail(event.target.value)}
+                  className={
+                    !isValidEmail(email) && sendAttempted ? "empty-input" : ""
+                  }
                 />
-                <span>{email.length}/50</span>
+                <span>{email.length}/{limits.email}</span>
               </div>
 
               <div className="input-wrapper half-input">
                 <input
                   type="text"
+                  name="name"
+                  autoComplete="name"
                   placeholder="Your name"
-                  onChange={(event) => handleNameChange(event)}
-                  className={`${!name && sendAttempted ? "empty-input" : ""
-                    }`}
+                  maxLength={limits.name}
+                  value={name}
+                  onChange={(event) => setName(event.target.value)}
+                  className={!name && sendAttempted ? "empty-input" : ""}
                 />
-                <span>{name.length}/50</span>
+                <span>{name.length}/{limits.name}</span>
               </div>
 
               <div className="input-wrapper">
                 <textarea
+                  name="message"
                   placeholder="Enter message"
-                  onChange={(event) => handleMessageChange(event)}
+                  maxLength={limits.message}
+                  value={message}
+                  onChange={(event) => setMessage(event.target.value)}
                   className={
                     !message && sendAttempted ? "empty-input" : ""
                   }
                 ></textarea>
-                <span>{message.length}/500</span>
+                <span>{message.length}/{limits.message}</span>
               </div>
 
               <div className="captcha-wrapper">
@@ -245,12 +223,12 @@ export default function ContactForm() {
             </div>
             <div className="row row-slim">
               <div className="button-container">
-                <Button onClick={() => sendMessage()} primary>
+                <Button primary>
                   <i className={`fas ${sending ? "fa-spinner fa-spin" : "fa-paper-plane"}`}></i> Send message
-                </Button>    
+                </Button>
               </div>
             </div>
-          </div>
+          </form>
         </div>
       </div>
       <div className={`alert-box ${showAlertbox ? "shown" : ""} ${alertBoxStyle}`}>

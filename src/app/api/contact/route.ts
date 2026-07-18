@@ -1,7 +1,7 @@
-import EmailTemplate from '@/components/EmailTemplate';
 import { NextRequest, NextResponse } from 'next/server';
 import { RateLimiterMemory } from 'rate-limiter-flexible';
 import { Resend } from 'resend';
+import { limits, type ContactFormRequestData } from '@/lib/contact';
 
 // Allow 5 messages per IP per hour
 const rateLimiter = new RateLimiterMemory({
@@ -12,14 +12,6 @@ const rateLimiter = new RateLimiterMemory({
 const captchaSecret = process.env.CAPTCHA_SECRET;
 const sender = process.env.EMAIL_SENDER;
 const recipient = process.env.EMAIL_RECIPIENT;
-
-export type ContactFormRequestData = {
-  name: string,
-  subject: string,
-  email: string,
-  message: string,
-  token: string
-}
 
 export async function POST(req: NextRequest) {
   const ip = ipAddress(req.headers);
@@ -71,7 +63,13 @@ function ipAddress(headers: Headers) {
 }
 
 function validateFields({ name, subject, email, message }: ContactFormRequestData) {
-  return name.length <= 50 && subject.length <= 100 && isValidEmail(email) && message.length <= 500;
+  return (
+    name.length <= limits.name &&
+    subject.length <= limits.subject &&
+    email.length <= limits.email &&
+    isValidEmail(email) &&
+    message.length <= limits.message
+  );
 }
 
 function isValidEmail(email: string) {
@@ -83,7 +81,7 @@ async function checkCaptchaToken(token: string) {
   const response = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: `secret=${captchaSecret}&response=${token}`
+    body: new URLSearchParams({ secret: captchaSecret ?? '', response: token })
   });
 
   return await response.json();
@@ -95,8 +93,9 @@ async function sendMail(sender: string, recipient: string, subject: string, name
     const { data, error } = await resend.emails.send({
       from: sender,
       to: [recipient],
+      replyTo: email,
       subject: subject,
-      react: EmailTemplate({ name, email, message }),
+      text: `You received a message from ${name} (${email}):\n\n${message}`,
     });
 
     if (error) {
