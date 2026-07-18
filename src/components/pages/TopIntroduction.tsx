@@ -41,10 +41,10 @@ export default function TopIntroduction({ children }: { children: ReactNode }) {
             {children}
             <SocialMediaContainer />
             <div>
-              <Button href="/#contact" primary large>
-                Work With Me
+              <Button href="/#cv" primary>
+                View my CV
               </Button>
-              <Button href="/#featured" large>
+              <Button href="/#featured">
                 Browse Projects
               </Button>
             </div>

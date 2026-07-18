@@ -15,7 +15,7 @@ export default function FeaturedProjects() {
             {MY_PROJECTS.map((project, i) => (
               <div
                 className={`featured ${
-                  project.id % 2 === 1 ? "featured-right" : ""
+                  i % 2 === 1 ? "featured-right" : ""
                 }`}
                 key={i}
               >
