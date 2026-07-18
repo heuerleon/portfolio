@@ -2,9 +2,16 @@
 
 import Link from "next/link";
 import { useRef, useEffect } from "react";
-import TypeIt from "typeit-react";
+import Typewriter from "@/components/Typewriter";
 import Button from "@/components/Button";
 import SocialMediaContainer from "@/components/SocialMediaContainer";
+
+const typewriterStrings = [
+  "Full-Stack Developer",
+  "Linux Enthusiast",
+  "Rust Enjoyer",
+  "Hobby gamer",
+];
 
 export default function TopIntroduction() {
   const bgRef = useRef<HTMLDivElement>(null);
@@ -46,26 +53,7 @@ export default function TopIntroduction() {
         <div className="row x-axis-space-between y-axis-centered">
           <div className="column-left col-2">
             <h3 className="headline-prefix typewriter">
-              <TypeIt
-                options={{
-                  strings: [
-                    "App developer",
-                    "Linux enthusiast",
-                    "Java & Kotlin developer",
-                    "Hobby gamer",
-                    "Hardware tinkerer",
-                  ],
-                  loop: true,
-                  speed: 50,
-                  deleteSpeed: 25,
-                  nextStringDelay: [1500, 100],
-                  lifeLike: false,
-                  cursor: false,
-                  breakLines: false,
-                  waitUntilVisible: true,
-                  html: false,
-                }}
-              />
+              <Typewriter strings={typewriterStrings} />
             </h3>
             <h1>Leon Heuer</h1>
             <p className="p-no-margin">
