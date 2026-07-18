@@ -11,7 +11,12 @@ export default function TopIntroduction() {
 
   useEffect(() => {
     const bg = bgRef.current;
-    if (!bg || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    if (
+      !bg ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+      // handled by the compositor-driven CSS animation in base.scss
+      CSS.supports("animation-timeline: view()")
+    ) {
       return;
     }
 

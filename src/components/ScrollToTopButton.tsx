@@ -1,26 +1,31 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function ScrollToTopButton() {
   const [showToTop, setShowToTop] = useState(false);
-  const scrollBefore = useRef(0);
-  const isBrowser = typeof window !== "undefined";
-  if (isBrowser) {
-    setInterval(() => handleScroll(), 10);
-  }
 
-  function handleScroll() {
-    if (scrollBefore.current !== window.scrollY) {
-      if (window.scrollY >= 600 && !showToTop) {
-        setShowToTop(true);
-      }
-      if (window.scrollY < 600 && showToTop) {
-        setShowToTop(false);
-      }
-      scrollBefore.current = window.scrollY;
-    }
-  }
+  useEffect(() => {
+    let frame = 0;
+
+    const update = () => {
+      frame = 0;
+      setShowToTop(window.scrollY >= 600);
+    };
+
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      cancelAnimationFrame(frame);
+    };
+  }, []);
+
   return (
     <span className={`scroll-to-top ${showToTop ? "visible" : ""}`}>
       <a href="#top" aria-label="to-top"><i className="fas fa-chevron-up"></i></a>

@@ -1,7 +1,30 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
+
+const navItems: { link: string; label: string }[] = [
+  {
+    link: "/#top",
+    label: "Home",
+  },
+  {
+    link: "/#about",
+    label: "About Me",
+  },
+  {
+    link: "/#projects",
+    label: "Projects",
+  },
+  {
+    link: "/#publications",
+    label: "Publications",
+  },
+  {
+    link: "/#contact",
+    label: "Contact",
+  },
+];
 
 export default function Nav() {
   const [showMobileNav, setShowMobileNav] = useState(false);
@@ -9,55 +32,47 @@ export default function Nav() {
 
   const [slideIn, setSlideIn] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
-  const scrollBefore = useRef(0);
-  const wasFixedBefore = useRef(false);
-
-  const isBrowser = typeof window !== "undefined";
 
   useEffect(() => {
-    if (isBrowser) {
-      setInterval(() => handleScroll(), 10);
-    }
-  }, []);
+    let scrollBefore = window.scrollY;
+    let wasFixedBefore = false;
+    let frame = 0;
 
-  const Direction = {
-    UP: 0,
-    DOWN: 1,
-    NONE: 2
-  }
+    const update = () => {
+      frame = 0;
+      const y = window.scrollY;
 
-  function handleScroll() {
-    if (scrollBefore.current !== window.scrollY) {
-      if (window.scrollY === 0) {
+      if (y === 0) {
         setCollapsed(false);
         setSlideIn(false);
-        wasFixedBefore.current = false;
-      } else {
-        let direction = Direction.NONE;
-        if (window.scrollY > scrollBefore.current) {
-          direction = Direction.DOWN;
-        }
-        if (window.scrollY < scrollBefore.current) {
-          direction = Direction.UP;
-        }
-
-        if (direction === Direction.UP && !slideIn) {
-          setCollapsed(false);
-          setSlideIn(true);
-          wasFixedBefore.current = true;
-        }
-
-        if (direction === Direction.DOWN && !collapsed && wasFixedBefore.current) {
-          setSlideIn(false);
-          setCollapsed(true);
-        }
+        wasFixedBefore = false;
+      } else if (y < scrollBefore) {
+        // scrolling up: slide the fixed nav in
+        setCollapsed(false);
+        setSlideIn(true);
+        wasFixedBefore = true;
+      } else if (y > scrollBefore && wasFixedBefore) {
+        // scrolling down: collapse it again
+        setSlideIn(false);
+        setCollapsed(true);
       }
 
-      scrollBefore.current = window.scrollY;
-      setChangeMobileNavColor(window.scrollY + 20 > window.innerHeight);
-    }
+      scrollBefore = y;
+      setChangeMobileNavColor(y + 20 > window.innerHeight);
+    };
 
-  }
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      cancelAnimationFrame(frame);
+    };
+  }, []);
 
   return (
     <div>
@@ -67,26 +82,15 @@ export default function Nav() {
         className={`desktop-nav ${collapsed ? "nav-collapsed" : ""} ${slideIn ? "nav-slidein" : ""}`}
       >
         <div className="nav-inner">
-          <h4 className="style-headline"><Link href="/">heuer.ovh</Link></h4>
+          <h4 className="style-headline">
+            <Link href="/">heuer.ovh</Link>
+          </h4>
           <ul className="nav-links">
-            <li>
-              <Link href="/#top">Home</Link>
-            </li>
-            <li>
-              <Link href="/#about">About Me</Link>
-            </li>
-            <li>
-              <Link href="/#what-i-do">What I Do</Link>
-            </li>
-            <li>
-              <Link href="/#featured">Featured</Link>
-            </li>
-            <li>
-              <Link href="/#projects">Projects</Link>
-            </li>
-            <li>
-              <Link href="/#contact">Contact</Link>
-            </li>
+            {navItems.map((navItem, i) => (
+              <li key={i}>
+                <Link href={navItem.link}>{navItem.label}</Link>
+              </li>
+            ))}
           </ul>
         </div>
       </nav>
@@ -94,8 +98,10 @@ export default function Nav() {
       {/* Mobile Nav */}
       <nav className={`mobile-nav ${showMobileNav ? "nav-visible" : ""}`}>
         <div className="nav-top-bar">
-          <div className={`nav-switcher ${changeMobileNavColor ? "dark-switcher" : ""}`}>
-            <button onClick={() => setShowMobileNav(shown => !shown)}>
+          <div
+            className={`nav-switcher ${changeMobileNavColor ? "dark-switcher" : ""}`}
+          >
+            <button onClick={() => setShowMobileNav((shown) => !shown)}>
               <span className="top-line"></span>
               <span className="middle-line"></span>
               <span className="bottom-line"></span>
@@ -103,26 +109,13 @@ export default function Nav() {
           </div>
         </div>
         <ul onClick={() => setShowMobileNav(false)}>
-          <li>
-            <Link href="/#top">Intro</Link>
-          </li>
-          <li>
-            <Link href="/#about">About Me</Link>
-          </li>
-          <li>
-            <Link href="/#what-i-do">What I Do</Link>
-          </li>
-          <li>
-            <Link href="/#featured">Featured</Link>
-          </li>
-          <li>
-            <Link href="/#projects">Projects</Link>
-          </li>
-          <li>
-            <Link href="/#contact">Contact</Link>
-          </li>
+          {navItems.map((navItem, i) => (
+            <li key={i}>
+              <Link href={navItem.link}>{navItem.label}</Link>
+            </li>
+          ))}
         </ul>
       </nav>
     </div>
   );
-};
+}

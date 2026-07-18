@@ -139,7 +139,7 @@ export default function ContactForm() {
   } 
 
   return (
-    <section className="padding-section" id="contact">
+    <section className="padding-section alt-section" id="contact">
       <div className="container">
         <div className="row">
           <div className="column-min">
