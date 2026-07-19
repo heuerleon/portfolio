@@ -13,6 +13,9 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://heuer.ovh"),
   title: "Leon Heuer's portfolio",
   description: "Personal projects and resume",
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: "Leon Heuer's portfolio",
     description: "Personal projects and resume",

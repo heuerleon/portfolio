@@ -1,5 +1,13 @@
 import Legal from "@/markdown/Legal.mdx"
 import Link from "next/link";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Legal Notice | Leon Heuer",
+  alternates: {
+    canonical: "/legal",
+  },
+};
 
 export default function LegalNotice() {
   return (
@@ -10,7 +18,7 @@ export default function LegalNotice() {
             <h1>Legal Notice</h1>
             <p className="warning-message">
               <i className="fas fa-info-circle"></i> The content of this site is
-              only available in German as of now.
+              only available in German.
             </p>
             <p>
               <Link href="/">Home</Link> / <Link href="/legal">Legal-Notice</Link>

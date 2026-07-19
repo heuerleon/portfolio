@@ -51,15 +51,16 @@ export default function TopIntroduction() {
       <div className="parallax-bg" ref={bgRef} aria-hidden="true" />
       <div className="container">
         <div className="row x-axis-space-between y-axis-centered">
-          <div className="column-left col-2">
-            <h3 className="headline-prefix typewriter">
+          <div className="column-left col-3-double">
+            <p className="headline-prefix typewriter">
               <Typewriter strings={typewriterStrings} />
-            </h3>
+            </p>
             <h1>Leon Heuer</h1>
             <p className="p-no-margin">
-              My name is Leon Heuer and I welcome you to my personal portfolio.
-              I am a student and young software developer from Germany
-              with an international focus.
+              Full-stack developer at Tesla in Berlin with end-to-end project ownership.
+              Previously CS student and software dev at Otto in Hamburg.
+              Former Hanyang University student.
+              I like coding in Rust and Kotlin.
             </p>
             <SocialMediaContainer />
             <div>

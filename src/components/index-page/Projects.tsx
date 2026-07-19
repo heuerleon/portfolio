@@ -79,7 +79,7 @@ export default function Projects() {
       <div className="container">
         <div className="row">
           <div className="column-centered">
-            <h1>Projects</h1>
+            <h2 className="section-heading">Projects</h2>
           </div>
         </div>
         <div className="row padding-row x-axis-space-between y-axis-stretched">
@@ -101,16 +101,16 @@ export default function Projects() {
                   />
                 </div>
                 <div className="featured-inner">
-                  <h1>{project.title}</h1>
-                  <h3>Description</h3>
+                  <h3>{project.title}</h3>
+                  <h4>Description</h4>
                   <p>{project.desc}</p>
-                  <h3>Built with</h3>
+                  <h4>Built with</h4>
                   <div className="icon-container">
                     {project.langs.map((icon, i) => (
                       <Image
                         key={i}
                         src={icon.image}
-                        alt={icon.title + "icon"}
+                        alt={icon.title + " icon"}
                         title={icon.title}
                         width={50}
                         height={50}

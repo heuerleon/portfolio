@@ -1,4 +1,15 @@
 import Link from "next/link";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Message sent | Leon Heuer",
+  robots: {
+    index: false,
+  },
+  alternates: {
+    canonical: "/contact-success",
+  },
+};
 
 export default function ContactSuccess() {
   return (

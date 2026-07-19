@@ -103,7 +103,7 @@ export default function ContactForm() {
       <div className="container">
         <div className="row">
           <div className="column-min">
-            <h1>Contact Me</h1>
+            <h2 className="section-heading">Contact Me</h2>
           </div>
         </div>
         <div className="row row-reversed nowrap">

@@ -1,0 +1,26 @@
+# Leon Heuer
+
+> Personal portfolio of Leon Heuer, a full-stack developer and dual computer science student from Germany. The site presents his background, software projects, academic publications, and contact options.
+
+Leon Heuer has been programming since the age of 10. He develops server-side Minecraft mods with Kotlin and MongoDB, works with TypeScript and React on the frontend, and has used Rust professionally for backend development. He is doing a dual study programme in applied computer science at OTTO (https://www.otto.de/), Germany's second largest online retailer, working in full-stack development. In his free time he develops server-side mods for the Minecraft server SkyCave (https://github.com/skycavemc), used by thousands of players.
+
+## Projects
+
+- [My portfolio](https://github.com/heuerleon/portfolio): This portfolio website, built with TypeScript, Next.js and SASS/SCSS.
+- [osu!backup](https://github.com/heuerleon/osu-backup): GUI-based backupper for the game "osu!", written in C#. Exports local player data and imports it on another machine.
+- [SkyCave Island System](https://github.com/skycavemc/island-system): Island system for the Minecraft server SkyCave, written in Java with MongoDB. Creation and management of protected islands with regions and members.
+- [SkyCave JobSystem](https://github.com/skycavemc/JobSystem): Kotlin plugin for the Minecraft server SkyCave, providing jobs with different advantages.
+- [MC GUI API](https://github.com/heuerleon/mcguiapi): Java API for creating graphical user interfaces using inventories in Minecraft.
+
+## Publications
+
+- "Functional State Machines in Rust: Typestate and Newtype Patterns (Experience Report)" (Workshop paper, Jun 2026, with Falk Woldmann Lu and Jan Haase, DOI 10.1145/3830438.3830958): https://doi.org/10.1145/3830438.3830958 — Three case studies from production code on the effects of the typestate and newtype design patterns on code quality in Rust.
+- "Benefits of Applying Software Design Patterns to Backend Rust Applications" (Bachelor's thesis, Feb 2026, arXiv:2607.02744 [cs.SE]): https://doi.org/10.48550/arXiv.2607.02744 — Case study on how the typestate and newtype design patterns affect software quality and compile-time enforcement of invariants in production backend Rust applications.
+
+## Contact
+
+- Email: leon@heuer.ovh
+- Discord: @haku2
+- GitHub: https://github.com/heuerleon
+- LinkedIn: https://www.linkedin.com/in/leonheuer/
+- Instagram: https://www.instagram.com/heuerleon/

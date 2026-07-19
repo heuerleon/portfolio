@@ -1,5 +1,13 @@
 import Privacy from "@/markdown/Privacy.mdx"
 import Link from "next/link";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Privacy Policy | Leon Heuer",
+  alternates: {
+    canonical: "/privacy",
+  },
+};
 
 export default function PrivacyPolicy() {
   return (
@@ -10,7 +18,7 @@ export default function PrivacyPolicy() {
             <h1>Privacy Policy</h1>
             <p className="warning-message">
               <i className="fas fa-info-circle"></i> The content of this site is
-              only available in German as of now.
+              only available in German.
             </p>
             <p>
               <Link href="/">Home</Link> / <Link href="/privacy">Privacy-Policy</Link>
