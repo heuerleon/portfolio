@@ -2,6 +2,7 @@ import Legal from "@/markdown/Legal.mdx"
 import { Link } from "@/i18n/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { Metadata } from "next";
+import { InfoIcon } from "@/components/Icons";
 
 export async function generateMetadata({
   params,
@@ -40,7 +41,7 @@ export default async function LegalNotice({
           <div className="column-centered">
             <h1>{t("heading")}</h1>
             <p className="warning-message">
-              <i className="fas fa-info-circle"></i> {common("germanOnly")}
+              <InfoIcon /> {common("germanOnly")}
             </p>
             <p>
               <Link href="/">{common("home")}</Link> / <Link href="/legal">{t("breadcrumbCurrent")}</Link>

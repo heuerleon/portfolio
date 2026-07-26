@@ -1,6 +1,7 @@
 import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import SocialMediaContainer from "@/components/SocialMediaContainer";
+import { ArrowRightIcon } from "@/components/Icons";
 
 export default function Footer() {
   const t = useTranslations("Footer");
@@ -20,6 +21,7 @@ export default function Footer() {
                 rel="noreferrer"
               >
                 {t("viewOnGitHub")}
+                <ArrowRightIcon />
               </a>
             </span>
             <span className="light">

@@ -79,6 +79,12 @@ section {
   }
 }
 
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 @mixin shrink-margins($margin: 0) {
   &:first-of-type {
     margin-left: $margin !important;
@@ -154,13 +160,11 @@ a {
   &:hover::before {
     width: 100%;
   }
-}
 
-.link[target]::after {
-  content: "\f061";
-  font-family: "Font Awesome 5 Free", sans-serif;
-  margin-left: 0.5em;
-  font-weight: 900;
+  svg {
+    margin-left: 0.4em;
+    vertical-align: -0.15em;
+  }
 }
 
 a,
@@ -276,12 +280,16 @@ b {
 }
 
 .light {
-  font-weight: 300;
+  font-weight: 400;
   font-size: 0.8em;
 }
 
 .block {
   display: block;
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
 }
 
 .error-message {
@@ -386,12 +394,9 @@ textarea {
     }
   }
 
-  i {
+  svg {
     display: block;
     font-size: 1.5em;
-    width: 1.1em;
-    display: flex;
-    justify-content: center;
     margin-right: 15px;
   }
 }
@@ -521,13 +526,13 @@ textarea {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 50px;
-    height: 50px;
-    border-radius: 5px;
+    width: 45px;
+    height: 45px;
+    border-radius: 8px;
     background-color: var(--accent);
     color: var(--main-color);
     transition: var(--trans-default);
-    font-size: 1.2em;
+    font-size: 1.5em;
 
     &:hover {
       opacity: 0.8;
@@ -622,7 +627,7 @@ textarea {
   }
 
   .light {
-    font-weight: 300;
+    font-weight: 400;
     font-size: 0.7em;
   }
 

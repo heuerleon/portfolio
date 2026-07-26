@@ -1,10 +1,11 @@
 import Image from "next/image";
 import { useTranslations } from "next-intl";
+import { GithubIcon } from "../Icons";
 
 type Language = {
   image: string;
   title: string;
-}
+};
 
 type Project = {
   id: string;
@@ -86,9 +87,7 @@ export default function Projects() {
           <div className="column">
             {projects.map((project, i) => (
               <div
-                className={`featured ${
-                  i % 2 === 1 ? "featured-right" : ""
-                }`}
+                className={`featured ${i % 2 === 1 ? "featured-right" : ""}`}
                 key={project.id}
               >
                 <div className="image-wrapper">
@@ -125,7 +124,7 @@ export default function Projects() {
                     title={t("viewSource")}
                     aria-label={t("sourceAria")}
                   >
-                    <i className="fab fa-github"></i>
+                    <GithubIcon />
                   </a>
                 </div>
               </div>

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
+import { UpIcon } from "./Icons";
 
 export default function ScrollToTopButton() {
   const t = useTranslations("Common");
@@ -30,7 +31,7 @@ export default function ScrollToTopButton() {
 
   return (
     <span className={`scroll-to-top ${showToTop ? "visible" : ""}`}>
-      <a href="#top" aria-label={t("toTop")}><i className="fas fa-chevron-up"></i></a>
+      <a href="#top" aria-label={t("toTop")}><UpIcon /></a>
     </span>
   )
 }

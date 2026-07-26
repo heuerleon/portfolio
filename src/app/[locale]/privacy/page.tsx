@@ -1,7 +1,8 @@
-import Privacy from "@/markdown/Privacy.mdx"
+import Privacy from "@/markdown/Privacy.mdx";
 import { Link } from "@/i18n/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { Metadata } from "next";
+import { InfoIcon } from "@/components/Icons";
 
 export async function generateMetadata({
   params,
@@ -40,10 +41,11 @@ export default async function PrivacyPolicy({
           <div className="column-centered">
             <h1>{t("heading")}</h1>
             <p className="warning-message">
-              <i className="fas fa-info-circle"></i> {common("germanOnly")}
+              <InfoIcon /> {common("germanOnly")}
             </p>
             <p>
-              <Link href="/">{common("home")}</Link> / <Link href="/privacy">{t("breadcrumbCurrent")}</Link>
+              <Link href="/">{common("home")}</Link> /{" "}
+              <Link href="/privacy">{t("breadcrumbCurrent")}</Link>
             </p>
           </div>
         </div>
@@ -53,11 +55,11 @@ export default async function PrivacyPolicy({
         <div className="container">
           <div className="row">
             <div className="column-left">
-              <Privacy/>
+              <Privacy />
             </div>
           </div>
         </div>
       </section>
     </div>
   );
-};
+}

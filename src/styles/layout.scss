@@ -133,6 +133,8 @@
   position: absolute;
   bottom: 20px;
   right: 20px;
+  display: flex;
+  align-items: center;
 
   &:hover {
     color: var(--accent);
@@ -230,12 +232,12 @@
 .publication-keywords {
   display: flex;
   gap: 12px;
-  font-size: .7em;
+  font-size: 0.7em;
   margin: 5px 0;
 
   span::before {
     content: "#";
-    opacity: .2;
+    opacity: 0.2;
     font-weight: bold;
     margin-right: 4px;
   }
@@ -723,12 +725,12 @@ section {
   align-items: center;
   max-width: 25rem;
 
-  i,
+  svg,
   span {
     display: block;
   }
 
-  i {
+  svg {
     font-size: 1.2em;
     margin-right: 10px;
   }

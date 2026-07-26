@@ -7,7 +7,6 @@ import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import ScrollToTopButton from "@/components/ScrollToTopButton";
 import "@/styles/global.scss";
-import "@/styles/fontawesome/css/all.min.css";
 import { Inter, Noto_Sans_KR } from "next/font/google";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -94,7 +93,9 @@ export default async function RootLayout({
 
   return (
     <html lang={locale}>
-      <body className={`${inter.className} ${inter.variable} ${notoSansKr.variable}`}>
+      <body
+        className={`${inter.className} ${inter.variable} ${notoSansKr.variable}`}
+      >
         <NextIntlClientProvider>
           <Nav />
           {children}
