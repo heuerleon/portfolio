@@ -1,8 +1,9 @@
 "use client";
 
 import { limits, type ContactFormRequestData } from "@/lib/contact";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import { useEffect, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import Turnstile from "react-turnstile";
 import Button from "../Button";
 
@@ -12,6 +13,7 @@ type AlertBoxIconClass = "fa-circle-xmark" | "fa-circle-info" | "fa-circle-check
 export default function ContactForm() {
   const siteKey = process.env.NEXT_PUBLIC_CAPTCHA_KEY;
   const router = useRouter();
+  const t = useTranslations("Contact");
 
   const [subject, setSubject] = useState("");
   const [name, setName] = useState("");
@@ -54,21 +56,13 @@ export default function ContactForm() {
       router.push("/contact-success");
     } else {
       if (status === 400) {
-        errorBox(
-          "Error processing your contact request. Please check your input."
-        );
+        errorBox(t("alerts.badRequest"));
       } else if (status === 500) {
-        errorBox(
-          "Error processing your contact request. There was an internal server error while sending your message. Please use another contact option."
-        );
+        errorBox(t("alerts.serverError"));
       } else if (status === 429) {
-        errorBox(
-          "You are sending too many messages. Please try again one hour later."
-        );
+        errorBox(t("alerts.tooMany"));
       } else {
-        errorBox(
-          "Error processing your contact request. Please use another contact option."
-        );
+        errorBox(t("alerts.generic"));
       }
       const responseBody: unknown = await response.json().catch(() => null);
       console.error(`Got status code ${status} with body:`, responseBody);
@@ -103,7 +97,7 @@ export default function ContactForm() {
       <div className="container">
         <div className="row">
           <div className="column-min">
-            <h2 className="section-heading">Contact Me</h2>
+            <h2 className="section-heading">{t("heading")}</h2>
           </div>
         </div>
         <div className="row row-reversed nowrap">
@@ -112,14 +106,14 @@ export default function ContactForm() {
               <i className="fas fa-envelope-open-text double-line-icon"></i>
               <div>
                 <span className="bold">leon(at)heuer.ovh</span>
-                <span className="light">Send me an email</span>
+                <span className="light">{t("emailLabel")}</span>
               </div>
             </div>
             <div className="contact-option">
               <i className="fab fa-discord double-line-icon"></i>
               <div>
                 <span className="bold">@haku2</span>
-                <span className="light">Add me on discord</span>
+                <span className="light">{t("discordLabel")}</span>
               </div>
             </div>
           </div>
@@ -136,7 +130,7 @@ export default function ContactForm() {
                 <input
                   type="text"
                   name="subject"
-                  placeholder="Subject"
+                  placeholder={t("placeholders.subject")}
                   maxLength={limits.subject}
                   value={subject}
                   onChange={(event) => setSubject(event.target.value)}
@@ -152,7 +146,7 @@ export default function ContactForm() {
                   type="email"
                   name="email"
                   autoComplete="email"
-                  placeholder="Your email address"
+                  placeholder={t("placeholders.email")}
                   maxLength={limits.email}
                   value={email}
                   onChange={(event) => setEmail(event.target.value)}
@@ -168,7 +162,7 @@ export default function ContactForm() {
                   type="text"
                   name="name"
                   autoComplete="name"
-                  placeholder="Your name"
+                  placeholder={t("placeholders.name")}
                   maxLength={limits.name}
                   value={name}
                   onChange={(event) => setName(event.target.value)}
@@ -180,7 +174,7 @@ export default function ContactForm() {
               <div className="input-wrapper">
                 <textarea
                   name="message"
-                  placeholder="Enter message"
+                  placeholder={t("placeholders.message")}
                   maxLength={limits.message}
                   value={message}
                   onChange={(event) => setMessage(event.target.value)}
@@ -197,7 +191,7 @@ export default function ContactForm() {
                   className={`error-message ${token || !sendAttempted ? "hidden" : ""
                     }`}
                 >
-                  You have to complete the captcha.
+                  {t("errors.captcha")}
                 </span>
                 <span
                   className={`error-message ${(email &&
@@ -209,7 +203,7 @@ export default function ContactForm() {
                     : ""
                     }`}
                 >
-                  Please fill in all fields.
+                  {t("errors.fillAll")}
                 </span>
                 <span
                   className={`error-message ${isValidEmail(email) || !sendAttempted
@@ -217,14 +211,14 @@ export default function ContactForm() {
                     : ""
                     }`}
                 >
-                  Please enter a valid E-Mail address.
+                  {t("errors.invalidEmail")}
                 </span>
               </div>
             </div>
             <div className="row row-slim">
               <div className="button-container">
                 <Button primary>
-                  <i className={`fas ${sending ? "fa-spinner fa-spin" : "fa-paper-plane"}`}></i> Send message
+                  <i className={`fas ${sending ? "fa-spinner fa-spin" : "fa-paper-plane"}`}></i> {t("submit")}
                 </Button>
               </div>
             </div>

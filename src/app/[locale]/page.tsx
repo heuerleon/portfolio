@@ -1,6 +1,7 @@
+import { setRequestLocale } from "next-intl/server";
 import TopIntroduction from "@/components/index-page/TopIntroduction";
 import AboutMeContainer from "@/components/index-page/AboutMeContainer";
-import AboutMe from "@/markdown/AboutMe.mdx";
+import AboutMe from "@/components/index-page/AboutMe";
 import ContactForm from "@/components/index-page/ContactForm";
 import Publications, { publications } from "@/components/index-page/Publications";
 import Projects from "@/components/index-page/Projects";
@@ -54,7 +55,14 @@ const jsonLd = {
   ],
 };
 
-export default function Index() {
+export default async function Index({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+
   return (
     <div>
       <script
@@ -65,7 +73,7 @@ export default function Index() {
       />
       <TopIntroduction />
       <AboutMeContainer>
-        <AboutMe/>
+        <AboutMe />
       </AboutMeContainer>
       <Projects />
       <Publications />

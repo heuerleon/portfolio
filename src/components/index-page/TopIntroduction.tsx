@@ -1,10 +1,12 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { useRef, useEffect } from "react";
+import { useTranslations } from "next-intl";
 import Typewriter from "@/components/Typewriter";
 import Button from "@/components/Button";
 import SocialMediaContainer from "@/components/SocialMediaContainer";
+import LanguageSwitcher from "../LanguageSwitcher";
 
 const typewriterStrings = [
   "Full-Stack Developer",
@@ -14,6 +16,7 @@ const typewriterStrings = [
 ];
 
 export default function TopIntroduction() {
+  const t = useTranslations("Hero");
   const bgRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -56,23 +59,25 @@ export default function TopIntroduction() {
               <Typewriter strings={typewriterStrings} />
             </p>
             <h1>Leon Heuer</h1>
+            <p>{t("intro")}</p>
             <p className="p-no-margin">
-              Full-stack developer at Tesla in Berlin with end-to-end project ownership.
-              Previously CS student and software dev at Otto in Hamburg.
-              Former Hanyang University student.
-              I like coding in Rust and Kotlin.
+              <LanguageSwitcher />
             </p>
             <SocialMediaContainer />
             <div>
-              <Button href="/#contact" primary large>Work With Me</Button>
-              <Button href="/#projects" large>Browse Projects</Button>
+              <Button href="/#contact" primary large>
+                {t("workWithMe")}
+              </Button>
+              <Button href="/#projects" large>
+                {t("browseProjects")}
+              </Button>
             </div>
           </div>
         </div>
       </div>
-      <Link href="/#about" className="scroll-down" aria-label="scroll-down">
+      <Link href="/#about" className="scroll-down" aria-label={t("scrollDown")}>
         <span></span>
       </Link>
     </section>
-  )
+  );
 }

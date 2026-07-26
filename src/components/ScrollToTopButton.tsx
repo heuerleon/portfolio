@@ -1,8 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 
 export default function ScrollToTopButton() {
+  const t = useTranslations("Common");
   const [showToTop, setShowToTop] = useState(false);
 
   useEffect(() => {
@@ -28,7 +30,7 @@ export default function ScrollToTopButton() {
 
   return (
     <span className={`scroll-to-top ${showToTop ? "visible" : ""}`}>
-      <a href="#top" aria-label="to-top"><i className="fas fa-chevron-up"></i></a>
+      <a href="#top" aria-label={t("toTop")}><i className="fas fa-chevron-up"></i></a>
     </span>
   )
 }

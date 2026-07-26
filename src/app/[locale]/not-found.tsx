@@ -1,4 +1,4 @@
-import ErrorPage from "@/markdown/ErrorPage.mdx";
+import ErrorPage from "@/components/ErrorPage";
 
 export default function NotFound() {
   return (

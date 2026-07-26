@@ -1,0 +1,123 @@
+{
+  "Metadata": {
+    "title": "Leon Heuer's portfolio",
+    "description": "Personal projects and resume"
+  },
+  "Nav": {
+    "home": "Home",
+    "about": "About Me",
+    "projects": "Projects",
+    "publications": "Publications",
+    "contact": "Contact"
+  },
+  "Hero": {
+    "intro": "Full-stack developer at Tesla in Berlin with end-to-end project ownership. Previously CS student and software dev at Otto in Hamburg. Former Hanyang University student. I like coding in Rust and Kotlin.",
+    "workWithMe": "Work With Me",
+    "browseProjects": "Browse Projects",
+    "scrollDown": "Scroll down"
+  },
+  "AboutMe": {
+    "heading": "About Me",
+    "p1": "I am a young software developer with a passion for programming since I was only 10 years old. I learned how to code by writing server-side Minecraft mods in Kotlin and MongoDB for the server <skyCave>SkyCave</skyCave>, where thousands of players have already used what I developed.",
+    "p2": "Over the past years, I have gained professional experience in TypeScript and React, as well as Java, Kotlin and Rust for backend development. At the moment, I work at <tesla>Tesla</tesla> as a full-stack developer for internal applications.",
+    "p3": "If you're interested in what I do, feel free to browse my <github>GitHub repositories</github> or my <projects>projects</projects> listed below."
+  },
+  "Projects": {
+    "heading": "Projects",
+    "description": "Description",
+    "builtWith": "Built with",
+    "viewSource": "View on GitHub",
+    "sourceAria": "Source code",
+    "iconAltSuffix": "{name} icon",
+    "items": {
+      "portfolio": {
+        "desc": "My self-made portfolio website you're currently looking at."
+      },
+      "osu-backup": {
+        "desc": "GUI based backupper for the game \"osu!\". Allows exporting your local player data and importing it conveniently on another machine."
+      },
+      "sc-islands": {
+        "desc": "An island system for the Minecraft server SkyCave. Allows creation and management of protected Islands with their own regions, members etc."
+      },
+      "sc-jobs": {
+        "desc": "Plugin for the Minecraft Server SkyCave, providing Jobs with different advantages."
+      },
+      "mc-gui-api": {
+        "desc": "MC GUI API is an API for creating graphical user interfaces using inventories in minecraft."
+      }
+    }
+  },
+  "Publications": {
+    "heading": "Publications",
+    "authors": "Authors:",
+    "doiAria": "DOI",
+    "kind": {
+      "workshop": "Workshop Paper",
+      "thesis": "Bachelor's Thesis"
+    }
+  },
+  "Contact": {
+    "heading": "Contact Me",
+    "emailLabel": "Send me an email",
+    "discordLabel": "Add me on discord",
+    "placeholders": {
+      "subject": "Subject",
+      "email": "Your email address",
+      "name": "Your name",
+      "message": "Enter message"
+    },
+    "errors": {
+      "captcha": "You have to complete the captcha.",
+      "fillAll": "Please fill in all fields.",
+      "invalidEmail": "Please enter a valid E-Mail address."
+    },
+    "submit": "Send message",
+    "alerts": {
+      "badRequest": "Error processing your contact request. Please check your input.",
+      "serverError": "Error processing your contact request. There was an internal server error while sending your message. Please use another contact option.",
+      "tooMany": "You are sending too many messages. Please try again one hour later.",
+      "generic": "Error processing your contact request. Please use another contact option."
+    }
+  },
+  "ContactSuccess": {
+    "metaTitle": "Message sent | Leon Heuer",
+    "heading": "Thank you for the request!",
+    "body": "Your message has been sent directly to my phone. I will read it as soon as possible. Expect an answer within 24 hours via E-Mail.",
+    "returnHome": "Return to home"
+  },
+  "ErrorPage": {
+    "heading": "404. This page does not exist :(",
+    "returnHome": "Return to home"
+  },
+  "Footer": {
+    "designedBy": "Designed & built by {name}",
+    "viewOnGitHub": "View on GitHub",
+    "rights": "© {year} {name}, All rights reserved",
+    "legalNotice": "Legal Notice",
+    "privacyPolicy": "Privacy Policy",
+    "imagesFrom": "Contains images from <link>Unsplash</link>"
+  },
+  "LegalPage": {
+    "metaTitle": "Legal Notice | Leon Heuer",
+    "heading": "Legal Notice",
+    "breadcrumbCurrent": "Legal Notice"
+  },
+  "PrivacyPage": {
+    "metaTitle": "Privacy Policy | Leon Heuer",
+    "heading": "Privacy Policy",
+    "breadcrumbCurrent": "Privacy Policy"
+  },
+  "Social": {
+    "github": "GitHub profile",
+    "instagram": "Instagram profile",
+    "linkedin": "LinkedIn profile"
+  },
+  "Common": {
+    "home": "Home",
+    "toTop": "Scroll to top",
+    "germanOnly": "The content of this site is only available in German."
+  },
+  "LanguageSwitcher": {
+    "label": "한국어 사이트"
+  }
+}

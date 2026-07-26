@@ -1,14 +1,17 @@
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 import SocialMediaContainer from "@/components/SocialMediaContainer";
 
 export default function Footer() {
+  const t = useTranslations("Footer");
+
   return (
     <section className="alt-section-dark" id="footer">
       <div className="container">
         <div className="row padding-row">
           <div className="column-centered">
             <SocialMediaContainer noTopMargin/>
-            <span>Designed & built by Leon Heuer</span>
+            <span>{t("designedBy", { name: "Leon Heuer" })}</span>
             <span>
               <a
                 href="https://github.com/heuerleon/portfolio"
@@ -16,17 +19,20 @@ export default function Footer() {
                 target="_blank"
                 rel="noreferrer"
               >
-                View on GitHub
+                {t("viewOnGitHub")}
               </a>
             </span>
             <span className="light">
-              © {new Date().getFullYear()} Leon Heuer, All rights reserved | <Link href="/legal">Legal Notice</Link> | <Link href="/privacy">Privacy Policy</Link>
+              {t("rights", { year: String(new Date().getFullYear()), name: "Leon Heuer" })} | <Link href="/legal">{t("legalNotice")}</Link> | <Link href="/privacy">{t("privacyPolicy")}</Link>
             </span>
             <span className="light">
-              Contains images from{" "}
-              <a href="https://unsplash.com/" target="_blank" rel="noreferrer">
-                Unsplash
-              </a>
+              {t.rich("imagesFrom", {
+                link: (chunks) => (
+                  <a href="https://unsplash.com/" target="_blank" rel="noreferrer">
+                    {chunks}
+                  </a>
+                ),
+              })}
             </span>
           </div>
         </div>

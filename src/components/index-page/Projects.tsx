@@ -1,5 +1,5 @@
 import Image from "next/image";
-
+import { useTranslations } from "next-intl";
 
 type Language = {
   image: string;
@@ -7,15 +7,16 @@ type Language = {
 }
 
 type Project = {
+  id: string;
   image: string;
   title: string;
   langs: Language[];
   source: string;
-  desc: string;
 };
 
 const projects: Project[] = [
   {
+    id: "portfolio",
     image: "/projects/portfolio.jpg",
     title: "My portfolio",
     langs: [
@@ -25,9 +26,9 @@ const projects: Project[] = [
       { image: "/language_icons/sass.svg", title: "SASS/SCSS" },
     ],
     source: "https://github.com/heuerleon/portfolio",
-    desc: "My self-made portfolio website you're currently looking at.",
   },
   {
+    id: "osu-backup",
     image: "/projects/osu-backup.jpg",
     title: "osu!backup",
     langs: [
@@ -35,9 +36,9 @@ const projects: Project[] = [
       { image: "/language_icons/vs.svg", title: "Visual Studio" },
     ],
     source: "https://github.com/heuerleon/osu-backup",
-    desc: 'GUI based backupper for the game "osu!". Allows exporting you local player data and importing it conveniently on another machine. ',
   },
   {
+    id: "sc-islands",
     image: "/projects/sc-islands.jpg",
     title: "SkyCave Island System",
     langs: [
@@ -46,9 +47,9 @@ const projects: Project[] = [
       { image: "/language_icons/mongodb.svg", title: "MongoDB" },
     ],
     source: "https://github.com/skycavemc/island-system",
-    desc: "An island system for the Minecraft server SkyCave. Allows creation and management of protected Islands with their own regions, members etc.",
   },
   {
+    id: "sc-jobs",
     image: "/projects/sc-jobs.jpg",
     title: "SkyCave JobSystem",
     langs: [
@@ -57,10 +58,9 @@ const projects: Project[] = [
       { image: "/language_icons/mongodb.svg", title: "MongoDB" },
     ],
     source: "https://github.com/skycavemc/JobSystem",
-    desc:
-      "Plugin for the Minecraft Server SkyCave, providing Jobs with different advantages.",
   },
   {
+    id: "mc-gui-api",
     image: "/projects/project-3.jpg",
     title: "MC GUI API",
     langs: [
@@ -68,18 +68,18 @@ const projects: Project[] = [
       { image: "/language_icons/intellij.svg", title: "IntelliJ IDEA" },
     ],
     source: "https://github.com/heuerleon/mcguiapi",
-    desc:
-      "MC GUI API is an API for creating graphical user interfaces using inventories in minecraft.",
   },
 ];
 
 export default function Projects() {
+  const t = useTranslations("Projects");
+
   return (
     <section className="padding-section alt-section" id="projects">
       <div className="container">
         <div className="row">
           <div className="column-centered">
-            <h2 className="section-heading">Projects</h2>
+            <h2 className="section-heading">{t("heading")}</h2>
           </div>
         </div>
         <div className="row padding-row x-axis-space-between y-axis-stretched">
@@ -89,7 +89,7 @@ export default function Projects() {
                 className={`featured ${
                   i % 2 === 1 ? "featured-right" : ""
                 }`}
-                key={i}
+                key={project.id}
               >
                 <div className="image-wrapper">
                   <Image
@@ -102,15 +102,15 @@ export default function Projects() {
                 </div>
                 <div className="featured-inner">
                   <h3>{project.title}</h3>
-                  <h4>Description</h4>
-                  <p>{project.desc}</p>
-                  <h4>Built with</h4>
+                  <h4>{t("description")}</h4>
+                  <p>{t(`items.${project.id}.desc`)}</p>
+                  <h4>{t("builtWith")}</h4>
                   <div className="icon-container">
                     {project.langs.map((icon, i) => (
                       <Image
                         key={i}
                         src={icon.image}
-                        alt={icon.title + " icon"}
+                        alt={t("iconAltSuffix", { name: icon.title })}
                         title={icon.title}
                         width={50}
                         height={50}
@@ -122,8 +122,8 @@ export default function Projects() {
                     className="featured-source"
                     target="_blank"
                     rel="noreferrer"
-                    title="View on GitHub"
-                    aria-label="source"
+                    title={t("viewSource")}
+                    aria-label={t("sourceAria")}
                   >
                     <i className="fab fa-github"></i>
                   </a>

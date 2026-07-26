@@ -1,32 +1,19 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { useState, useEffect } from "react";
+import { useTranslations } from "next-intl";
 
-const navItems: { link: string; label: string }[] = [
-  {
-    link: "/#top",
-    label: "Home",
-  },
-  {
-    link: "/#about",
-    label: "About Me",
-  },
-  {
-    link: "/#projects",
-    label: "Projects",
-  },
-  {
-    link: "/#publications",
-    label: "Publications",
-  },
-  {
-    link: "/#contact",
-    label: "Contact",
-  },
+const navItems: { link: string; labelKey: string }[] = [
+  { link: "/#top", labelKey: "home" },
+  { link: "/#about", labelKey: "about" },
+  { link: "/#projects", labelKey: "projects" },
+  { link: "/#publications", labelKey: "publications" },
+  { link: "/#contact", labelKey: "contact" },
 ];
 
 export default function Nav() {
+  const t = useTranslations("Nav");
   const [showMobileNav, setShowMobileNav] = useState(false);
   const [changeMobileNavColor, setChangeMobileNavColor] = useState(false);
 
@@ -88,7 +75,7 @@ export default function Nav() {
           <ul className="nav-links">
             {navItems.map((navItem, i) => (
               <li key={i}>
-                <Link href={navItem.link}>{navItem.label}</Link>
+                <Link href={navItem.link}>{t(navItem.labelKey)}</Link>
               </li>
             ))}
           </ul>
@@ -111,7 +98,7 @@ export default function Nav() {
         <ul onClick={() => setShowMobileNav(false)}>
           {navItems.map((navItem, i) => (
             <li key={i}>
-              <Link href={navItem.link}>{navItem.label}</Link>
+              <Link href={navItem.link}>{t(navItem.labelKey)}</Link>
             </li>
           ))}
         </ul>

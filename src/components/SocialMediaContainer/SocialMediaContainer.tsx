@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl"
 import styles from "./SocialMediaContainer.module.scss"
 
 type SocialMediaContainerProps = {
@@ -5,13 +6,15 @@ type SocialMediaContainerProps = {
 }
 
 export default function SocialMediaContainer({ noTopMargin }: SocialMediaContainerProps) {
+    const t = useTranslations("Social")
+
     return(
         <div className={`${styles.socialMediaContainer} ${noTopMargin ? styles.noTopMargin : ""}`}>
             <a
                 href="https://github.com/heuerleon"
                 target="_blank"
                 rel="noreferrer"
-                aria-label="github"
+                aria-label={t("github")}
             >
                 <i className="fab fa-github"></i>
             </a>
@@ -19,7 +22,7 @@ export default function SocialMediaContainer({ noTopMargin }: SocialMediaContain
                 href="https://www.instagram.com/heuerleon/"
                 target="_blank"
                 rel="noreferrer"
-                aria-label="instagram"
+                aria-label={t("instagram")}
             >
                 <i className="fab fa-instagram"></i>
             </a>
@@ -27,7 +30,7 @@ export default function SocialMediaContainer({ noTopMargin }: SocialMediaContain
                 href="https://www.linkedin.com/in/leonheuer/"
                 target="_blank"
                 rel="noreferrer"
-                aria-label="linkedin"
+                aria-label={t("linkedin")}
             >
                 <i className="fab fa-linkedin"></i>
             </a>
