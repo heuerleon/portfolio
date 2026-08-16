@@ -1,15 +1,14 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import { notFound } from "next/navigation";
+import { redirect } from "next/navigation";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import Nav from "@/components/Nav";
-import Footer from "@/components/Footer";
 import "@/styles/global.scss";
 import { Geist, Noto_Sans_KR, VT323 } from "next/font/google";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
+import { ToastProvider } from "@/components/Toast";
 
 const ogLocales: Record<string, string> = {
   en: "en_US",
@@ -88,7 +87,7 @@ export default async function RootLayout({
 }>) {
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) {
-    notFound();
+    redirect("/");
   }
   setRequestLocale(locale);
 
@@ -98,9 +97,7 @@ export default async function RootLayout({
         className={`${sans.className} ${sans.variable} ${notoSansKr.variable} ${typewriter.variable}`}
       >
         <NextIntlClientProvider>
-          <Nav />
-          {children}
-          <Footer />
+          <ToastProvider>{children}</ToastProvider>
         </NextIntlClientProvider>
         <Analytics />
         <SpeedInsights />

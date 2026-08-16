@@ -53,6 +53,8 @@
   --success-fg: #6ee7b7;
   --error-bg: #33161a;
   --error-fg: #f87171;
+  --info-bg: #16222e;
+  --info-fg: #7dd3fc;
   --warning-fg: #fbbf24;
 }
 
@@ -531,7 +533,6 @@ b {
 
   .terminal-prompt {
     @include terminal-type;
-    margin-top: 15px;
     font-size: 0.9em;
     color: var(--main-color);
 
@@ -544,4 +545,10 @@ b {
       @include terminal-caret;
     }
   }
+}
+
+.secondary-route-header {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }

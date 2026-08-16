@@ -555,57 +555,6 @@ section {
 }
 
 // --------------------------------------------------- //
-//                   ALERTBOX LAYOUT                   //
-// --------------------------------------------------- //
-
-.alert-box {
-  position: fixed;
-  bottom: 30px;
-  left: 50%;
-  transform: translateX(-50%);
-  visibility: hidden;
-  padding: 1rem;
-  border-radius: var(--radius-sm);
-  z-index: 1;
-  font-size: 0.8em;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: center;
-  align-items: center;
-  max-width: 25rem;
-
-  svg,
-  span {
-    display: block;
-  }
-
-  svg {
-    font-size: 1.2em;
-    margin-right: 10px;
-  }
-
-  &.shown {
-    visibility: visible;
-  }
-
-  &.success {
-    background-color: var(--success-bg);
-    color: var(--success-fg);
-  }
-  &.error {
-    background-color: var(--error-bg);
-    color: var(--error-fg);
-  }
-}
-
-@media screen and (width <= 800px) {
-  .alert-box {
-    width: calc(100vw - 60px);
-  }
-}
-
-// --------------------------------------------------- //
 //                    CONTACT FORM                     //
 // --------------------------------------------------- //
 

@@ -39,12 +39,12 @@ export default async function LegalNotice({
       <section className="padding-section alt-section-dark adjust-to-nav">
         <div className="row">
           <div className="column-centered">
+            <p>
+              <Link href="/">{common("home")}</Link> / <Link href="/legal">{t("breadcrumbCurrent")}</Link>
+            </p>
             <h1>{t("heading")}</h1>
             <p className="warning-message">
               <InfoIcon /> {common("germanOnly")}
-            </p>
-            <p>
-              <Link href="/">{common("home")}</Link> / <Link href="/legal">{t("breadcrumbCurrent")}</Link>
             </p>
           </div>
         </div>

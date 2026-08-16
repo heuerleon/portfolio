@@ -8,6 +8,8 @@ const CELL_H = 26;
 const GAP = 2;
 
 const RADIUS = 430;
+const NARROW_RADIUS = 320;
+const NARROW_WIDTH = 800;
 const MAX_ALPHA = 0.1;
 const LEVELS = 16;
 
@@ -44,10 +46,10 @@ function holdOffEdges(value: number, size: number) {
   return value + fromStart - fromEnd;
 }
 
-function glowFalloff(dx: number, dy: number) {
+function glowFalloff(dx: number, dy: number, radius: number) {
   const distance = Math.hypot(dx, dy);
-  if (distance >= RADIUS) return 0;
-  const t = 1 - distance / RADIUS;
+  if (distance >= radius) return 0;
+  const t = 1 - distance / radius;
   const smooth = t * t * (3 - 2 * t);
   return smooth * smooth;
 }
@@ -78,6 +80,7 @@ export default function TerminalBackground() {
 
     let width = 0;
     let height = 0;
+    let radius = RADIUS;
     let heroHeight = 0;
     let started = false;
 
@@ -126,6 +129,7 @@ export default function TerminalBackground() {
             const falloff = glowFalloff(
               col * CELL_W + CELL_W / 2 - originX,
               row * CELL_H + CELL_H / 2 - originY,
+              radius,
             );
 
             ctx.globalAlpha =
@@ -144,15 +148,15 @@ export default function TerminalBackground() {
     const drawAt = (originX: number, originY: number, alpha: number) => {
       ctx.clearRect(0, 0, width, height);
 
-      const firstCol = Math.max(0, Math.floor((originX - RADIUS) / CELL_W));
+      const firstCol = Math.max(0, Math.floor((originX - radius) / CELL_W));
       const lastCol = Math.min(
         Math.ceil(width / CELL_W),
-        Math.ceil((originX + RADIUS) / CELL_W),
+        Math.ceil((originX + radius) / CELL_W),
       );
-      const firstRow = Math.max(0, Math.floor((originY - RADIUS) / CELL_H));
+      const firstRow = Math.max(0, Math.floor((originY - radius) / CELL_H));
       const lastRow = Math.min(
         Math.ceil(height / CELL_H),
-        Math.ceil((originY + RADIUS) / CELL_H),
+        Math.ceil((originY + radius) / CELL_H),
       );
 
       for (let col = firstCol; col < lastCol; col++) {
@@ -160,6 +164,7 @@ export default function TerminalBackground() {
           const falloff = glowFalloff(
             col * CELL_W + CELL_W / 2 - originX,
             row * CELL_H + CELL_H / 2 - originY,
+            radius,
           );
           if (falloff <= 0) continue;
 
@@ -298,6 +303,7 @@ export default function TerminalBackground() {
       const dpr = window.devicePixelRatio || 1;
       width = rect.width;
       height = rect.height;
+      radius = width <= NARROW_WIDTH ? NARROW_RADIUS : RADIUS;
       heroHeight = hero?.offsetHeight ?? 0;
       canvas.width = Math.round(width * dpr);
       canvas.height = Math.round(height * dpr);

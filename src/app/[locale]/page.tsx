@@ -2,9 +2,13 @@ import { setRequestLocale } from "next-intl/server";
 import TopIntroduction from "@/components/index-page/TopIntroduction";
 import AboutMe from "@/components/index-page/AboutMe";
 import ContactForm from "@/components/index-page/ContactForm";
-import Publications, { publications } from "@/components/index-page/Publications";
+import Publications, {
+  publications,
+} from "@/components/index-page/Publications";
 import Projects from "@/components/index-page/Projects";
 import TerminalBackground from "@/components/index-page/TerminalBackground";
+import Footer from "@/components/Footer";
+import Nav from "@/components/Nav";
 
 const personId = "https://heuer.ovh/#person";
 
@@ -65,6 +69,7 @@ export default async function Index({
 
   return (
     <div>
+      <Nav />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -77,6 +82,7 @@ export default async function Index({
       <Projects />
       <Publications />
       <ContactForm />
+      <Footer />
     </div>
   );
 }

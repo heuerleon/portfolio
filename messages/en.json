@@ -75,18 +75,9 @@
       "badRequest": "Error processing your contact request. Please check your input.",
       "serverError": "Error processing your contact request. There was an internal server error while sending your message. Please use another contact option.",
       "tooMany": "You are sending too many messages. Please try again one hour later.",
-      "generic": "Error processing your contact request. Please use another contact option."
+      "generic": "Error processing your contact request. Please use another contact option.",
+      "success": "Your message has been sent directly to my phone. I will read it as soon as possible. Expect an answer within 24 hours via E-Mail."
     }
-  },
-  "ContactSuccess": {
-    "metaTitle": "Message sent | Leon Heuer",
-    "heading": "Thank you for the request!",
-    "body": "Your message has been sent directly to my phone. I will read it as soon as possible. Expect an answer within 24 hours via E-Mail.",
-    "returnHome": "Return to home"
-  },
-  "ErrorPage": {
-    "heading": "404. This page does not exist :(",
-    "returnHome": "Return to home"
   },
   "Footer": {
     "designedBy": "Designed & built by {name}",

@@ -1,33 +1,17 @@
 "use client";
 
 import { limits, type ContactFormRequestData } from "@/lib/contact";
-import { useRouter } from "@/i18n/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { useTranslations } from "next-intl";
 import Turnstile from "react-turnstile";
 import Button from "../Button";
-import {
-  CircleCheckIcon,
-  CircleXIcon,
-  DiscordIcon,
-  InfoIcon,
-  LoaderIcon,
-  MailIcon,
-  SendIcon,
-} from "../Icons";
-
-type AlertBoxStyle = "error" | "info" | "success";
-
-const alertBoxIcons = {
-  error: CircleXIcon,
-  info: InfoIcon,
-  success: CircleCheckIcon,
-} as const;
+import { MailIcon, DiscordIcon, LoaderIcon, SendIcon } from "../Icons";
+import { useToasts } from "../Toast";
 
 export default function ContactForm() {
   const siteKey = process.env.NEXT_PUBLIC_CAPTCHA_KEY;
-  const router = useRouter();
   const t = useTranslations("Contact");
+  const { showToast } = useToasts();
 
   const [subject, setSubject] = useState("");
   const [name, setName] = useState("");
@@ -37,14 +21,6 @@ export default function ContactForm() {
 
   const [sendAttempted, setSendAttempted] = useState(false);
   const [sending, setSending] = useState(false);
-
-  const [showAlertbox, setShowAlertbox] = useState(false);
-  const [alertBoxText, setAlertBoxText] = useState("");
-  const [alertBoxStyle, setAlertBoxStyle] = useState<AlertBoxStyle>("info");
-  const alertTimer = useRef(0);
-  const alertBoxDuration = 5 * 1000;
-
-  useEffect(() => () => clearTimeout(alertTimer.current), []);
 
   async function sendMessage() {
     setSendAttempted(true);
@@ -72,16 +48,16 @@ export default function ContactForm() {
 
     const status = response.status;
     if (status === 200) {
-      router.push("/contact-success");
+      showToast({ variant: "success", text: t("alerts.success") });
     } else {
       if (status === 400) {
-        errorBox(t("alerts.badRequest"));
+        showToast({ variant: "error", text: t("alerts.badRequest") });
       } else if (status === 500) {
-        errorBox(t("alerts.serverError"));
+        showToast({ variant: "error", text: t("alerts.serverError") });
       } else if (status === 429) {
-        errorBox(t("alerts.tooMany"));
+        showToast({ variant: "error", text: t("alerts.tooMany") });
       } else {
-        errorBox(t("alerts.generic"));
+        showToast({ variant: "error", text: t("alerts.generic") });
       }
       const responseBody: unknown = await response.json().catch(() => null);
       console.error(`Got status code ${status} with body:`, responseBody);
@@ -97,23 +73,6 @@ export default function ContactForm() {
     const regex = /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/;
     return regex.test(String(email).toLowerCase());
   }
-
-  function errorBox(text: string) {
-    setAlertBoxStyle("error");
-    showAlertBox(text);
-  }
-
-  function showAlertBox(text: string) {
-    setAlertBoxText(text);
-    setShowAlertbox(true);
-    clearTimeout(alertTimer.current);
-    alertTimer.current = window.setTimeout(
-      () => setShowAlertbox(false),
-      alertBoxDuration,
-    );
-  }
-
-  const AlertBoxIcon = alertBoxIcons[alertBoxStyle];
 
   return (
     <section className="padding-section" id="contact">
@@ -250,12 +209,6 @@ export default function ContactForm() {
             </div>
           </form>
         </div>
-      </div>
-      <div
-        className={`alert-box ${showAlertbox ? "shown" : ""} ${alertBoxStyle}`}
-      >
-        <AlertBoxIcon />
-        <span>{alertBoxText}</span>
       </div>
     </section>
   );
