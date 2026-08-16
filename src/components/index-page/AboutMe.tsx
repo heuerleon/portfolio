@@ -7,7 +7,7 @@ export default function AboutMe() {
     <section className="alt-section padding-section" id="about">
       <div className="container">
         <div className="row padding-row">
-          <div className="column-left">
+          <div className="column-centered">
             <h2 className="section-heading">{t("heading")}</h2>
             <p className="p-capped">
               {t.rich("p1", {

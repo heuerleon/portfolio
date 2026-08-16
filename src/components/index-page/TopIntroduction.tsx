@@ -6,6 +6,7 @@ import Typewriter from "@/components/Typewriter";
 import Button from "@/components/Button";
 import SocialMediaContainer from "@/components/SocialMediaContainer";
 import LanguageSwitcher from "../LanguageSwitcher";
+import TerminalBackground from "./TerminalBackground";
 import Image from "next/image";
 
 const typewriterStrings = [
@@ -20,6 +21,7 @@ export default function TopIntroduction() {
 
   return (
     <section className="full-height y-axis-centered" id="top">
+      <TerminalBackground />
       <div className="container">
         <div className="row x-axis-space-between y-axis-centered">
           <div className="column col-3-double">
@@ -53,7 +55,9 @@ export default function TopIntroduction() {
         </div>
       </div>
       <Link href="/#about" className="scroll-down" aria-label={t("scrollDown")}>
-        <span></span>
+        <span className="scroll-chevron"></span>
+        <span className="scroll-chevron"></span>
+        <span className="scroll-chevron"></span>
       </Link>
     </section>
   );
