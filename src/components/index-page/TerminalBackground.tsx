@@ -10,11 +10,17 @@ const RADIUS = 430;
 const MAX_ALPHA = 0.1;
 const LEVELS = 16;
 
+const SCROLLED_PAST_SHARE = 0.6;
+
 const IDLE_SPREAD = 0.18;
 const IDLE_SPEED = 32;
 const IDLE_TURN = 1.2;
 const IDLE_ARRIVED = 60;
 const IDLE_MIN_TRAVEL = 180;
+
+const FOLLOW_RATE = 6;
+const FOLLOW_SPEED = 1000;
+const FOLLOW_SETTLED = 0.5;
 
 // Keep the push under the reach, or the glow moves against the cursor at an edge.
 const EDGE_PUSH = 200;
@@ -38,19 +44,18 @@ export default function TerminalBackground() {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const section = canvas.closest("section") ?? canvas.parentElement;
-    if (!section) return;
-
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
+    const hero = document.getElementById("top");
+
     let width = 0;
     let height = 0;
+    let heroHeight = 0;
     let started = false;
 
-    // Null while the cursor is away, which hands the glow back to its drift.
     let pointer: { x: number; y: number } | null = null;
 
     let x = 0;
@@ -60,11 +65,14 @@ export default function TerminalBackground() {
     let targetX = 0;
     let targetY = 0;
 
+    let drawnX = NaN;
+    let drawnY = NaN;
+    let drawnAlpha = NaN;
+
     let lastTime = 0;
     let frameId = 0;
-    let onScreen = true;
 
-    const drawAt = (originX: number, originY: number) => {
+    const drawAt = (originX: number, originY: number, alpha: number) => {
       ctx.clearRect(0, 0, width, height);
 
       const firstCol = Math.max(0, Math.floor((originX - RADIUS) / CELL_W));
@@ -92,7 +100,7 @@ export default function TerminalBackground() {
           const level = Math.round(weighted * LEVELS) / LEVELS;
           if (level <= 0) continue;
 
-          ctx.globalAlpha = Math.min(level, 1) * MAX_ALPHA;
+          ctx.globalAlpha = Math.min(level, 1) * alpha;
           ctx.fillRect(col * CELL_W, row * CELL_H, CELL_W - GAP, CELL_H - GAP);
         }
       }
@@ -106,24 +114,33 @@ export default function TerminalBackground() {
       }
     };
 
-    const tick = (time: number) => {
-      frameId = 0;
+    const currentAlpha = () => {
+      if (!heroHeight) return MAX_ALPHA;
+      const heroScrolledPast = Math.min(
+        Math.max(window.scrollY / heroHeight, 0),
+        1,
+      );
+      return MAX_ALPHA * (1 - heroScrolledPast * (1 - SCROLLED_PAST_SHARE));
+    };
 
-      // Nothing to animate while the cursor drives, so this stays on demand.
-      if (pointer) {
-        drawAt(pointer.x, pointer.y);
+    const chase = (elapsed: number) => {
+      if (!pointer) return;
+      const dx = pointer.x - x;
+      const dy = pointer.y - y;
+      const gap = Math.hypot(dx, dy);
+      if (gap < FOLLOW_SETTLED) {
+        x = pointer.x;
+        y = pointer.y;
         return;
       }
 
-      if (reduceMotion.matches) {
-        drawAt(width / 2, height / 2);
-        return;
-      }
+      const eased = gap * (1 - Math.exp(-FOLLOW_RATE * elapsed));
+      const step = Math.min(eased, FOLLOW_SPEED * elapsed);
+      x += (dx / gap) * step;
+      y += (dy / gap) * step;
+    };
 
-      const elapsed = lastTime ? Math.min((time - lastTime) / 1000, 0.1) : 0;
-      lastTime = time;
-
-      // Steering the heading rather than easing the position keeps one pace.
+    const drift = (elapsed: number) => {
       const dx = targetX - x;
       const dy = targetY - y;
       const remaining = Math.hypot(dx, dy) || 1;
@@ -138,13 +155,37 @@ export default function TerminalBackground() {
       x += vx * elapsed;
       y += vy * elapsed;
       if (remaining < IDLE_ARRIVED) pickTarget();
+    };
 
-      drawAt(x, y);
-      if (onScreen) frameId = requestAnimationFrame(tick);
+    const tick = (time: number) => {
+      const elapsed = lastTime ? Math.min((time - lastTime) / 1000, 0.1) : 0;
+      lastTime = time;
+
+      if (reduceMotion.matches) {
+        x = pointer ? pointer.x : width / 2;
+        y = pointer ? pointer.y : height / 2;
+      } else if (pointer) {
+        chase(elapsed);
+      } else {
+        drift(elapsed);
+      }
+
+      const alpha = currentAlpha();
+      if (x !== drawnX || y !== drawnY || alpha !== drawnAlpha) {
+        drawAt(x, y, alpha);
+        drawnX = x;
+        drawnY = y;
+        drawnAlpha = alpha;
+      }
+
+      frameId = requestAnimationFrame(tick);
     };
 
     const schedule = () => {
-      if (!frameId) frameId = requestAnimationFrame(tick);
+      if (!frameId) {
+        lastTime = 0;
+        frameId = requestAnimationFrame(tick);
+      }
     };
 
     const resize = () => {
@@ -152,11 +193,13 @@ export default function TerminalBackground() {
       const dpr = window.devicePixelRatio || 1;
       width = rect.width;
       height = rect.height;
+      heroHeight = hero?.offsetHeight ?? 0;
       canvas.width = Math.round(width * dpr);
       canvas.height = Math.round(height * dpr);
-      // Sizing the canvas wipes its context state.
+      // Sizing the canvas wipes its context state, and its picture with it.
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx.fillStyle = "#ffffff";
+      drawnX = NaN;
 
       if (!started) {
         x = width / 2;
@@ -170,55 +213,31 @@ export default function TerminalBackground() {
       schedule();
     };
 
+    // The canvas is fixed, so client coordinates are already canvas ones.
     const onPointerMove = (event: PointerEvent) => {
       if (event.pointerType !== "mouse") return;
-      const rect = canvas.getBoundingClientRect();
       pointer = {
-        x: holdOffEdges(event.clientX - rect.left, width),
-        y: holdOffEdges(event.clientY - rect.top, height),
+        x: holdOffEdges(event.clientX, width),
+        y: holdOffEdges(event.clientY, height),
       };
-      schedule();
     };
 
     const onPointerLeave = () => {
-      if (pointer) {
-        x = pointer.x;
-        y = pointer.y;
-      }
       pointer = null;
-      lastTime = 0;
       pickTarget();
-      schedule();
     };
 
     const sizing = new ResizeObserver(resize);
     sizing.observe(canvas);
     resize();
 
-    const visibility = new IntersectionObserver(
-      ([entry]) => {
-        onScreen = entry.isIntersecting;
-        if (onScreen) {
-          lastTime = 0;
-          schedule();
-        } else if (frameId) {
-          cancelAnimationFrame(frameId);
-          frameId = 0;
-        }
-      },
-      { threshold: 0 },
-    );
-    visibility.observe(canvas);
-
-    // On the section, so the glow stays with the cursor over the hero text.
-    section.addEventListener("pointermove", onPointerMove);
-    section.addEventListener("pointerleave", onPointerLeave);
+    window.addEventListener("pointermove", onPointerMove);
+    document.addEventListener("pointerleave", onPointerLeave);
 
     return () => {
       sizing.disconnect();
-      visibility.disconnect();
-      section.removeEventListener("pointermove", onPointerMove);
-      section.removeEventListener("pointerleave", onPointerLeave);
+      window.removeEventListener("pointermove", onPointerMove);
+      document.removeEventListener("pointerleave", onPointerLeave);
       if (frameId) cancelAnimationFrame(frameId);
     };
   }, []);

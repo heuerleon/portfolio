@@ -4,6 +4,7 @@ import AboutMe from "@/components/index-page/AboutMe";
 import ContactForm from "@/components/index-page/ContactForm";
 import Publications, { publications } from "@/components/index-page/Publications";
 import Projects from "@/components/index-page/Projects";
+import TerminalBackground from "@/components/index-page/TerminalBackground";
 
 const personId = "https://heuer.ovh/#person";
 
@@ -70,6 +71,7 @@ export default async function Index({
           __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
         }}
       />
+      <TerminalBackground />
       <TopIntroduction />
       <AboutMe />
       <Projects />

@@ -28,11 +28,9 @@
   }
 }
 
-// The raised surface shared by the card-like blocks on the page: publications
-// and timeline entries. Padding and spacing stay with each component.
 @mixin card {
   background: var(--bg-lighter);
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   box-shadow: var(--shadow-lighter);
   transition: var(--trans-default);
 
@@ -41,113 +39,64 @@
   }
 }
 
-// --------------------------------------------------- //
-//                       FEATURED                      //
-// --------------------------------------------------- //
-
-.featured {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  width: 100%;
-  background: var(--bg-lighter);
-  border-radius: 10px;
-  max-height: 400px;
-  box-shadow: var(--shadow-lighter);
+@mixin hover-card {
+  padding: 20px calc(var(--gutter) - 2px);
+  border: 2px solid transparent;
+  border-radius: var(--radius-md);
   transition: var(--trans-default);
+
+  &:hover {
+    color: inherit;
+    border-color: var(--border-color);
+    background-color: color-mix(in srgb, var(--bg-lighter) 40%, transparent);
+    box-shadow: var(--shadow-light);
+  }
+}
+
+// --------------------------------------------------- //
+//                       PROJECTS                      //
+// --------------------------------------------------- //
+
+.projects-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px 40px;
   margin: 20px 0;
+}
 
-  h3 {
-    font-size: 1.5em;
-    margin: 0 0 10px;
-    font-weight: 800;
-  }
-
-  h4 {
-    font-size: 0.8em;
-    color: var(--fg-lighter);
-    font-weight: 700;
-    margin: 0 0 5px;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    display: inline-flex;
-    align-items: center;
-
-    &::before {
-      content: "";
-      height: 2px;
-      width: 20px;
-      background-color: var(--fg-lighter);
-      display: block;
-      margin-right: 10px;
-    }
-  }
+.project {
+  @include hover-card;
+  display: flex;
+  flex-direction: column;
 
   p {
-    font-size: 1em;
+    font-size: 0.9em;
     opacity: 0.8;
-    margin-bottom: 10px;
+    margin: 0 0 15px;
   }
 
-  &:hover {
-    box-shadow: var(--shadow-light);
-
-    .featured-thumbnail {
-      transform: scale(1.2);
-    }
-  }
-
-  .image-wrapper {
-    height: 100%;
-    width: 50%;
-    display: flex;
-    position: relative;
-    overflow: hidden;
-    box-sizing: border-box;
-    border-radius: 10px 0 0 10px;
-
-    &::after {
-      content: "";
-      display: block;
-      position: absolute;
-      bottom: -1px;
-      right: -150px;
-      background-color: var(--bg-lighter);
-      z-index: 5;
-      width: 150px;
-      height: 100%;
-      transform-origin: top right;
-      transform: skew(-20deg);
-      transition: var(--trans-anim);
-    }
+  &:hover .project-stack span {
+    color: var(--accent);
   }
 }
 
-.featured-thumbnail {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 10px 0 0 10px;
-  transition: var(--trans-anim);
-}
-
-.featured-inner {
-  position: relative;
-  box-sizing: border-box;
-  padding: 20px;
-  width: 50%;
-}
-
-.featured-source {
+.project-heading {
   font-size: 1.5em;
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
+  font-weight: 800;
+  margin: 0 0 10px;
   display: flex;
   align-items: center;
+  gap: 12px;
+}
+
+.project-source {
+  display: flex;
+  align-items: center;
+  font-size: 0.6em;
+  margin-left: 4px;
+  padding: 4px;
+  transition: var(--trans-default);
 
   &:hover {
     color: var(--accent);
@@ -155,21 +104,25 @@
   }
 }
 
-.featured-right {
-  flex-direction: row-reverse;
+.project-stack {
+  margin-bottom: 0;
+  display: flex;
+  gap: 8px;
 
-  .image-wrapper {
-    border-radius: 0 10px 10px 0;
+  span {
+    font-family: var(--font-vt);
+    transition: var(--trans-default);
 
     &::after {
-      left: -150px;
-      top: -1px;
-      transform-origin: bottom left;
+      color: var(--main-color);
+      opacity: 0.2;
+      content: "/";
+      margin-left: 8px;
     }
-  }
 
-  .featured-thumbnail {
-    border-radius: 0 10px 10px 0;
+    &:last-child::after {
+      display: none;
+    }
   }
 }
 
@@ -178,10 +131,9 @@
 // --------------------------------------------------- //
 
 .publication {
-  @include card;
+  @include hover-card;
   display: flex;
   flex-direction: column;
-  padding: 20px;
   width: 100%;
   margin: 20px 0;
 
@@ -196,27 +148,19 @@
     opacity: 0.8;
     margin: 20px 0;
   }
+
+  &:hover {
+    .publication-doi {
+      color: var(--accent);
+    }
+  }
 }
 
 .publication-doi {
-  font-size: 0.8em;
-  position: relative;
   align-self: start;
-
-  &::after {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    content: "";
-    height: 1px;
-    width: 100%;
-    background: var(--main-color);
-    transition: var(--trans-default);
-  }
-
-  &:hover::after {
-    background: var(--accent);
-  }
+  font-size: 1.1em;
+  transition: var(--trans-default);
+  font-family: var(--font-vt);
 }
 
 .publication-metadata {
@@ -230,7 +174,6 @@
   margin-left: 10px;
 }
 
-// Used between metadata fields wherever they are listed inline.
 .metadata-separator {
   margin: 0 8px;
   opacity: 0.5;
@@ -251,186 +194,18 @@
 }
 
 // --------------------------------------------------- //
-//                     CV TIMELINE                     //
-// --------------------------------------------------- //
-
-// The section itself is only a scroll runway: AboutStage grows its height by
-// however far the track has to travel, and the stage inside stays pinned for
-// exactly that distance before the page carries on down.
-.about-section {
-  padding: 0;
-}
-
-.about-stage {
-  position: sticky;
-  top: 0;
-  width: 100%;
-  height: 100vh;
-  min-height: 600px; // keeps the stage usable on short windows
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 40px;
-  padding: 60px 0;
-  overflow: hidden;
-}
-
-.about-intro {
-  flex: 0 0 auto;
-}
-
-// Without JS, or on narrow screens, this is simply a swipeable strip; while
-// pinned the transform drives it instead, so native scrolling is switched off.
-.timeline-viewport {
-  flex: 1 1 auto;
-  min-height: 0;
-  display: flex;
-  align-items: center;
-  overflow-x: auto;
-  scrollbar-width: thin;
-  scrollbar-color: var(--border-color) transparent;
-  scroll-snap-type: x proximity;
-
-  // Line the first card up with the container edge, then let the track run
-  // out to the right edge of the screen.
-  padding-left: max(15px, calc((100% - var(--global-max-width)) / 2));
-}
-
-.pinned .timeline-viewport {
-  overflow: hidden;
-}
-
-.timeline {
-  list-style: none;
-  margin: 0;
-  padding: 0 25px 0 0;
-  position: relative;
-  display: flex;
-  align-items: stretch;
-  gap: 25px;
-  will-change: transform;
-
-  // The track must keep its full natural width. As a flex item it would
-  // otherwise shrink to the viewport, leaving nothing to scroll through.
-  flex: 0 0 auto;
-  min-width: max-content;
-
-  // The rail, running the length of the track through every marker.
-  &::before {
-    content: "";
-    position: absolute;
-    top: 11px;
-    left: 0;
-    right: 25px;
-    height: 2px;
-    background-color: var(--border-color);
-  }
-}
-
-.timeline-entry {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  flex: 0 0 320px;
-  margin: 0;
-  scroll-snap-align: start;
-
-  // Marker, sitting on the rail above the card.
-  &::before {
-    content: "";
-    position: absolute;
-    top: 6px;
-    left: 0;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background-color: var(--bg);
-    border: 2px solid var(--border-color);
-    transition: var(--trans-default);
-    z-index: 1;
-  }
-
-  &.current::before {
-    border-color: var(--accent);
-  }
-}
-
-.timeline-meta {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 8px;
-  padding-left: 22px;
-  margin-bottom: 12px;
-}
-
-.timeline-period {
-  font-size: 0.7em;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--fg-lighter);
-}
-
-.timeline-content {
-  @include card;
-  padding: 20px;
-  flex: 1 1 auto; // cards in a row all end at the same height
-}
-
-// Stacked layout: no pinning to do, so the stage goes back to flowing with
-// the page and the strip is swiped by hand. The breakpoint matches the one
-// AboutStage checks before it pins.
-@media screen and (width <= 1000px) {
-  .about-stage {
-    position: static;
-    height: auto;
-    min-height: 0;
-    padding: 80px 0;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .about-stage {
-    position: static;
-    height: auto;
-    min-height: 0;
-    padding: 80px 0;
-  }
-}
-
-.timeline-role {
-  font-size: 1.1em;
-  font-weight: 700;
-  text-transform: none;
-  margin: 0 0 3px;
-}
-
-.timeline-location {
-  display: block;
-  font-size: 0.8em;
-  color: var(--fg-lighter);
-}
-
-.timeline-desc {
-  font-size: 0.8em;
-  margin: 15px 0 0;
-}
-
-// --------------------------------------------------- //
 //                    SECTION LAYOUT                   //
 // --------------------------------------------------- //
 
 section {
   display: flex;
   position: relative;
-  background-color: var(--bg);
   color: var(--main-color);
   padding: 20px 0;
 }
 
 .padding-section {
-  padding: 80px 0;
+  padding: 90px 0;
 }
 
 .full-height {
@@ -501,7 +276,7 @@ section {
   justify-content: center;
   width: 100%;
   box-sizing: border-box;
-  padding: 0 15px;
+  padding: 0 var(--gutter);
 }
 
 .column {
@@ -532,7 +307,7 @@ section {
   flex-wrap: wrap;
   width: 100%;
   box-sizing: border-box;
-  padding: 0 15px;
+  padding: 0 var(--gutter);
 }
 
 .column-min {
@@ -651,7 +426,7 @@ section {
 //                  NAVIGATION LAYOUT                  //
 // --------------------------------------------------- //
 
-.mobile-nav {
+.nav {
   position: fixed;
   width: 100%;
   height: var(--nav-height);
@@ -666,20 +441,20 @@ section {
     margin: 0;
     padding: 0;
     position: absolute;
-    top: 50%;
+    top: 30%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -30%);
     transition: var(--trans-default);
 
     li {
       list-style: none;
-      margin: 0;
+      margin: 0 0 15px;
       transition: var(--trans-default);
 
       a {
         display: block;
-        padding: 1.2rem;
-        font-size: 1.5em;
+        padding: 1.4rem;
+        font-size: 1.7em;
         font-weight: 500;
 
         &:hover {
@@ -692,7 +467,12 @@ section {
   .nav-top-bar {
     width: 100%;
     max-width: var(--global-max-width);
+    height: var(--nav-height);
     margin: 0 auto;
+    padding: 0 var(--gutter);
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
     position: relative;
   }
 
@@ -726,7 +506,7 @@ section {
       height: 2px;
       width: 18px;
       background-color: var(--main-color);
-      border-radius: 2px;
+      border-radius: var(--radius-round);
       transition: var(--trans-default);
     }
 
@@ -770,94 +550,6 @@ section {
   }
 }
 
-@media screen and (width > 800px) {
-  .mobile-nav {
-    display: none;
-  }
-}
-
-.desktop-nav {
-  position: absolute;
-  width: 100%;
-  top: 0;
-  left: 0;
-  z-index: 10;
-  height: var(--nav-height);
-  color: var(--main-color);
-  transition: var(--trans-anim);
-
-  &.nav-collapsed {
-    position: fixed;
-    transform: translateY(calc(var(--nav-height) * -1));
-    background-color: var(--bg-dark);
-    opacity: 0;
-  }
-
-  &.nav-slidein {
-    position: fixed;
-    transform: translateY(0);
-    background-color: var(--bg-dark);
-    z-index: 100;
-  }
-
-  .nav-inner {
-    max-width: var(--global-max-width);
-    margin: 0 auto;
-    padding: 0 15px;
-    display: flex;
-    align-items: center;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    box-sizing: border-box;
-  }
-
-  .nav-links {
-    margin: 0;
-    padding: 0;
-    opacity: 1;
-
-    li {
-      display: inline-block;
-      list-style: none;
-      margin: 0 20px;
-      height: var(--nav-height);
-      @include shrink-margins();
-
-      a {
-        position: relative;
-        font-size: 0.7em;
-        font-weight: 500;
-        display: inline-flex;
-        align-items: center;
-        transition: var(--trans-default);
-        height: 100%;
-
-        &::after {
-          content: "";
-          display: block;
-          background-color: transparent;
-          height: 2px;
-          width: 100%;
-          position: absolute;
-          bottom: calc(50% - 10px);
-          left: 0;
-          transition: var(--trans-default);
-        }
-
-        &:hover::after {
-          background-color: var(--accent);
-        }
-      }
-    }
-  }
-}
-
-@media screen and (width <= 800px) {
-  .desktop-nav {
-    display: none;
-  }
-}
-
 .adjust-to-nav {
   margin-top: var(--nav-height);
 }
@@ -873,7 +565,7 @@ section {
   transform: translateX(-50%);
   visibility: hidden;
   padding: 1rem;
-  border-radius: 0.5rem;
+  border-radius: var(--radius-sm);
   z-index: 1;
   font-size: 0.8em;
   display: flex;
@@ -910,5 +602,127 @@ section {
 @media screen and (width <= 800px) {
   .alert-box {
     width: calc(100vw - 60px);
+  }
+}
+
+// --------------------------------------------------- //
+//                    CONTACT FORM                     //
+// --------------------------------------------------- //
+
+.contact-form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  flex: 1;
+  min-width: 0;
+
+  > * {
+    grid-column: 1 / -1;
+  }
+
+  .half-input {
+    grid-column: span 1;
+  }
+}
+
+.input-wrapper {
+  width: 100%;
+  position: relative;
+
+  span {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    font-size: 0.7em;
+    opacity: 0.7;
+    width: fit-content;
+  }
+}
+
+
+.error-message {
+  color: var(--error-fg);
+  font-size: 0.8em;
+}
+
+.warning-message {
+  color: var(--warning-fg);
+  font-size: 0.8em;
+}
+
+input,
+textarea {
+  font: inherit;
+  font-size: 0.8em;
+  font-weight: 500;
+  padding: 15px 25px;
+  box-sizing: border-box;
+  cursor: text;
+  width: 100%;
+  display: block;
+  color: var(--main-color);
+  border: none;
+  border-radius: var(--radius-sm);
+  transition: var(--trans-default);
+  box-shadow: var(--shadow-light);
+  outline: 2px solid var(--border-color);
+    background-color: color-mix(in srgb, var(--bg-lighter) 40%, transparent);
+
+  &::placeholder {
+    color: var(--fg-lighter);
+  }
+
+  &:hover {
+    background-color: color-mix(in srgb, var(--bg-lighter) 60%, transparent);
+  }
+
+  &:focus {
+    background-color: color-mix(in srgb, var(--bg-lighter) 80%, transparent);
+    outline: 2px solid var(--accent);
+  }
+}
+
+textarea {
+  resize: vertical;
+  min-height: 5em;
+  height: 15em;
+  max-height: 30em;
+  transition:
+    all var(--trans-default),
+    height 0ms linear;
+}
+
+.empty-input {
+  color: var(--error-fg);
+}
+
+.captcha-wrapper {
+  margin: 10px 0;
+
+  span {
+    display: block;
+  }
+}
+
+.contact-option {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 0 0 20px;
+  text-align: left;
+
+  div {
+    display: block;
+
+    span {
+      display: block;
+      white-space: nowrap;
+    }
+  }
+
+  svg {
+    display: block;
+    font-size: 1.5em;
+    margin-right: 15px;
   }
 }

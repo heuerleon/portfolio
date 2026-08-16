@@ -148,109 +148,105 @@ export default function ContactForm() {
             }}
             noValidate
           >
-            <div className="row row-slim">
-              <div className="input-wrapper">
-                <input
-                  type="text"
-                  name="subject"
-                  placeholder={t("placeholders.subject")}
-                  maxLength={limits.subject}
-                  value={subject}
-                  onChange={(event) => setSubject(event.target.value)}
-                  className={!subject && sendAttempted ? "empty-input" : ""}
-                />
-                <span>
-                  {subject.length}/{limits.subject}
-                </span>
-              </div>
-
-              <div className="input-wrapper half-input">
-                <input
-                  type="email"
-                  name="email"
-                  autoComplete="email"
-                  placeholder={t("placeholders.email")}
-                  maxLength={limits.email}
-                  value={email}
-                  onChange={(event) => setEmail(event.target.value)}
-                  className={
-                    !isValidEmail(email) && sendAttempted ? "empty-input" : ""
-                  }
-                />
-                <span>
-                  {email.length}/{limits.email}
-                </span>
-              </div>
-
-              <div className="input-wrapper half-input">
-                <input
-                  type="text"
-                  name="name"
-                  autoComplete="name"
-                  placeholder={t("placeholders.name")}
-                  maxLength={limits.name}
-                  value={name}
-                  onChange={(event) => setName(event.target.value)}
-                  className={!name && sendAttempted ? "empty-input" : ""}
-                />
-                <span>
-                  {name.length}/{limits.name}
-                </span>
-              </div>
-
-              <div className="input-wrapper">
-                <textarea
-                  name="message"
-                  placeholder={t("placeholders.message")}
-                  maxLength={limits.message}
-                  value={message}
-                  onChange={(event) => setMessage(event.target.value)}
-                  className={!message && sendAttempted ? "empty-input" : ""}
-                ></textarea>
-                <span>
-                  {message.length}/{limits.message}
-                </span>
-              </div>
-
-              <div className="captcha-wrapper">
-                {siteKey && (
-                  <Turnstile
-                    sitekey={siteKey}
-                    onSuccess={setToken}
-                    theme="dark"
-                  />
-                )}
-                <span
-                  className={`error-message ${
-                    token || !sendAttempted ? "hidden" : ""
-                  }`}
-                >
-                  {t("errors.captcha")}
-                </span>
-                <span
-                  className={`error-message ${
-                    (email && name && subject && message) || !sendAttempted
-                      ? "hidden"
-                      : ""
-                  }`}
-                >
-                  {t("errors.fillAll")}
-                </span>
-                <span
-                  className={`error-message ${
-                    isValidEmail(email) || !sendAttempted ? "hidden" : ""
-                  }`}
-                >
-                  {t("errors.invalidEmail")}
-                </span>
-              </div>
+            <div className="input-wrapper">
+              <input
+                type="text"
+                name="subject"
+                placeholder={t("placeholders.subject")}
+                maxLength={limits.subject}
+                value={subject}
+                onChange={(event) => setSubject(event.target.value)}
+                className={!subject && sendAttempted ? "empty-input" : ""}
+              />
+              <span>
+                {subject.length}/{limits.subject}
+              </span>
             </div>
-            <div className="row row-slim">
-              <div className="button-container">
-                <Button primary>
-                  {sending ? <LoaderIcon /> : <SendIcon />} {t("submit")}
-                </Button>
-              </div>
+
+            <div className="input-wrapper half-input">
+              <input
+                type="email"
+                name="email"
+                autoComplete="email"
+                placeholder={t("placeholders.email")}
+                maxLength={limits.email}
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                className={
+                  !isValidEmail(email) && sendAttempted ? "empty-input" : ""
+                }
+              />
+              <span>
+                {email.length}/{limits.email}
+              </span>
+            </div>
+
+            <div className="input-wrapper half-input">
+              <input
+                type="text"
+                name="name"
+                autoComplete="name"
+                placeholder={t("placeholders.name")}
+                maxLength={limits.name}
+                value={name}
+                onChange={(event) => setName(event.target.value)}
+                className={!name && sendAttempted ? "empty-input" : ""}
+              />
+              <span>
+                {name.length}/{limits.name}
+              </span>
+            </div>
+
+            <div className="input-wrapper">
+              <textarea
+                name="message"
+                placeholder={t("placeholders.message")}
+                maxLength={limits.message}
+                value={message}
+                onChange={(event) => setMessage(event.target.value)}
+                className={!message && sendAttempted ? "empty-input" : ""}
+              ></textarea>
+              <span>
+                {message.length}/{limits.message}
+              </span>
+            </div>
+
+            <div className="captcha-wrapper">
+              {siteKey && (
+                <Turnstile
+                  sitekey={siteKey}
+                  onSuccess={setToken}
+                  theme="dark"
+                />
+              )}
+              <span
+                className={`error-message ${
+                  token || !sendAttempted ? "hidden" : ""
+                }`}
+              >
+                {t("errors.captcha")}
+              </span>
+              <span
+                className={`error-message ${
+                  (email && name && subject && message) || !sendAttempted
+                    ? "hidden"
+                    : ""
+                }`}
+              >
+                {t("errors.fillAll")}
+              </span>
+              <span
+                className={`error-message ${
+                  isValidEmail(email) || !sendAttempted ? "hidden" : ""
+                }`}
+              >
+                {t("errors.invalidEmail")}
+              </span>
+            </div>
+            <div className="button-container">
+              <Button primary>
+                {sending ? <LoaderIcon /> : <SendIcon />} {t("submit")}
+              </Button>
             </div>
           </form>
         </div>

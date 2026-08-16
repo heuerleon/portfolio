@@ -50,9 +50,16 @@ export default function Publications() {
           </div>
         </div>
         <div className="row padding-row x-axis-space-between y-axis-stretched">
-          <div className="column">
+          <div className="column col-no-padding">
             {publications.map((pub, i) => (
-              <div className="publication" key={i}>
+              <a
+                className="publication"
+                key={i}
+                href={pub.doiLink}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={t("doiAria")}
+              >
                 <h3>{pub.title}</h3>
                 <div className="publication-metadata">
                   {format.dateTime(new Date(pub.date), {
@@ -73,17 +80,10 @@ export default function Publications() {
                   {pub.abstract.slice(0, 500) +
                     (pub.abstract.length > 500 ? "..." : "")}
                 </p>
-                <a
-                  href={pub.doiLink}
-                  className="publication-doi"
-                  target="_blank"
-                  rel="noreferrer"
-                  title="DOI"
-                  aria-label={t("doiAria")}
-                >
+                <span className="publication-doi" title="DOI">
                   {pub.doi}
-                </a>
-              </div>
+                </span>
+              </a>
             ))}
           </div>
         </div>

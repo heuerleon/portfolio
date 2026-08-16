@@ -28,7 +28,6 @@
     "builtWith": "Built with",
     "viewSource": "View on GitHub",
     "sourceAria": "Source code",
-    "iconAltSuffix": "{name} icon",
     "items": {
       "portfolio": {
         "desc": "My self-made portfolio website you're currently looking at."

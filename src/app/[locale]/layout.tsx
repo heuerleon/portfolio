@@ -5,13 +5,11 @@ import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
-import ScrollToTopButton from "@/components/ScrollToTopButton";
 import "@/styles/global.scss";
-import { Geist, Geist_Mono, Inter, Noto_Sans_KR, VT323 } from "next/font/google";
+import { Geist, Noto_Sans_KR, VT323 } from "next/font/google";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
-import { subscribe } from "node:diagnostics_channel";
 
 const ogLocales: Record<string, string> = {
   en: "en_US",
@@ -103,7 +101,6 @@ export default async function RootLayout({
           <Nav />
           {children}
           <Footer />
-          <ScrollToTopButton />
         </NextIntlClientProvider>
         <Analytics />
         <SpeedInsights />

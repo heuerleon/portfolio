@@ -4,10 +4,17 @@
 
   --global-max-width: 1100px;
   --nav-height: 60px;
+  --gutter: 15px;
 
   --shadow-lighter: 0 5px 20px rgba(0, 0, 0, 0.25);
   --shadow-light: 0 5px 20px rgba(0, 0, 0, 0.4);
   --default-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+
+  // ---------------------------- radii ---------------------------- //
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-round: 9999px;
 
   // ------------------------- brand scale ------------------------- //
   --brand-50: #e1faff;
@@ -24,22 +31,22 @@
   // ------------- surfaces, deepest to most elevated -------------- //
   // Neutrals carry a slight blue cast towards the brand hue. The tint grows
   // with each step so the raised surfaces read coolest.
-  --bg-dark: #050609; // page chrome: hero, nav bar, footer
-  --bg: #0a0c10; // page + default section background
-  --bg-light: #101319; // alternating sections
-  --bg-lighter: #171c23; // cards, inputs, anything raised
-  --bg-bright: #21272f; // hover state of a raised surface
+  --bg-dark: #050609;
+  --bg: #0a0c10;
+  --bg-light: #101319;
+  --bg-lighter: #171c23;
+  --bg-bright: #21272f;
 
   // ---------------------------- text ----------------------------- //
-  --main-color: #f2f4f8; // primary text
-  --fg-lighter: #9ba3b2; // secondary / muted text
-  --border-color: #333b47; // hairlines and outlines
+  --main-color: #f2f4f8;
+  --fg-lighter: #9ba3b2;
+  --border-color: #333b47;
 
   // --------------------------- accent ---------------------------- //
-  --accent-light: var(--brand-400); // hover
-  --accent: var(--brand-500); // default
-  --accent-dark: var(--brand-700); // pressed, gradients
-  --accent-contrast: var(--bg-dark); // text sitting on an accent fill
+  --accent-light: var(--brand-400);
+  --accent: var(--brand-500);
+  --accent-dark: var(--brand-700);
+  --accent-contrast: var(--bg-dark);
 
   // --------------------------- status ---------------------------- //
   --success-bg: #12291c;
@@ -49,7 +56,6 @@
   --warning-fg: #fbbf24;
 }
 
-// Sections alternate between the base background and one step up.
 .alt-section {
   --bg: var(--bg-light);
 }
@@ -306,145 +312,8 @@ b {
   animation: spin 1s linear infinite;
 }
 
-.error-message {
-  color: var(--error-fg);
-  font-size: 0.8em;
-}
-
-.warning-message {
-  color: var(--warning-fg);
-  font-size: 0.8em;
-}
-
-input,
-textarea {
-  font: inherit;
-  font-size: 0.8em;
-  font-weight: 500;
-  padding: 15px 25px;
-  box-sizing: border-box;
-  cursor: text;
-  width: 100%;
-  display: block;
-  background-color: var(--bg-lighter);
-  color: var(--main-color);
-  border: none;
-  border-radius: 10px;
-  transition: var(--trans-default);
-  opacity: 0.7;
-  outline: 0 solid transparent;
-  box-shadow: var(--shadow-light);
-  outline: 2px solid transparent;
-
-  &::placeholder {
-    color: var(--fg-lighter);
-  }
-
-  &:hover {
-    opacity: 1;
-    background-color: var(--bg-bright);
-  }
-
-  &:focus {
-    opacity: 1;
-    background-color: var(--bg-bright);
-    outline: 2px solid var(--accent);
-  }
-}
-
-textarea {
-  resize: vertical;
-  min-height: 5em;
-  height: 15em;
-  max-height: 30em;
-  transition:
-    all var(--trans-default),
-    height 0ms linear;
-}
-
-.empty-input {
-  color: var(--error-fg);
-}
-
-.input-wrapper {
-  width: 100%;
-  position: relative;
-  margin: 10px 0;
-  position: relative;
-
-  span {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    font-size: 0.7em;
-    opacity: 0.7;
-    width: fit-content;
-  }
-}
-
-.half-input {
-  width: calc(50% - 5px);
-  margin-left: 10px;
-
-  &:nth-of-type(2) {
-    margin-left: 0;
-  }
-}
-
-.captcha-wrapper {
-  margin: 10px 0;
-
-  span {
-    display: block;
-  }
-}
-
-.contact-option {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin: 20px 0 10px;
-  text-align: left;
-
-  div {
-    display: block;
-
-    span {
-      display: block;
-      white-space: nowrap;
-    }
-  }
-
-  svg {
-    display: block;
-    font-size: 1.5em;
-    margin-right: 15px;
-  }
-}
-
-.icon-container {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-
-  img {
-    position: relative;
-    max-width: 25px;
-    max-height: 25px;
-    margin: 0 5px;
-    transition: var(--trans-default);
-
-    &:hover {
-      opacity: 0.8;
-    }
-
-    @include shrink-margins(0);
-  }
-}
-
 .portrait-photo {
-  border-radius: 9999px;
+  border-radius: var(--radius-round);
   transition: var(--trans-default);
 
   &:hover {
@@ -466,14 +335,22 @@ textarea {
 }
 
 .scroll-down {
-  position: absolute;
+  position: fixed;
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
-  transition: var(--trans-default);
+  transition:
+    opacity var(--trans-anim),
+    visibility var(--trans-anim);
+}
+
+.scroll-down-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
 }
 
 .scroll-chevron {
@@ -521,7 +398,7 @@ textarea {
   &,
   &::after,
   img {
-    border-radius: 20px;
+    border-radius: var(--radius-lg);
     transition: var(--trans-default);
   }
 
@@ -570,7 +447,7 @@ textarea {
     justify-content: center;
     width: 45px;
     height: 45px;
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
     background-color: var(--accent);
     color: var(--main-color);
     transition: var(--trans-default);
@@ -609,10 +486,8 @@ textarea {
 
 #top {
   overflow: hidden;
-  isolation: isolate;
   view-timeline-name: --hero-exit;
 
-  // Everything in the hero rides above the terminal behind it.
   .container {
     position: relative;
     z-index: 1;
@@ -624,7 +499,7 @@ textarea {
 }
 
 .terminal-bg {
-  position: absolute;
+  position: fixed;
   inset: 0;
   z-index: 0;
   width: 100%;

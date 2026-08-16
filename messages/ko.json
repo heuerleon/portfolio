@@ -28,7 +28,6 @@
     "builtWith": "사용 기술",
     "viewSource": "GitHub에서 보기",
     "sourceAria": "소스 코드",
-    "iconAltSuffix": "{name} 아이콘",
     "items": {
       "portfolio": {
         "desc": "지금 보고 계신, 제가 직접 만든 포트폴리오 웹사이트입니다."

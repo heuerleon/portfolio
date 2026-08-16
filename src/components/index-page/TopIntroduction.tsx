@@ -1,13 +1,15 @@
 "use client";
 
 import { Link } from "@/i18n/navigation";
+import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import Typewriter from "@/components/Typewriter";
 import Button from "@/components/Button";
 import SocialMediaContainer from "@/components/SocialMediaContainer";
 import LanguageSwitcher from "../LanguageSwitcher";
-import TerminalBackground from "./TerminalBackground";
 import Image from "next/image";
+
+const HERO_LEAVING_SHARE = 0.12;
 
 const typewriterStrings = [
   "Full-Stack Developer",
@@ -18,10 +20,39 @@ const typewriterStrings = [
 
 export default function TopIntroduction() {
   const t = useTranslations("Hero");
+  const heroRef = useRef<HTMLElement>(null);
+
+  const [heroInView, setHeroInView] = useState(true);
+
+  useEffect(() => {
+    const hero = heroRef.current;
+    if (!hero) return;
+
+    let frame = 0;
+
+    // Measured against the hero, not the viewport: 100vh outruns the visible
+    // area on mobile while the browser chrome is showing.
+    const update = () => {
+      frame = 0;
+      const { top, height } = hero.getBoundingClientRect();
+      setHeroInView(top > -height * HERO_LEAVING_SHARE);
+    };
+
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      cancelAnimationFrame(frame);
+    };
+  }, []);
 
   return (
-    <section className="full-height y-axis-centered" id="top">
-      <TerminalBackground />
+    <section className="full-height y-axis-centered" id="top" ref={heroRef}>
       <div className="container">
         <div className="row x-axis-space-between y-axis-centered">
           <div className="column col-3-double">
@@ -54,7 +85,11 @@ export default function TopIntroduction() {
           </div>
         </div>
       </div>
-      <Link href="/#about" className="scroll-down" aria-label={t("scrollDown")}>
+      <Link
+        href="/#about"
+        className={`scroll-down ${heroInView ? "" : "scroll-down-hidden"}`}
+        aria-label={t("scrollDown")}
+      >
         <span className="scroll-chevron"></span>
         <span className="scroll-chevron"></span>
         <span className="scroll-chevron"></span>
