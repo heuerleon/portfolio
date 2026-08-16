@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { sectionArt } from "./sectionArt";
 
 const CELL_W = 14;
 const CELL_H = 26;
@@ -9,6 +10,12 @@ const GAP = 2;
 const RADIUS = 430;
 const MAX_ALPHA = 0.1;
 const LEVELS = 16;
+
+const ART_CELL_COLS = 2;
+const ART_FIT_SHARE = 1;
+const ART_ALPHA = 0.11;
+const ART_AMBIENT = 0.35;
+const ART_FADE = 400;
 
 const SCROLLED_PAST_SHARE = 0.6;
 
@@ -37,6 +44,16 @@ function holdOffEdges(value: number, size: number) {
   return value + fromStart - fromEnd;
 }
 
+function glowFalloff(dx: number, dy: number) {
+  const distance = Math.hypot(dx, dy);
+  if (distance >= RADIUS) return 0;
+  const t = 1 - distance / RADIUS;
+  const smooth = t * t * (3 - 2 * t);
+  return smooth * smooth;
+}
+
+type Art = { rows: string[]; cols: number };
+
 export default function TerminalBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -50,6 +67,14 @@ export default function TerminalBackground() {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
     const hero = document.getElementById("top");
+
+    const sections: { element: HTMLElement; art: Art }[] = [];
+    for (const { id, rows } of sectionArt) {
+      const element = document.getElementById(id);
+      if (!element) continue;
+      const cols = Math.max(...rows.map((row) => row.length));
+      sections.push({ element, art: { rows, cols } });
+    }
 
     let width = 0;
     let height = 0;
@@ -65,12 +90,56 @@ export default function TerminalBackground() {
     let targetX = 0;
     let targetY = 0;
 
+    let art: Art | null = null;
+    let nextArt: Art | null = null;
+    let fade = 0;
+
     let drawnX = NaN;
     let drawnY = NaN;
     let drawnAlpha = NaN;
+    let drawnArt: Art | null = null;
+    let drawnFade = NaN;
 
     let lastTime = 0;
     let frameId = 0;
+    let focusFrame = 0;
+
+    const drawArt = (originX: number, originY: number) => {
+      if (!art || fade <= 0) return;
+
+      const pixelCols =
+        art.cols * ART_CELL_COLS * CELL_W <= width * ART_FIT_SHARE
+          ? ART_CELL_COLS
+          : 1;
+      const startCol = Math.round((width / CELL_W - art.cols * pixelCols) / 2);
+      const startRow = Math.round((height / CELL_H - art.rows.length) / 2);
+
+      for (let line = 0; line < art.rows.length; line++) {
+        const pixels = art.rows[line];
+        const row = startRow + line;
+
+        for (let pixel = 0; pixel < pixels.length; pixel++) {
+          if (pixels[pixel] !== "#") continue;
+
+          for (let part = 0; part < pixelCols; part++) {
+            const col = startCol + pixel * pixelCols + part;
+            const falloff = glowFalloff(
+              col * CELL_W + CELL_W / 2 - originX,
+              row * CELL_H + CELL_H / 2 - originY,
+            );
+
+            ctx.globalAlpha =
+              ART_ALPHA * fade * (ART_AMBIENT + (1 - ART_AMBIENT) * falloff);
+            ctx.fillRect(
+              col * CELL_W,
+              row * CELL_H,
+              CELL_W - GAP,
+              CELL_H - GAP,
+            );
+          }
+        }
+      }
+    };
 
     const drawAt = (originX: number, originY: number, alpha: number) => {
       ctx.clearRect(0, 0, width, height);
@@ -88,14 +157,12 @@ export default function TerminalBackground() {
 
       for (let col = firstCol; col < lastCol; col++) {
         for (let row = firstRow; row < lastRow; row++) {
-          const dx = col * CELL_W + CELL_W / 2 - originX;
-          const dy = row * CELL_H + CELL_H / 2 - originY;
-          const distance = Math.hypot(dx, dy);
-          if (distance >= RADIUS) continue;
+          const falloff = glowFalloff(
+            col * CELL_W + CELL_W / 2 - originX,
+            row * CELL_H + CELL_H / 2 - originY,
+          );
+          if (falloff <= 0) continue;
 
-          const t = 1 - distance / RADIUS;
-          const smooth = t * t * (3 - 2 * t);
-          const falloff = smooth * smooth;
           const weighted = falloff * (0.8 + 0.4 * cellWeight(col, row));
           const level = Math.round(weighted * LEVELS) / LEVELS;
           if (level <= 0) continue;
@@ -104,6 +171,8 @@ export default function TerminalBackground() {
           ctx.fillRect(col * CELL_W, row * CELL_H, CELL_W - GAP, CELL_H - GAP);
         }
       }
+
+      drawArt(originX, originY);
     };
 
     const pickTarget = () => {
@@ -121,6 +190,32 @@ export default function TerminalBackground() {
         1,
       );
       return MAX_ALPHA * (1 - heroScrolledPast * (1 - SCROLLED_PAST_SHARE));
+    };
+
+    const pickArt = () => {
+      const middle = window.innerHeight / 2;
+      const focused = sections.find(({ element }) => {
+        const { top, bottom } = element.getBoundingClientRect();
+        return top <= middle && bottom > middle;
+      });
+      nextArt = focused ? focused.art : null;
+    };
+
+    const advanceFade = (elapsed: number) => {
+      if (!art) {
+        art = nextArt;
+        fade = 0;
+        return;
+      }
+
+      const step = (elapsed * 1000) / ART_FADE;
+      if (art === nextArt) {
+        fade = Math.min(fade + step, 1);
+        return;
+      }
+
+      fade = Math.max(fade - step, 0);
+      if (fade === 0) art = nextArt;
     };
 
     const chase = (elapsed: number) => {
@@ -170,12 +265,22 @@ export default function TerminalBackground() {
         drift(elapsed);
       }
 
+      advanceFade(elapsed);
+
       const alpha = currentAlpha();
-      if (x !== drawnX || y !== drawnY || alpha !== drawnAlpha) {
+      if (
+        x !== drawnX ||
+        y !== drawnY ||
+        alpha !== drawnAlpha ||
+        art !== drawnArt ||
+        fade !== drawnFade
+      ) {
         drawAt(x, y, alpha);
         drawnX = x;
         drawnY = y;
         drawnAlpha = alpha;
+        drawnArt = art;
+        drawnFade = fade;
       }
 
       frameId = requestAnimationFrame(tick);
@@ -210,7 +315,16 @@ export default function TerminalBackground() {
         started = true;
       }
       pickTarget();
+      pickArt();
       schedule();
+    };
+
+    const onScroll = () => {
+      if (focusFrame) return;
+      focusFrame = requestAnimationFrame(() => {
+        focusFrame = 0;
+        pickArt();
+      });
     };
 
     // The canvas is fixed, so client coordinates are already canvas ones.
@@ -232,13 +346,16 @@ export default function TerminalBackground() {
     resize();
 
     window.addEventListener("pointermove", onPointerMove);
+    window.addEventListener("scroll", onScroll, { passive: true });
     document.addEventListener("pointerleave", onPointerLeave);
 
     return () => {
       sizing.disconnect();
       window.removeEventListener("pointermove", onPointerMove);
+      window.removeEventListener("scroll", onScroll);
       document.removeEventListener("pointerleave", onPointerLeave);
       if (frameId) cancelAnimationFrame(frameId);
+      if (focusFrame) cancelAnimationFrame(focusFrame);
     };
   }, []);
 

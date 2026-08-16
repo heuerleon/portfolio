@@ -107,7 +107,6 @@
 @mixin terminal-type {
   font-family: var(--font-vt);
   font-weight: normal;
-  letter-spacing: 0.2em;
   line-height: normal;
 }
 
@@ -356,7 +355,7 @@ b {
 .scroll-chevron {
   display: block;
   font-family: var(--font-vt);
-  font-size: 1.3em;
+  font-size: 1.4em;
   line-height: 0.62;
   color: var(--accent);
   animation: scroll-cascade 1.6s ease-in-out infinite;
@@ -366,17 +365,17 @@ b {
   }
 
   &:nth-child(1) {
-    transform: translateY(6px) scale(1.6, 0.6);
+    transform: translateY(8px) scale(2, 0.6);
   }
 
   &:nth-child(2) {
     animation-delay: 0.2s;
-    transform: scale(1.6, 0.6);
+    transform: scale(2, 0.6);
   }
 
   &:nth-child(3) {
     animation-delay: 0.4s;
-    transform: translateY(-6px) scale(1.6, 0.6);
+    transform: translateY(-8px) scale(2, 0.6);
   }
 }
 
@@ -471,6 +470,7 @@ b {
   font-size: 1.6em;
   margin: 5px 0 10px;
   color: var(--accent);
+  letter-spacing: 0.2em;
 }
 
 .typewriter::after {
@@ -527,5 +527,21 @@ b {
 
   .social-media-container {
     margin-top: 0;
+  }
+
+  .terminal-prompt {
+    @include terminal-type;
+    margin-top: 15px;
+    font-size: 0.9em;
+    color: var(--main-color);
+
+    span {
+      font: inherit;
+      color: var(--accent);
+    }
+
+    &::after {
+      @include terminal-caret;
+    }
   }
 }

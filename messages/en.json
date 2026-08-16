@@ -93,8 +93,7 @@
     "viewOnGitHub": "View on GitHub",
     "rights": "© {year} {name}, All rights reserved",
     "legalNotice": "Legal Notice",
-    "privacyPolicy": "Privacy Policy",
-    "imagesFrom": "Contains images from <link>Unsplash</link>"
+    "privacyPolicy": "Privacy Policy"
   },
   "LegalPage": {
     "metaTitle": "Legal Notice | Leon Heuer",

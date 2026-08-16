@@ -27,14 +27,8 @@ export default function Footer() {
             <span className="light">
               {t("rights", { year: String(new Date().getFullYear()), name: "Leon Heuer" })} | <Link href="/legal">{t("legalNotice")}</Link> | <Link href="/privacy">{t("privacyPolicy")}</Link>
             </span>
-            <span className="light">
-              {t.rich("imagesFrom", {
-                link: (chunks) => (
-                  <a href="https://unsplash.com/" target="_blank" rel="noreferrer">
-                    {chunks}
-                  </a>
-                ),
-              })}
+            <span className="terminal-prompt" aria-hidden="true">
+              <span>leon@portfolio:~$</span> sudo shutdown -h now
             </span>
           </div>
         </div>
