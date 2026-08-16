@@ -28,6 +28,19 @@
   }
 }
 
+// The raised surface shared by the card-like blocks on the page: publications
+// and timeline entries. Padding and spacing stay with each component.
+@mixin card {
+  background: var(--bg-lighter);
+  border-radius: 10px;
+  box-shadow: var(--shadow-lighter);
+  transition: var(--trans-default);
+
+  &:hover {
+    box-shadow: var(--shadow-light);
+  }
+}
+
 // --------------------------------------------------- //
 //                       FEATURED                      //
 // --------------------------------------------------- //
@@ -165,14 +178,11 @@
 // --------------------------------------------------- //
 
 .publication {
+  @include card;
   display: flex;
   flex-direction: column;
   padding: 20px;
   width: 100%;
-  background: var(--bg-lighter);
-  border-radius: 10px;
-  box-shadow: var(--shadow-lighter);
-  transition: var(--trans-default);
   margin: 20px 0;
 
   h3 {
@@ -185,10 +195,6 @@
     font-size: 0.8em;
     opacity: 0.8;
     margin: 20px 0;
-  }
-
-  &:hover {
-    box-shadow: var(--shadow-light);
   }
 }
 
@@ -217,16 +223,17 @@
   margin-bottom: 5px;
   font-weight: 600;
   font-size: 0.9em;
+}
 
-  span {
-    font-weight: normal;
-    margin-left: 10px;
-  }
+.publication-authors {
+  font-weight: normal;
+  margin-left: 10px;
+}
 
-  .metadata-separator {
-    margin: 0 8px;
-    opacity: 0.5;
-  }
+// Used between metadata fields wherever they are listed inline.
+.metadata-separator {
+  margin: 0 8px;
+  opacity: 0.5;
 }
 
 .publication-keywords {
@@ -241,6 +248,173 @@
     font-weight: bold;
     margin-right: 4px;
   }
+}
+
+// --------------------------------------------------- //
+//                     CV TIMELINE                     //
+// --------------------------------------------------- //
+
+// The section itself is only a scroll runway: AboutStage grows its height by
+// however far the track has to travel, and the stage inside stays pinned for
+// exactly that distance before the page carries on down.
+.about-section {
+  padding: 0;
+}
+
+.about-stage {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  min-height: 600px; // keeps the stage usable on short windows
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 40px;
+  padding: 60px 0;
+  overflow: hidden;
+}
+
+.about-intro {
+  flex: 0 0 auto;
+}
+
+// Without JS, or on narrow screens, this is simply a swipeable strip; while
+// pinned the transform drives it instead, so native scrolling is switched off.
+.timeline-viewport {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-color) transparent;
+  scroll-snap-type: x proximity;
+
+  // Line the first card up with the container edge, then let the track run
+  // out to the right edge of the screen.
+  padding-left: max(15px, calc((100% - var(--global-max-width)) / 2));
+}
+
+.pinned .timeline-viewport {
+  overflow: hidden;
+}
+
+.timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0 25px 0 0;
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  gap: 25px;
+  will-change: transform;
+
+  // The track must keep its full natural width. As a flex item it would
+  // otherwise shrink to the viewport, leaving nothing to scroll through.
+  flex: 0 0 auto;
+  min-width: max-content;
+
+  // The rail, running the length of the track through every marker.
+  &::before {
+    content: "";
+    position: absolute;
+    top: 11px;
+    left: 0;
+    right: 25px;
+    height: 2px;
+    background-color: var(--border-color);
+  }
+}
+
+.timeline-entry {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 320px;
+  margin: 0;
+  scroll-snap-align: start;
+
+  // Marker, sitting on the rail above the card.
+  &::before {
+    content: "";
+    position: absolute;
+    top: 6px;
+    left: 0;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: var(--bg);
+    border: 2px solid var(--border-color);
+    transition: var(--trans-default);
+    z-index: 1;
+  }
+
+  &.current::before {
+    border-color: var(--accent);
+  }
+}
+
+.timeline-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-left: 22px;
+  margin-bottom: 12px;
+}
+
+.timeline-period {
+  font-size: 0.7em;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fg-lighter);
+}
+
+.timeline-content {
+  @include card;
+  padding: 20px;
+  flex: 1 1 auto; // cards in a row all end at the same height
+}
+
+// Stacked layout: no pinning to do, so the stage goes back to flowing with
+// the page and the strip is swiped by hand. The breakpoint matches the one
+// AboutStage checks before it pins.
+@media screen and (width <= 1000px) {
+  .about-stage {
+    position: static;
+    height: auto;
+    min-height: 0;
+    padding: 80px 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-stage {
+    position: static;
+    height: auto;
+    min-height: 0;
+    padding: 80px 0;
+  }
+}
+
+.timeline-role {
+  font-size: 1.1em;
+  font-weight: 700;
+  text-transform: none;
+  margin: 0 0 3px;
+}
+
+.timeline-location {
+  display: block;
+  font-size: 0.8em;
+  color: var(--fg-lighter);
+}
+
+.timeline-desc {
+  font-size: 0.8em;
+  margin: 15px 0 0;
 }
 
 // --------------------------------------------------- //

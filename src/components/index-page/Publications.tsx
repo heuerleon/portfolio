@@ -65,7 +65,9 @@ export default function Publications() {
                   {t(`kind.${pub.kindKey}`)}
                   <span className="metadata-separator">/</span>
                   {t("authors")}
-                  <span>{pub.authors.join(", ")}</span>
+                  <span className="publication-authors">
+                    {pub.authors.join(", ")}
+                  </span>
                 </div>
                 <p>
                   {pub.abstract.slice(0, 500) +
