@@ -1,9 +1,9 @@
 "use client";
 
 import { limits, type ContactFormRequestData } from "@/lib/contact";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useTranslations } from "next-intl";
-import Turnstile from "react-turnstile";
+import Turnstile, { type BoundTurnstileObject } from "react-turnstile";
 import Button from "../Button";
 import { MailIcon, DiscordIcon, LoaderIcon, SendIcon } from "../Icons";
 import { useToasts } from "../Toast";
@@ -21,6 +21,8 @@ export default function ContactForm() {
 
   const [sendAttempted, setSendAttempted] = useState(false);
   const [sending, setSending] = useState(false);
+
+  const turnstile = useRef<BoundTurnstileObject | null>(null);
 
   async function sendMessage() {
     setSendAttempted(true);
@@ -48,7 +50,12 @@ export default function ContactForm() {
 
     const status = response.status;
     if (status === 200) {
-      showToast({ variant: "success", text: t("alerts.success") });
+      showToast({
+        variant: "success",
+        text: t("alerts.success"),
+        duration: 7 * 1000,
+      });
+      resetForm();
     } else {
       if (status === 400) {
         showToast({ variant: "error", text: t("alerts.badRequest") });
@@ -63,6 +70,16 @@ export default function ContactForm() {
       console.error(`Got status code ${status} with body:`, responseBody);
     }
     setSending(false);
+  }
+
+  function resetForm() {
+    setSubject("");
+    setEmail("");
+    setName("");
+    setMessage("");
+    setToken("");
+    setSendAttempted(false);
+    turnstile.current?.reset();
   }
 
   function validateFields() {
@@ -174,7 +191,11 @@ export default function ContactForm() {
               {siteKey && (
                 <Turnstile
                   sitekey={siteKey}
+                  onLoad={(_widgetId, boundTurnstile) => {
+                    turnstile.current = boundTurnstile;
+                  }}
                   onSuccess={setToken}
+                  onExpire={() => setToken("")}
                   theme="dark"
                 />
               )}
