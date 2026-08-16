@@ -452,6 +452,19 @@ textarea {
   }
 }
 
+@media screen and (width <= 1000px) {
+  .hero-portrait {
+    order: -1;
+    align-items: flex-start;
+    margin-bottom: 20px;
+
+    .portrait-photo {
+      width: 80px;
+      height: 80px;
+    }
+  }
+}
+
 .scroll-down {
   position: absolute;
   bottom: 20px;

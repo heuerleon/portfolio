@@ -43,7 +43,7 @@ export default function TopIntroduction() {
               </Button>
             </div>
           </div>
-          <div className="column col-3">
+          <div className="column col-3 hero-portrait">
           <Image
             src="/leon.jpg"
             className="portrait-photo"
