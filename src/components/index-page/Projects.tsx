@@ -76,7 +76,7 @@ export default function Projects() {
   const t = useTranslations("Projects");
 
   return (
-    <section className="padding-section alt-section" id="projects">
+    <section className="padding-section" id="projects">
       <div className="container">
         <div className="row">
           <div className="column-centered">

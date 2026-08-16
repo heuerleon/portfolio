@@ -1,6 +1,6 @@
 @media screen and (max-width: 800px) {
   .scroll-to-top {
-    background-color: var(--darker-bg);
+    background-color: var(--bg-dark);
     padding: 10px;
     border-radius: 5px;
     right: 20px;
@@ -15,11 +15,6 @@
     width: 100% !important;
     align-items: center;
     text-align: center;
-  }
-
-  #about-me-img {
-    width: 10em !important;
-    height: 10em !important;
   }
 
   .image-wrapper::after {

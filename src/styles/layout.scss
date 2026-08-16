@@ -37,7 +37,7 @@
   flex-direction: row;
   align-items: center;
   width: 100%;
-  background: var(--bg-brighter);
+  background: var(--bg-lighter);
   border-radius: 10px;
   max-height: 400px;
   box-shadow: var(--shadow-lighter);
@@ -52,7 +52,7 @@
 
   h4 {
     font-size: 0.8em;
-    opacity: 0.2;
+    color: var(--fg-lighter);
     font-weight: 700;
     margin: 0 0 5px;
     text-transform: uppercase;
@@ -64,7 +64,7 @@
       content: "";
       height: 2px;
       width: 20px;
-      background-color: var(--main-color);
+      background-color: var(--fg-lighter);
       display: block;
       margin-right: 10px;
     }
@@ -99,7 +99,7 @@
       position: absolute;
       bottom: -1px;
       right: -150px;
-      background-color: var(--bg-brighter);
+      background-color: var(--bg-lighter);
       z-index: 5;
       width: 150px;
       height: 100%;
@@ -169,7 +169,7 @@
   flex-direction: column;
   padding: 20px;
   width: 100%;
-  background: var(--bg-brighter);
+  background: var(--bg-lighter);
   border-radius: 10px;
   box-shadow: var(--shadow-lighter);
   transition: var(--trans-default);
@@ -237,7 +237,7 @@
 
   span::before {
     content: "#";
-    opacity: 0.2;
+    color: var(--accent);
     font-weight: bold;
     margin-right: 4px;
   }
@@ -445,7 +445,7 @@ section {
 }
 
 .col-border {
-  border: 2px solid var(--bg-light);
+  border: 2px solid var(--border-color);
   padding-top: 15px;
   padding-bottom: 15px;
   margin: 15px 0;
@@ -534,14 +534,6 @@ section {
     z-index: 11;
     transition: var(--trans-default);
 
-    &.dark-switcher {
-      .top-line,
-      .middle-line,
-      .bottom-line {
-        background-color: var(--bg);
-      }
-    }
-
     button {
       padding: 10px;
       width: 40px;
@@ -586,14 +578,6 @@ section {
     ul {
       display: block;
       opacity: 1;
-    }
-
-    .dark-switcher {
-      .top-line,
-      .middle-line,
-      .bottom-line {
-        background-color: var(--main-color);
-      }
     }
 
     .top-line {
@@ -740,12 +724,12 @@ section {
   }
 
   &.success {
-    background-color: var(--green);
-    color: var(--green-dark);
+    background-color: var(--success-bg);
+    color: var(--success-fg);
   }
   &.error {
-    background-color: var(--red);
-    color: var(--red-dark);
+    background-color: var(--error-bg);
+    color: var(--error-fg);
   }
 }
 

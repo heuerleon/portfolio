@@ -116,7 +116,7 @@ export default function ContactForm() {
   const AlertBoxIcon = alertBoxIcons[alertBoxStyle];
 
   return (
-    <section className="padding-section alt-section" id="contact">
+    <section className="padding-section" id="contact">
       <div className="container">
         <div className="row">
           <div className="column-min">
@@ -217,7 +217,7 @@ export default function ContactForm() {
                   <Turnstile
                     sitekey={siteKey}
                     onSuccess={setToken}
-                    theme="light"
+                    theme="dark"
                   />
                 )}
                 <span

@@ -15,7 +15,6 @@ const navItems: { link: string; labelKey: string }[] = [
 export default function Nav() {
   const t = useTranslations("Nav");
   const [showMobileNav, setShowMobileNav] = useState(false);
-  const [changeMobileNavColor, setChangeMobileNavColor] = useState(false);
 
   const [slideIn, setSlideIn] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
@@ -45,7 +44,6 @@ export default function Nav() {
       }
 
       scrollBefore = y;
-      setChangeMobileNavColor(y + 20 > window.innerHeight);
     };
 
     const onScroll = () => {
@@ -85,9 +83,7 @@ export default function Nav() {
       {/* Mobile Nav */}
       <nav className={`mobile-nav ${showMobileNav ? "nav-visible" : ""}`}>
         <div className="nav-top-bar">
-          <div
-            className={`nav-switcher ${changeMobileNavColor ? "dark-switcher" : ""}`}
-          >
+          <div className="nav-switcher">
             <button onClick={() => setShowMobileNav((shown) => !shown)}>
               <span className="top-line"></span>
               <span className="middle-line"></span>

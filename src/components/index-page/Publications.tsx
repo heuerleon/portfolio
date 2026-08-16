@@ -42,7 +42,7 @@ export default function Publications() {
   const format = useFormatter();
 
   return (
-    <section className="padding-section" id="publications">
+    <section className="alt-section padding-section" id="publications">
       <div className="container">
         <div className="row">
           <div className="column-centered">

@@ -5,46 +5,66 @@
   --global-max-width: 1100px;
   --nav-height: 60px;
 
-  --shadow-lighter: 0 5px 20px rgba(100, 100, 100, 0.1);
-  --shadow-light: 0 5px 20px rgba(100, 100, 100, 0.2);
+  --shadow-lighter: 0 5px 20px rgba(0, 0, 0, 0.25);
+  --shadow-light: 0 5px 20px rgba(0, 0, 0, 0.4);
   --default-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
 
-  --accent-light: #38bdf8;
-  --accent: #0ea5e9;
-  --accent-dark: #0284c7;
-  --accent-darker: #0c4a6e;
+  // ------------------------- brand scale ------------------------- //
+  --amber-50: #fff8e1;
+  --amber-100: #ffefcb;
+  --amber-200: #ffdd9a;
+  --amber-300: #ffca64;
+  --amber-400: #ffba38;
+  --amber-500: #ffb01b;
+  --amber-600: #ffa903;
+  --amber-700: #e39500;
+  --amber-800: #cb8400;
+  --amber-900: #b07100;
 
-  --box-color: rgba(255, 255, 255, 0.5);
+  // ------------- surfaces, deepest to most elevated -------------- //
+  --bg-dark: #090909; // page chrome: hero, nav bar, footer
+  --bg: #121212; // page + default section background
+  --bg-light: #1a1a1a; // alternating sections
+  --bg-lighter: #242424; // cards, inputs, anything raised
+  --bg-bright: #2f2f2f; // hover state of a raised surface
 
-  --green: #e6f4ea;
-  --green-dark: #1e8449;
-  --red: #fcebea;
-  --red-dark: #c0392b;
+  // ---------------------------- text ----------------------------- //
+  --main-color: #f5f5f5; // primary text
+  --fg-lighter: #a3a3a3; // secondary / muted text
+  --border-color: #383838; // hairlines and outlines
+
+  // --------------------------- accent ---------------------------- //
+  --accent-light: var(--amber-300); // hover
+  --accent: var(--amber-500); // default
+  --accent-dark: var(--amber-700); // pressed, gradients
+  --accent-contrast: var(--bg-dark); // text sitting on an accent fill
+
+  // ------------------------- hero mesh --------------------------- //
+  // Faint amber blobs layered over --bg. Kept as rgba literals rather
+  // than color-mix() so the gradients degrade on older browsers.
+  --mesh-warm: rgba(255, 176, 27, 0.13); // amber-500
+  --mesh-dark: rgba(227, 149, 0, 0.09); // amber-700
+  --mesh-soft: rgba(255, 202, 100, 0.08); // amber-300
+  --mesh-deep: rgba(176, 113, 0, 0.12); // amber-900
+
+  // Film grain: one 140px SVG turbulence tile, rasterised once and repeated.
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23g)'/%3E%3C/svg%3E");
+
+  // --------------------------- status ---------------------------- //
+  --success-bg: #12291c;
+  --success-fg: #6ee7b7;
+  --error-bg: #33161a;
+  --error-fg: #f87171;
+  --warning-fg: #fbbf24;
 }
 
-:root,
-.alt-section-dark {
-  --bg-brighter: #f8fafc;
-  --bg-bright: #6b7280;
-  --bg-lighter: #374151;
-  --bg-light: #1f2937;
-  --bg: #111827;
-  --bg-dark: #0b101a;
-
-  --main-color: #f3f4f6;
-  --border-color: #e2e8f0;
-}
-
-section {
-  --bg: #f1f5f9;
-  --main-color: #111827;
-  --fg-lighter: #94a3b8;
-}
-
+// Sections alternate between the base background and one step up.
 .alt-section {
-  --bg: #e2e8f0;
-  --main-color: #111827;
-  --fg-lighter: #94a3b8;
+  --bg: var(--bg-light);
+}
+
+.alt-section-dark {
+  --bg: var(--bg-dark);
 }
 
 @keyframes scroll {
@@ -179,7 +199,6 @@ button {
 }
 
 h1 {
-  text-transform: capitalize;
   font-size: 3em;
   margin: 0 0 20px;
   font-weight: 800;
@@ -187,39 +206,14 @@ h1 {
 
 h2 {
   font-size: 2em;
-  text-transform: capitalize;
   margin: 10px 0 15px;
   font-weight: 700;
-}
-
-.section-heading {
-  font-size: 3em;
-  margin: 0 0 20px;
-  font-weight: 800;
-}
-
-.headline-prefix {
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  font-size: 1.2em;
-  font-weight: 600;
-  margin: 5px 0 10px;
-  line-height: normal;
-  opacity: 1;
-  color: var(--accent);
 }
 
 h3 {
   font-size: 1.2em;
   margin: 5px 0 10px;
   font-weight: 600;
-}
-
-.style-headline {
-  text-transform: lowercase;
-  font-size: 1em;
-  font-weight: 600;
-  margin: 0;
 }
 
 h4 {
@@ -229,9 +223,22 @@ h4 {
   margin: 5px 0;
 }
 
+.section-heading {
+  font-size: 3em;
+  margin: 0 0 20px;
+  font-weight: 800;
+}
+
+.style-headline {
+  text-transform: lowercase;
+  font-size: 1em;
+  font-weight: 600;
+  margin: 0;
+}
+
 body:lang(ko),
 .lang-switcher {
-  font-family: var(--font-inter), var(--font-korean), sans-serif;
+  font-family: var(--font-sans), var(--font-korean), sans-serif;
 }
 
 img {
@@ -293,12 +300,12 @@ b {
 }
 
 .error-message {
-  color: #f44336;
+  color: var(--error-fg);
   font-size: 0.8em;
 }
 
 .warning-message {
-  color: #fbbf24;
+  color: var(--warning-fg);
   font-size: 0.8em;
 }
 
@@ -312,6 +319,7 @@ textarea {
   cursor: text;
   width: 100%;
   display: block;
+  background-color: var(--bg-lighter);
   color: var(--main-color);
   border: none;
   border-radius: 10px;
@@ -321,12 +329,18 @@ textarea {
   box-shadow: var(--shadow-light);
   outline: 2px solid transparent;
 
+  &::placeholder {
+    color: var(--fg-lighter);
+  }
+
   &:hover {
     opacity: 1;
+    background-color: var(--bg-bright);
   }
 
   &:focus {
     opacity: 1;
+    background-color: var(--bg-bright);
     outline: 2px solid var(--accent);
   }
 }
@@ -342,7 +356,7 @@ textarea {
 }
 
 .empty-input {
-  color: red;
+  color: var(--error-fg);
 }
 
 .input-wrapper {
@@ -420,6 +434,10 @@ textarea {
 
     @include shrink-margins(0);
   }
+}
+
+.portrait-photo {
+  border-radius: 9999px;
 }
 
 .scroll-down {
@@ -508,14 +526,6 @@ textarea {
   }
 }
 
-#about-me-img {
-  width: 20em;
-  height: 20em;
-  object-fit: cover;
-  border-radius: 20em;
-  max-width: unset;
-}
-
 .scroll-to-top {
   position: fixed;
   right: 40px;
@@ -530,7 +540,7 @@ textarea {
     height: 45px;
     border-radius: 8px;
     background-color: var(--accent);
-    color: var(--main-color);
+    color: var(--accent-contrast);
     transition: var(--trans-default);
     font-size: 1.5em;
 
@@ -546,12 +556,22 @@ textarea {
   animation: fade-in var(--trans-anim);
 }
 
+.typewriter {
+  font-family: var(--font-vt);
+  font-weight: normal;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 1.6em;
+  margin: 5px 0 10px;
+  line-height: normal;
+  color: var(--accent);
+}
+
 .typewriter::after {
-  content: "|";
+  content: "_";
   animation: blink 700ms infinite;
   margin-left: 5px;
   font-weight: 700;
-  color: var(--main-color);
 }
 
 .simple-bg {
@@ -567,63 +587,12 @@ textarea {
   view-timeline-name: --hero-exit;
 }
 
-.parallax-bg {
-  position: absolute;
-  inset: -35% 0 0 0;
-  z-index: -1;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  will-change: transform;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  @supports (animation-timeline: view()) {
-    .parallax-bg {
-      animation: parallax-shift linear both;
-      animation-timeline: --hero-exit;
-      animation-range: exit 0% exit 100%;
-    }
-  }
-}
-
-@keyframes parallax-shift {
-  to {
-    // 30% of the section height (scroll factor 0.3), expressed as a
-    // fraction of this 135%-tall layer: 30 / 135
-    transform: translateY(22.22%);
-  }
-}
-
-@media screen and (width > 2560px) {
-  .parallax-bg {
-    background-image:
-      linear-gradient(#111827ad, #111827ad), url("../../public/bg_6000.jpg");
-  }
-}
-
-@media screen and (1920px <= width <= 2560px) {
-  .parallax-bg {
-    background-image:
-      linear-gradient(#111827ad, #111827ad), url("../../public/bg_2560.jpg");
-  }
-}
-
-@media screen and (width <= 1920px) {
-  .parallax-bg {
-    background-image:
-      linear-gradient(#111827ad, #111827ad), url("../../public/bg_1920.jpg");
-  }
-}
-
 #footer {
-  background-color: var(--bg-dark);
-
   span {
     margin-bottom: 10px;
     font-weight: 600;
     font-size: 0.8em;
-    color: var(--bg-bright);
+    color: var(--fg-lighter);
   }
 
   .light {

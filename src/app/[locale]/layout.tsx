@@ -7,10 +7,11 @@ import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import ScrollToTopButton from "@/components/ScrollToTopButton";
 import "@/styles/global.scss";
-import { Inter, Noto_Sans_KR } from "next/font/google";
+import { Geist, Geist_Mono, Inter, Noto_Sans_KR, VT323 } from "next/font/google";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
+import { subscribe } from "node:diagnostics_channel";
 
 const ogLocales: Record<string, string> = {
   en: "en_US",
@@ -68,7 +69,7 @@ export async function generateMetadata({
   };
 }
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const sans = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
 const notoSansKr = Noto_Sans_KR({
   weight: ["400", "600", "700", "800"],
@@ -77,6 +78,8 @@ const notoSansKr = Noto_Sans_KR({
   display: "swap",
   preload: false,
 });
+
+const typewriter = VT323({ weight: ["400"], variable: "--font-vt" });
 
 export default async function RootLayout({
   children,
@@ -94,7 +97,7 @@ export default async function RootLayout({
   return (
     <html lang={locale}>
       <body
-        className={`${inter.className} ${inter.variable} ${notoSansKr.variable}`}
+        className={`${sans.className} ${sans.variable} ${notoSansKr.variable} ${typewriter.variable}`}
       >
         <NextIntlClientProvider>
           <Nav />

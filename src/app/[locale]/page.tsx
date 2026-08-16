@@ -1,6 +1,5 @@
 import { setRequestLocale } from "next-intl/server";
 import TopIntroduction from "@/components/index-page/TopIntroduction";
-import AboutMeContainer from "@/components/index-page/AboutMeContainer";
 import AboutMe from "@/components/index-page/AboutMe";
 import ContactForm from "@/components/index-page/ContactForm";
 import Publications, { publications } from "@/components/index-page/Publications";
@@ -72,9 +71,7 @@ export default async function Index({
         }}
       />
       <TopIntroduction />
-      <AboutMeContainer>
-        <AboutMe />
-      </AboutMeContainer>
+      <AboutMe />
       <Projects />
       <Publications />
       <ContactForm />
